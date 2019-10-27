@@ -186,12 +186,12 @@ Wilson: \\
 
 At temperatures above quench current flows through both superconductor and copper in parallel connection. What is actually quite surprising, resistivity of a superconductor above critical temperature is much higher that the one of copper. Therefore, it can be assumed that current flows through a stabilizer and only this part contributes to Joule heating. The same occurs with heat conductivity which is much lower for Nb-Ti at higher temperatures. In order to take these characteristics into account during numerical analysis, the winding area is reduced to area of copper. It leads to a formula of reduced diameter presented below.
 \begin{equation}
-    d_\text{strand, red} = \sqrt{\frac{A_\text{Cu}}{A_\text{strand}}}*d_\text{strand}
+    d_\text{strand, red} = \sqrt{\frac{A_\text{Cu}}{A_\text{strand}}} ~ d_\text{strand}
 \end{equation}
 
 Since the winding diameter in analysis is smaller than in reality, its equivalent heat capacity must take this correction into account which is shown in the equation below. The representative winding equivalent heat capacity is shown in Fig. \ref{fig:eq_wind_cp}.
 \begin{equation}
-    C_\text{p, equiv} = f_\text{Cu}*C_\text{p, Cu} + f_\text{NbTi}*C_\text{p, NbTi}
+    C_\text{p, equiv} = f_\text{Cu} ~ C_\text{p, Cu} + f_\text{NbTi} ~ C_\text{p, NbTi}
 \end{equation}
  
 \begin{figure}[h!]
@@ -203,8 +203,8 @@ Since the winding diameter in analysis is smaller than in reality, its equivalen
   grid style={dashed,gray!30},
   width=0.7\linewidth, 
   height = 6cm,
-  xlabel={$T$},
-  ylabel={$C_{v}$},
+  xlabel={$T,~\text{K}$},
+  ylabel={$C_{v},~\frac{\text{J}}{\text{m}^3 \cdot \text{K}}$},
   xlabel style={below right},
   ylabel style={above left},
   xmin=0.0,
@@ -267,7 +267,7 @@ Insulation dimensions:
 \end{equation}
 
 \begin{equation}
-    A_\text{ins,cond} = \frac{\frac{1}{4} A_\text{ins} \cdot L_{winding}}{L_\text{ins}}
+    A_\text{ins,cond} = \frac{\frac{1}{4} A_\text{ins} ~ L_{winding}}{L_\text{ins}}
 \end{equation}
 
 \begin{figure}[H]
