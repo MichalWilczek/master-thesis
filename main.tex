@@ -1,0 +1,517 @@
+\documentclass{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[affil-it]{authblk}
+\usepackage[english]{babel}
+\usepackage{polski}
+
+% packages for title page
+\usepackage{siunitx}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx, wrapfig}
+\usepackage{tabularx}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+
+\usepackage{xcolor}
+\usepackage{subfigure}
+\usepackage[super]{nth}
+\usepackage{indentfirst}
+\usepackage{algorithm,algorithmic}
+\usepackage{enumerate}
+\usepackage[toc,page]{appendix}
+
+\usepackage{amsthm}
+\usepackage{pdfcomment}
+
+\usepackage[siunitx,americaninductors]{circuitikz}
+\usepackage{schemabloc}
+\usetikzlibrary{circuits}
+\usepackage{tikz, pgfplots}
+\usetikzlibrary{shapes,arrows}
+\usepackage{verbatim}
+
+\begin{document}
+\input{title_pages/titlepage_PL.tex}
+\clearpage\thispagestyle{empty}
+\tableofcontents
+\clearpage\thispagestyle{empty}
+
+\section*{Notation}
+
+\begin{table}[h!]
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ l l }  
+    \hline
+    $A_\text{Cu}$ & cross-sectional area of copper in a wire \\  
+    $B_\text{c20}$ & intercepts of critical surface along magnetic field axis \\  
+    $C_\text{p, equiv}$ & equivalent specific heat capacity of a wire \\  
+    $C_\text{p, Cu}$ & specific heat capacity of copper \\   
+    $C_\text{p, NbTi}$ & specific heat capacity of NbTi \\  
+    $d_\text{strand}$ & real diameter of a wire \\  
+    $d_\text{strand, red}$ & reduced diameter of a wire \\   
+    $f_\text{Cu}$ &  copper volumetric ratio in a wire\\        
+    $f_\text{NbTi}$ &  NbTi volumetric ratio in a wire\\   
+    $T_\text{c}$ & critical temperature \\
+    $T_\text{c0}$ & intercepts of critical surface along temperature axis \\
+    $RRR$ & residual resistivity ratio \\
+    \hline
+     \end{tabular} 
+    \end{center}  
+ \end{table}
+\newpage
+
+% official introduction of the Master thesis
+\section{Introduction}
+
+\subsection{About CERN}
+
+\subsection{Superconductors}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\linewidth]{figures/introduction/critical_surface_scheme.png}
+\caption{Schematic of the critical surface of $\text{Nb}_\text{3}\text{Sn}$ and Nb-Ti \cite{evans_marvel_of_technology}}
+\label{fig:scheme_critical_surface}
+\end{figure}
+
+
+
+\subsection{Quench Problem}
+
+    \subsubsection{Copper Resistivity}
+    Copper residual resistivity ratio according to NIST: 
+    \begin{equation}
+    RRR = \frac{\rho(T=273~\text{K}, B=0~\text{T})}{\rho(T=4~\text{K}, B=0~\text{T})}
+    \end{equation}
+    
+    \subsubsection{Critical Parameters for Superconductivity}
+    Critical current:
+    \begin{equation}
+        I_\text{c}(T) = I \frac{T-T_\text{cs}}{T_\text{c}-T_\text{cs}}
+    \end{equation}
+    \\
+    Critical temperature:
+    \begin{equation}
+        T_\text{c}(B) = 9.2 \cdot [1- \frac{B}{14.5}]^{0.59}~\text{for}~B~<~10~\text{T}
+    \end{equation}
+    \\
+    Critical magnetic field: 
+    \begin{equation}
+        B_\text{c2}(T) = B_\text{c2}(T=0) \cdot [1-(\frac{T}{T_\text{c}(B=0)})^{n}],
+    \end{equation}
+    where
+    $B_\text{c2}(T=0)=14.5~\text{T}$, $T_\text{c}(B=0)=9.2~\text{K}$, $n=1.7$.
+
+    \subsubsection{Current Flow in Copper Matrix}
+    
+    Current sharing temperature: 
+    \begin{equation}
+        T_\text{cs} = T_\text{c} (1 - \frac{I}{\text{c}_1 + \text{c}_2 B }),
+    \end{equation}
+    where $\text{c}_1=3449~\text{A}$ and $\text{c}_2=-257~\text{AT}^{-1}$
+    \\
+    Current in copper matrix: 
+    \begin{equation}
+        \left\{ \begin{array}{lll}
+        I_\text{Cu} = 0 & \text{for}~T < T_\text{cs} \\ \\
+        I_\text{Cu} = I - I_\text{c} & \text{for}~T_\text{cs} \leq T<T_\text{c}  \\ \\
+        I_\text{Cu} = I & \text{for}~T_\text{cs} \leq T
+        \end{array} \right.
+    \end{equation}
+    \\
+    Joule heating: 
+    \begin{equation}
+        \left\{ \begin{array}{lll}
+        q_\text{Joule} = 0 & \text{for}~T < T_\text{cs} \\ \\
+        q_\text{Joule} = \rho_\text{Cu}(T, B) \frac{(I-I_\text{c})^2}{{\text{a}_\text{Cu}}^2}& \text{for}~T_\text{cs} \leq T<T_\text{c}  \\ \\
+        q_\text{Joule} = \rho_\text{Cu}(T, B) \frac{I^2}{{\text{a}_\text{Cu}}^2} & \text{for}~T_\text{cs} \leq T
+        \end{array} \right.
+    \end{equation}
+
+    \begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.49\linewidth]{figures/skew_quad_bcs/magnetic_field_mapping/Heat_Generation_Curve_B_3.png}
+    \caption{Heat Generation Curve as a function of temperature for B=3 T}
+    \label{fig:H_gen_curve}
+    \end{figure}
+    
+\subsection{Accelerator Magnets}
+What type of magnets can we find? \\
+How are they protected? \\
+Passive and active protections \\ 
+Self-protectability
+
+\subsection{Analyses in Superconductors}
+
+\subsection{Numerical Analyses}
+
+Heat conduction equation: 
+\begin{equation}
+    \frac{\partial}{\partial x}[k(B) \frac{\partial T}{\partial x}] + q_v = \rho c_p \frac{\partial T}{\partial t}
+\end{equation}
+
+
+
+\subsection{Thermal Numerical Analyses}
+
+To write in introduction: 
+Wilson: \\
+- point disturbances (page 74) \\
+- minimum propagating zone (MPZ) (same page - up to 80 something...)
+
+% AIM THESIS
+\clearpage
+\section{Aim of Thesis}
+\input{sections/aim_thesis/aim_thesis.tex}
+
+% 1D QUENCH PROPAGATION MODELLING 
+\clearpage
+\section{1D Quench Propagation Modelling}
+\label{section: 1d_quench_propagation_modelling}
+
+\begin{equation}
+    \left\{ \begin{array}{ll}
+    \frac{f_\text{Cu}}{f_\text{Nb-Ti}} = \frac{A_\text{Cu}}{A_\text{Nb-Ti}} = 2.2\\ \\
+    f_\text{Cu} + f_\text{Nb-Ti} = 1
+    \end{array} \right.
+\end{equation}
+
+At temperatures above quench current flows through both superconductor and copper in parallel connection. What is actually quite surprising, resistivity of a superconductor above critical temperature is much higher that the one of copper. Therefore, it can be assumed that current flows through a stabilizer and only this part contributes to Joule heating. The same occurs with heat conductivity which is much lower for Nb-Ti at higher temperatures. In order to take these characteristics into account during numerical analysis, the winding area is reduced to area of copper. It leads to a formula of reduced diameter presented below.
+\begin{equation}
+    d_\text{strand, red} = \sqrt{\frac{A_\text{Cu}}{A_\text{strand}}}*d_\text{strand}
+\end{equation}
+
+Since the winding diameter in analysis is smaller than in reality, its equivalent heat capacity must take this correction into account which is shown in the equation below. The representative winding equivalent heat capacity is shown in Fig. \ref{fig:eq_wind_cp}.
+\begin{equation}
+    C_\text{p, equiv} = f_\text{Cu}*C_\text{p, Cu} + f_\text{NbTi}*C_\text{p, NbTi}
+\end{equation}
+ 
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  no markers,
+  legend style={at={(1,0)},anchor=south east},
+  grid style={dashed,gray!30},
+  width=0.7\linewidth, 
+  height = 6cm,
+  xlabel={$T$},
+  ylabel={$C_{v}$},
+  xlabel style={below right},
+  ylabel style={above left},
+  xmin=0.0,
+  ymin=0.0,
+  xmax=50.0
+  ]
+  
+  \addplot table[x=temperature,y=cv_equiv,col sep=comma] {sections/1D_quench_modelling/figures/cv_equivalent.csv}; 
+
+\end{axis}
+\end{tikzpicture}
+\caption{Equivalent winding volumetric heat capacity temperature dependence for \textit{B}=2 T}
+    \label{fig:eq_wind_cp}
+\end{figure}
+ 
+ 
+ 
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.35\linewidth]{figures/material_properties/Eq_Cp_plot.png}
+%     \caption{Equivalent winding specific heat capacity temperature dependence for \textit{B}=3 T}
+%     \label{fig:eq_wind_cp}
+% \end{figure}
+
+The geometrical data input are collected and specified altogether in Table \ref{table:skew_quad_params_table}.
+
+\begin{table}[h!]
+    \caption{Geometrical parameters for skew quadrupole \cite{hl_lhc_tech_design_report_v01, marco_prioli_mails}} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ ccc }  
+    \hline
+    Aperture & 150 & [mm]\\
+    Coil length & 841 & [m] \\
+    Number of apertures & 1 & \\
+    Number of circuits & 1 & \\
+    Strand diameter & 0.7 & [mm] \\
+    $\text{A}_\text{Cu}/\text{A}_\text{Nb-Ti}$ \cite{marco_prioli_mails} & 2.2 & \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:skew_quad_params_table} 
+ \end{table}
+
+Insulation dimensions:
+
+\begin{equation}
+    A_\text{ins} = a^2 - \frac{\pi d_\text{strand}^2}{4}
+\end{equation}
+
+\begin{equation}
+    p_\text{avg} = \frac{4 a + \pi d_\text{strand}}{2} 
+\end{equation}
+
+\begin{equation}
+    L_\text{ins} = \frac{A_\text{ins}}{p_\text{avg}}
+\end{equation}
+
+\begin{equation}
+    A_\text{ins,cond} = \frac{\frac{1}{4} A_\text{ins} \cdot L_{winding}}{L_\text{ins}}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale = 1]
+\filldraw[blue] (-0.941/2,-0.941/2) rectangle (0.941/2,0.941/2);
+\filldraw[red] (0,0) circle (0.7/2+0.07);
+\filldraw[yellow] (0,0) circle (0.7/2);
+\filldraw[blue] (-0.941/2,-0.941/2+0.941) rectangle (0.941/2,0.941/2+0.941);
+\filldraw[red] (0,0+0.941) circle (0.7/2+0.07);
+\filldraw[yellow] (0,0+0.941) circle (0.7/2);
+\filldraw[blue] (-0.941/2+0.941,-0.941/2) rectangle (0.941/2+0.941,0.941/2);
+\filldraw[red] (0+0.941,0) circle (0.7/2+0.07);
+\filldraw[yellow] (0+0.941,0) circle (0.7/2);
+\filldraw[blue] (-0.941/2+0.941,-0.941/2+0.941) rectangle (0.941/2+0.941,0.941/2+0.941);
+\filldraw[red] (0+0.941,0+0.941) circle (0.7/2+0.07);
+\filldraw[yellow] (0+0.941,0+0.941) circle (0.7/2);
+\draw[thick, cyan] (-0.8,0.7/2) -- (0,0.7/2);
+\draw[thick, cyan] (-0.8,-0.7/2) -- (0,-0.7/2);
+\draw[black, thick, <->] (-0.75,0.7/2) -- (-0.75,-0.7/2);
+\node[scale = 1, rotate=90] at (-1.1, 0) {$d_\text{strand}$};
+\draw[thick,<->] (-0.941/2,-0.9) -- (0.941*1.5,-0.9);
+\node[scale = 1] at (0.941*0.5, -0.7) {$2a$};
+\draw[ultra thick,->, black] (1.5,0.5) -- (2.25,0.5);
+\filldraw[yellow] (2.7,0) circle (0.2);
+\filldraw[yellow] (3.7,0) circle (0.2);
+\filldraw[yellow] (3.7,1) circle (0.2);
+\filldraw[yellow] (2.7,1) circle (0.2);
+\draw[thick, blue] (2.9,0) -- (3.5,0);
+\draw[thick, blue] (2.9,1) -- (3.5,1);
+\draw[thick, blue] (2.7,0.8) -- (2.7,0.2);
+\filldraw[red] (3.7,0.5) ellipse (0.25cm and 0.1cm);
+\draw[thick, blue] (3.7,0.8) -- (3.7,0.5);
+\draw[thick, blue] (3.7,0.4) -- (3.7,0.2);
+\draw[thick, black, <->] (2.9,1.25) -- (3.5,1.25);
+\node[scale = 1] at (3.2, 1.55) {$L_\text{ins}$};
+\node[scale = 1, red] at (4.7, 0.5) {$A_\text{ins,cond}$};
+\end{tikzpicture}
+\caption{Cross-sectional of 2D and 1D element}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% QUENCH VELOCITY MODELLING
+\clearpage
+\section{Quench Velocity Modelling}
+\label{section:quench_velocity_modelling}
+
+When quench occurs, one can notice that the point at which the cable transforms from superconducting to normal state propagates with time. This point remains at the critical temperature, $T_\text{c}$ for a given magnetic field strength. For the purpose of quench velocity modelling, the interesting feature of this point is how it changes its position in time, as described in Fig. \ref{fig:modelling_approach}. Depending on the electro-magneto-thermal conditions at which quench occurs, quench velocity can remain constant or change in time. 
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale = 1]
+\draw [thick, ->] (0.0,0.0) -- (8.0,0);
+
+\draw [thick, blue] (0.0,0.5) -- (2.75,0.5);
+\draw [thick, blue] (5.25,0.5) -- (8.0,0.5);
+
+\draw [thick, blue] (2.75,0.5) .. controls +(0:1cm) and +(180:1cm) .. (4.0,1.5);
+\draw [thick, blue] (4.0,1.5) .. controls +(0:1cm) and +(180:1cm) .. (5.25,0.5);
+
+\draw [thin] (3.25,-0.5) -- (3.25,1.25);
+\draw [thin] (4.75,-0.5) -- (4.75,1.25);
+
+\draw [thick, ->] (4.75,0.75) -- (5.75,0.75);
+\draw [thick, ->] (3.25,0.75) -- (2.25,0.75);
+
+\draw [thin, red, <->] (3.25,-0.5) -- (4.75,-0.5);
+\draw [thin, blue, ->] (0.0,-0.5) -- (3.25,-0.5);
+\draw [thin, blue, <-] (4.75,-0.5) -- (8.0,-0.5);
+
+\node[scale = 0.8] [color = red] at (4.0,-0.25) {Quenched};
+\node[scale = 0.8] [color = blue] at (1.625,-0.25) {Not Quenched};
+\node[scale = 0.8] [color = blue] at (6.375,-0.25) {Not Quenched};
+
+\node[scale = 0.8] at (5.25,1.0) {$v_\text{quench}$};
+\node[scale = 0.8] at (2.75,1.0) {$v_\text{quench}$};
+\node[scale = 0.8] at (8.0,+0.25) {Cable domain};
+
+\end{tikzpicture}
+\caption{Quench velocity approach.}
+\label{fig:modelling_approach}
+\end{figure}
+
+Quench velocity can be approximated with analytic formulas. They are usually a function of current density, material properties of the winding and temperature gradient around the quench front. The quench velocity in ITER applications is mainly estimated based on~\cite{MIT_phd_thesis}. For superconducting accelerator magnets, Wilson's formula is more applicable if cooling with helium is not considered \cite[p.~206]{wilson1987superconducting}, as described below
+\begin{equation}
+    v_\text{quench}=\frac{J}{\gamma C}\sqrt{\frac{\rho k}{T_\text{s}-T_\text{0}}},
+    \label{eqn:Wilson_quench_velocity_formula}
+\end{equation}
+where $T_\text{s}$ -- critical temperature,
+$T_\text{0}$ -- coolant temperature,
+$\rho$ -- resistivity averaged over the conductor volume,
+$J$ -- current density averaged over the conductor volume,
+$k$ -- thermal conductivity averaged over the conductor unit cell,
+$C$ -- specific heat averaged over the conductor unit cell,
+$\gamma$ -- conductor density.
+
+In standard heat conduction multi-dimensional quench problem, the solver tries to find a temperature distribution in a given space and time. It is usually computationally costly because one should cope with a temperature distribution being steep at the level of the quench front. Due to high material non-linearities at cryogenic temperatures, in order to accurately solve temperature distribution in the entire region of the cable, one should refine mesh or decrease the simulation time step (up to the order of a $\mu$s). In both cases the simulation time usually becomes excessively long. All material properties used in scope of the thesis are presented in Appendix \ref{appendix_material_properties_description}.
+
+As presented in Fig. \ref{fig:modelling_approach}, the quenched and non-quenched regions in a superconducting cable have different but relatively uniform temperature distributions. Therefore, the solution of heat conduction equation in two of these regions is easier to solve than at the quench front where both regions meet with their already importantly different material properties such as thermal conductivity or specific heat capacity. The method simplifying the thermal quench modelling, called quench velocity method, bases on predicting quench velocity by an outsourced external routine. Such an approach allows one to have the quench wave explicitly solved and, therefore, an accurate solution of temperature distribution at the quench front is not required. As a result, the mesh refinement along the coil length is not needed anymore and the numerical model is of a smaller size to be solved. Therefore, the numerical model still calculates the heat balance equation but with a fixed and relatively coarse mesh along the coil of a magnet. 
+ 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale = 1]
+\draw [thick, ->] (0.0,0.0) -- (8.0,0);
+\foreach \t in {0,0.5,1,...,7.5}
+\filldraw[black] ({\t},0) circle (2pt);
+\node[scale = 0.8] at (8.5,0.25) {Nodal cable 1D domain};
+\draw [thick, red] (3.5,0) -- (3.5,0.5);
+\draw [thick, red] (3.5,0.5) -- (4.5,0.5);
+\draw [thick, red] (4.5,0.5) -- (4.5,0);
+\draw [thick, red] (3,0) -- (3.5,0.7);
+\draw [thick, red] (3.5,0.7) -- (4.5,0.7);
+\draw [thick, red] (4.5,0.7) -- (5,0);
+\draw [thick, red] (2.5,0) -- (3,0.9);
+\draw [thick, red] (3,0.9) -- (5,0.9);
+\draw [thick, red] (5,0.9) -- (5.5,0);
+\draw [thick, ->] (5.25,0.45) -- (6.25,0.45);
+\node[scale = 0.8] at (5.75,0.65) {$v_\text{quench}$};
+\draw [thick, ->] (2.75,0.45) -- (1.75,0.45);
+\node[scale = 0.8] at (2.25,0.65) {$v_\text{quench}$};
+\node[scale = 0.8, red] at (4,1.1) {$T_\text{coil}$};
+\end{tikzpicture}
+\caption{Schematic temperature propagation with quench velocity modelling.}
+\label{fig:modelling_approach}
+\end{figure}
+
+Solving quench propagation by means of quench velocity method assumes that, while  simulating the heat propagation during quench, the quench front velocity is known and estimated separately beforehand. The quench velocity can be:
+\begin{itemize}
+\item assumed constant,
+\item based on available measurements,
+\item calculated analytically,
+\item calculated numerically.
+\end{itemize}
+
+In numerical thermal 3D problem, there are two phenomena to be analysed important for the quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse propagation of quench across the insulation between separate windings of the coil. Only the \nth{1} part is solved by means of a quench velocity - based thermal model. In order to conduct a 3D thermal analysis using quench velocity method, the simulation tools listed below need to be developed: 
+\begin{enumerate}
+\item electro-thermal model simulating longitudinal quench propagation
+\item thermal model simulating transverse thermal propagation across insulation
+\item algorithm mapping multidimensional winding geometry onto 1D coil
+\item algorithm calculating quench velocity
+\item algorithm assigning node numbers to quench position varying in time
+\item algorithm detecting new quenches across multiple windings
+\end{enumerate}
+
+ANSYS environment was chosen to perform the electro-thermal and thermal analyses. The external algorithms are prepared in Python. This chapter describes all the aforementioned algorithms as well as their implementation in Python-ANSYS coupling.
+
+\subsection{Quench Velocity Algorithm}
+\label{subsection:quench_velocity_algorithm}
+\input{sections/q_vel_modelling/q_vel_alg.tex}
+
+\subsection{Quench Velocity Benchmarking}
+\label{subsection:quench_velocity_benchmarking}
+\input{sections/q_vel_modelling/quench_velocity_benchmarking.tex}
+
+% ALGORITHMS AND PYTHON IMPLEMENTATION
+\clearpage
+\section{Algorithms and their Implementation in Python}
+\label{section:python_framework}
+\input{sections/q_vel_modelling/python_framework.tex}
+
+\subsection{Multidimensional Mapping Algorithm}
+\label{subsection:multidimensional_mapping_algorithm}
+\input{sections/q_vel_modelling/multidimensional_mapping.tex}
+
+\subsection{Node Searching Algorithm}
+\label{subsection:node_searching_algorithm}
+\input{sections/q_vel_modelling/node_search_alg.tex}
+
+\subsection{Quench Detection Algorithm}
+\label{subsection:quench_detection_algorithm}
+\input{sections/q_vel_modelling/q_det_alg.tex}
+
+% SKEW QUADRUPOLE ANALYSIS - QUENCH DETECTION
+\clearpage
+\section{Skew Quadrupole Quench Detection Analysis}
+\label{section:skew_quadrupole_quench_detection_analysis}
+
+This chapter describes the thermal quench analysis of a skew quadrupole developed by LASA laboratories of INFN-Milano. The skew quadrupole belongs to the group of high-order corrector magnets designed for the upgrade of High-Luminosity LHC. Their design assumes using no quench protection devices such as quench heaters or CLIQ except for crowbars \footnote{Describe what crowbars are...}. Therefore, when any of these magnet quenches, the discharge of energy stored in their magnetic field occurs merely by their own rise in resistivity. i.e. they are self-protected.
+
+Quench velocity approach presented in chapter \ref{section:quench_velocity_modelling} is used to analyze the magnet as a 3-dimensional thermal domain. It is verified by comparing the available measurements of a quenched skew quadrupole with the simulation results conducted in ANSYS. One has to remember that the skew quadrupole is the only high-order corrector which has quench protection system installed, i.e. it is not self-protected. However, it has been used for illustration purposes because of its available quench measurements when quench heaters were not used. 
+
+\subsection{Geometry}
+\input{sections/skew_quad_q_det/geometry.tex}
+
+\subsection{Assumptions for Geometry and Material Properties}
+\input{sections/skew_quad_q_det/geometry_material_assumptions.tex}
+
+\subsection{Quench Measurements}
+\input{sections/skew_quad_q_det/quench_measurements.tex}
+
+\subsection{Initial Conditions...}
+\input{sections/skew_quad_q_det/initial_conditions.tex}
+
+\subsection{Quench Velocity Mapping}
+\input{sections/skew_quad_q_det/quench_velocity_mapping.tex}
+
+% APPENDICES
+\clearpage
+\begin{appendices}
+
+\section{Material Properties}
+\label{appendix_material_properties_description}
+
+The material properties are based on an update of ROXIE database prepared at CERN \cite{material_properties_roxie}. Except for Nb-Ti specific heat capacity, NIST standards for cryogenic materials are used to describe them. Nb-Ti is defined by CUDI which is Arjan Verweij's software for Rutherford cable modelling~\cite{cudi_manual}.  
+
+\subsection{Copper}
+\label{appendix:cu_material_properties}
+\input{sections/appendices/material_properties/copper.tex}
+
+% \subsection{Niobium Titanium}
+% \label{appendix:nbti_material_properties}
+% \input{sections/appendices/material_properties/niobium_titanium.tex}
+
+% \subsection{G10 Material Properties}
+% \label{appendix:g10_material_properties}
+% \input{sections/appendices/material_properties/g10.tex}
+
+\section{Compilation of ANSYS with Python Environment}
+\label{appendix:python_ansys_compilation}
+\input{sections/appendices/compilation_ansys_python/compilation_ansys_python.tex}
+
+% \section{Mapping Algorithm Python Script}
+% \section{Quench Velocity Algorithm Python Script}
+% \section{Nodes Search Algorithm Python Script}
+
+\end{appendices}
+
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,./bib/article}
+
+\end{document}

@@ -1,0 +1,10 @@
+
+Solving temperature distribution in a superconducting magnet in 3D where quench is considered is a challenging task. The~reasons standing behind this are: $(i)$~nonlinear material properties at cryogenic temperatures; $(ii)$~high temperature gradients at the quench front. When a numerical solver tries to deal with the problem characterized as follows, it decreases its time step in order to reach convergence. It also requires a finer mesh to represent the steep temperature change at the quench front. Both implications make the simulation computationally demanding. A good example of the level of non-linearities at cryogenic temperatures is thermal conductivity of copper. Its value changes by up to several dozens of times for $T \in (1.9, 30)$~K~\cite{paudel_thesis}.
+
+Since the 3D thermal models are computationally demanding, they cannot be applied as a useful tool at the stage of the magnet design. In this thesis, there are several scientific questions asked:
+\begin{enumerate}
+\item Can multidimensional thermal analysis in superconducting accelerator magnets be more efficient numerically?
+\item  Can such a modelling be conducted in ANSYS which is nowadays one the most widespread commercial tools for FEM numerical simulations on the market?
+\end{enumerate}
+
+In the thesis, modelling of 3D thermal problems is simplified by applying quench velocity method. It has been inspired by ITER's Magnet Division approach to quench modelling of toroidal superconducting magnets \cite{iter_presentation_qualified_analysis, iter_fault_case_study}. The quench velocity method assumes that, while simulating the heat propagation during quench, the quench front velocity is known and estimated separately beforehand. It is further explained in chapter \ref{section:quench_velocity_modelling}. The same chapter also describes the implementation of the method in Python and then in ANSYS software. In chapter \ref{section:skew_quadrupole_quench_detection_analysis}, the quench velocity modelling approach is applied to simulate the quench propagation in the skew quadrupole, being one of the high-order corrector magnets for the HL-LHC upgrade.

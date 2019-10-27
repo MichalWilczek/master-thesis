@@ -1,0 +1,17 @@
+
+Up to this part of the chapter \ref{section:quench_velocity_modelling}, the algorithms served for modelling longitudinal quench propagation, i.e. quench modelling would allow for quicker calculation of the quench front but still in only one dimension. This algorithm serves for detecting quench and initiating a new quench front when the temperature outside of the quenched zone exceeds the critical temperature of a superconductor. This algorithm is responsible for turn-to-turn propagation across the insulation layer between windings. Therefore, it allows one to conduct the multi-dimensional thermal analysis. 
+
+Provided that searching starts at node $N$, winding number is $W$, magnetic field strength of the winding $W$ is $B_W$, node temperature is $T_N$ and critical temperature of related winding is $T_{c,W}$, the problem is solved as described in Algorithm \ref{alg:quench_detection}.
+
+\begin{algorithm}
+    \caption{Quench detection algorithm description}
+    \label{alg:quench_detection}
+    \begin{algorithmic}[1]
+    \STATE \textbf{for} $N$ which is not quenched \textbf{do}
+    \STATE \hspace{0.5cm} check the winding $W$ which node $N$ belongs to
+    \STATE \hspace{0.5cm} assign magnetic field $B_W$ of given winding $W$
+    \STATE \hspace{0.5cm} calculate $T_{c,W}$ for given magnetic field $B_W$
+    \STATE \hspace{0.5cm} \textbf{if} $T(N) > T_{c,W}$
+    \STATE \hspace{1.0cm} assign node $N$ to list of newly quenched nodes
+    \end{algorithmic}
+\end{algorithm}
