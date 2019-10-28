@@ -1,0 +1,232 @@
+
+In the \nth{1} analysis neither insulation nor epoxy resin are considered. Therefore, the strand cross-section is a yellow part of the domain presented in Fig. \ref{fig: 1d_strand_geometry}. The strand is a composite with a specified non-superconductor to superconductor ratio described in (\ref{eqn: non_super_to_super_ratio}).
+
+\begin{equation}
+    \left\{ \begin{array}{ll}
+    f = \frac{f_\text{Cu}}{f_\text{Nb-Ti}} = \frac{A_\text{Cu}}{A_\text{Nb-Ti}}\\ \\
+    f_\text{Cu} + f_\text{Nb-Ti} = 1
+    \end{array} \right.
+    \label{eqn: non_super_to_super_ratio}
+\end{equation}
+
+Since both materials are characterised by a different heat capacity, the total volumetric heat capacity of a strand should be recalculated as depicted in (\ref{eqn: cv_equiv}). The graphic representation of of this formula is shown in Fig. \ref{fig:eq_wind_cp}.
+
+\begin{equation}
+    C_\text{v, equiv} = f_\text{Cu} ~ C_\text{v, Cu} + f_\text{Nb-Ti} ~ C_\text{v, Nb-Ti}
+    \label{eqn: cv_equiv}
+\end{equation}
+
+\begin{figure}[h!]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={$T,~\text{K}$},
+          ylabel={$C_{v},~\frac{\text{J}}{\text{m}^3 \cdot \text{K}}$},
+          xmin=0.0,
+          ymin=0.0,
+          xmax=50.0
+          ]
+          \addplot table[x=temperature,y=cv_equiv,col sep=comma] {sections/1D_quench_modelling/figures/cv_equivalent.csv}; 
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Equivalent winding volumetric heat capacity temperature dependence for $B=2~\text{T}$ and $f=2.2$}
+    \label{fig:eq_wind_cp}
+\end{figure}
+
+At temperatures above the values when quench occurs, the current flows both through a superconductor and a copper matrix. Both strand components can be represented as a parallel connection of two resistors, $R_\text{Nb-Ti}$ and $R_\text{Cu}$. Above the critical temperature, $R_\text{Nb-Ti} \gg R_\text{Cu}$. Therefore, it is assumed that the current only flows through a copper stabiliser and only this part of the strand contributes to Joule heating. Then, the average power density in the strand cross section is calculated as in (\ref{eqn: p_dens_equiv}). One can notice that, in order to apply power density over the entire strand domain, the copper resistivity $\rho_\text{Cu}$ should be divided by the non-superconductor ratio, $f_\text{Cu}$.
+
+\begin{equation}
+    q_\text{Joule} = J^2~\rho = J_\text{Cu}^2~\rho_\text{Cu}~f_\text{Cu} = \frac{I^2}{f_\text{Cu}^2~A_\text{strand}^2}~\rho_\text{Cu}~f_\text{Cu} = \frac{I^2}{A_\text{strand}^2}~\frac{\rho_\text{Cu}}{f_\text{Cu}} 
+    \label{eqn: p_dens_equiv}
+\end{equation}
+
+Since the materials properties of electrical and thermal conductivity are often strictly connected, in this case $k_\text{Cu} \gg k_\text{Nb-Ti}$. Then, it is assumed that the thermal conductivity of Nb-Ti is negligible and only the part of copper contributes to longitudinal heat propagation, as shown in (\ref{eqn: k_equiv}). Only in this chapter, the thermal conductivity of copper is calculated according to the Wiedemann-Franz law, as presented in (\ref{eqn: k_cu_wiedemann_franz}). In next chapters, the thermal conductivity of copper is calculated according to NIST standards, as described in Appendix \ref{appendix_material_properties_description}. All other material properties are entirely based on NIST standards, too.
+
+\begin{equation}
+    k_\text{eq, strand} = f_\text{Cu} ~ k_\text{Cu} + f_\text{Nb-Ti} ~ k_\text{Nb-Ti} =  f_\text{Cu} ~ k_\text{Cu}
+    \label{eqn: k_equiv}
+\end{equation}
+
+\begin{equation}
+    k_\text{Cu} = 2.45 \cdot 10^{-8} ~ \frac{T}{\rho_\text{Cu}}
+    \label{eqn: k_cu_wiedemann_franz}
+\end{equation}
+
+In the analysis, the Gaussian distribution of initial temperature is assumed according to equation~(\ref{eqn: gaussian_temp_ic}) with a symmetry condition at the position $x=0~\text{m}$. As presented in Fig. \ref{fig: init_gauss_temp_distr}, one-metre cable represents a half of the analysed domain. The input parameters for the 1D analysis are depicted in Table \ref{table: 1d_quench_propagation_geometry_parameters}. The initially quenched zone is equal to $L_\text{quench, init}= 0.1~\text{m}$ when symmetry is not taken into consideration. It~means that at $x=0.05~\text{m}$, the strand is at critical temperature for the given magnetic field strength. Therefore, the $\alpha$ parameter in (\ref{eqn: gaussian_temp_ic}) is calculated accordingly. RRR and $f$~are assumed to be equal as in the case of the skew quadrupole. 
+
+\begin{equation}
+    T(x) = T_\text{init} + (T_\text{max} - T_\text{init}) ~ e^{-(\frac{x}{\alpha})^2}
+    \label{eqn: gaussian_temp_ic}
+\end{equation}
+
+\begin{figure}[h!]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={$L_\text{strand},~\text{m}$},
+          ylabel={$T,~\text{K}$},
+          xmin=0.0,
+          ymin=0.0,
+          xmax=1.0
+          ]
+          \addplot table[x=posx,y=temperature,col sep=comma] {sections/1D_quench_modelling/figures/gaus_init_distr.csv}; 
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Initial Gaussian temperature distribution}
+    \label{fig: init_gauss_temp_distr}
+\end{figure}
+
+\begin{table}[h!]
+    \caption{Analysis input parameters} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        $T_\text{init}$ & 1.9 & [K] \\
+        $T_\text{max}$ & 20.0 & [K] \\
+        $T_\text{c}$ & 8.429 & [K] \\
+        $B$ & 2 & [T] \\
+        $L_\text{quench, init}$ & 0.1 & [m] \\ 
+        $\alpha$ & 0.223 & [m] \\   
+        $I$ & 100 & [A] \\   
+        RRR & 193 & [-] \\   
+        f & 2.2 & [-] \\   
+        time total & 0.1 & [s] \\   
+        time step & 10 & [\textmu s] \\   
+        number of elements & $10^4$ & [-] \\   
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_quench_propagation_geometry_parameters} 
+ \end{table}
+
+In the analyses, three time steps were compared for $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2}. In each of the software, the quench velocity was calculated by comparing the position of the quench front at $t=0.06~\text{s}$ and $t=0.1~\text{s}$. 
+The relative error was estimated for: 
+\begin{itemize}
+    \item quench velocity, as presented in Table \ref{table: 1d_no_insulation_v_quench_comparison},
+    \item temperature along the strand length at $t=0.1~\text{s}$, as presented in Fig. \ref{fig: 1d_no_insulation_temp_along_strand_comparison}.
+\end{itemize}
+
+The difference in hot spot temperature at $x=0~\text{m}$, does not exceed 0.06 \%.
+
+\begin{table}[h!]
+    \caption{Quench velocity comparison in COMSOL and ANSYS} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        $v_\text{quench, COMSOL}$ & 7.075 & [m/s] \\
+        $v_\text{quench, ANSYS}$ & 6.9675 & [m/s] \\
+        Relative error & -1.52 & [\%] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_no_insulation_v_quench_comparison} 
+ \end{table}
+
+\begin{figure}[h!]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={$L_\text{strand},~\text{m}$},
+          ylabel={$T,~\text{K}$},
+          xmin=0.0,
+          ymin=0.0,
+          xmax=1.0
+          ]
+        %   Initial temperature curve
+          \addplot[smooth, black] table[x=posx,y=t_0_0_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          
+        %   COMSOL plots
+          \addplot[smooth, red] table[x=posx,y=t_0_03_com,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          \addplot[smooth, red] table[x=posx,y=t_0_06_com,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          \addplot[smooth, red] table[x=posx,y=t_0_1_com,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+
+        %   ANSYS plots
+          \addplot[smooth, blue] table[x=posx,y=t_0_03_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          \addplot[smooth, blue] table[x=posx,y=t_0_06_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          \addplot[smooth, blue] table[x=posx,y=t_0_1_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2.csv};
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Temperature distribution calculated in COMSOL (red) and ANSYS (blue) for three time frames: $t=\{0.03, 0.06, 0.1\}$ s.}
+    \label{fig: 1d_no_insulation_temp_along_strand_comparison}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+        %   no markers,
+        %   Mercedes stars,
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={$L_\text{strand},~\text{m}$},
+          ylabel={Relative error, \%},
+          xmin=0.0,
+        %   ymin=0.0,
+          xmax=1.0
+          ]
+          
+          \addplot[red] table[x=posx,y=error_0_1,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2_2_error.csv};
+         
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Relative error along the strand for $t=0.1~\text{s}$.}
+    \label{fig: ans_comsol_comparison_f_2_2}
+\end{figure}
+
+
+% \begin{figure}
+% \centering
+% \begin{tikzpicture}
+% \pgfplotsset{
+%     scale only axis,
+%     height=4cm,
+%     width=8cm,
+%     compat=1.3,
+%     scaled x ticks=base 10:0,
+%     xmin=0, xmax=9
+% }
+% \begin{axis}[
+%   axis y line*=left,
+%   ymin=0, ymax=1,
+%   xlabel={$L_\text{strand},~\text{m}$},
+%   ylabel={$T,~\text{K}$},
+% ]
+% \addplot[smooth, red] table[x=posx,y=t_0_03_com,col sep=comma] {sections/1D_quench_modelling/figures/results_no_insulation/Temp_tstep_10ms_1e4elems_f2.2.csv}; 
+% \label{plot_resistive_voltage}
+% \end{axis}
+
+% \begin{axis}[
+%   axis y line*=right,
+%   axis x line=none,
+%   ymin=0, ymax=100,
+%   ylabel={Current, A}
+% ]
+% \addplot[smooth, blue] table[x=Time,y=Current,col sep=comma] {figures/skew_quad_bcs/current_voltage_discharge.csv}; 
+% \label{current}
+% \addlegendentry{$I$}
+% \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{$V_\text{r}$}
+% \end{axis}
+% \end{tikzpicture}
+
+% \caption{Current and Resistive Voltage change during the discharge of skew quadrupole}
+% \label{fig:skew_quad_discharge}
+% \end{figure}
