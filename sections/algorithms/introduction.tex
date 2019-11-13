@@ -1,0 +1,12 @@
+
+In numerical thermal 3D problem, there are two phenomena to be analysed important for the quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse propagation of quench across the insulation between separate windings of the coil. Only the \nth{1} part is solved by means of a quench velocity - based thermal model. In order to conduct a 3D thermal analysis using quench velocity method, the simulation tools listed below need to be developed: 
+\begin{enumerate}
+\item electro-thermal model simulating longitudinal quench propagation
+\item thermal model simulating transverse thermal propagation across insulation
+\item algorithm mapping multidimensional winding geometry onto 1D coil
+\item algorithm calculating quench velocity
+\item algorithm assigning node numbers to quench position varying in time
+\item algorithm detecting new quenches across multiple windings
+\end{enumerate}
+
+ANSYS environment was chosen to perform the electro-thermal and thermal analyses. The external algorithms are prepared in Python. This chapter describes all the aforementioned algorithms as well as their implementation in Python-ANSYS coupling.

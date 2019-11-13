@@ -10,6 +10,8 @@
 \usepackage[export]{adjustbox}
 \usepackage{graphicx, wrapfig}
 \usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -36,6 +38,8 @@
 \usepackage{verbatim}
 
 \begin{document}
+
+
 \input{title_pages/titlepage_PL.tex}
 \clearpage\thispagestyle{empty}
 \tableofcontents
@@ -70,6 +74,7 @@
 \newpage
 
 % official introduction of the Master thesis
+\pagestyle{fancy}
 \section{Introduction}
 
 \subsection{About CERN}
@@ -82,8 +87,6 @@
 \caption{Schematic of the critical surface of $\text{Nb}_\text{3}\text{Sn}$ and Nb-Ti \cite{evans_marvel_of_technology}}
 \label{fig:scheme_critical_surface}
 \end{figure}
-
-
 
 \subsection{Quench Problem}
 
@@ -159,8 +162,6 @@ Heat conduction equation:
     \frac{\partial}{\partial x}[k(B) \frac{\partial T}{\partial x}] + q_v = \rho c_p \frac{\partial T}{\partial t}
 \end{equation}
 
-
-
 \subsection{Thermal Numerical Analyses}
 
 To write in introduction: 
@@ -169,9 +170,14 @@ Wilson: \\
 - minimum propagating zone (MPZ) (same page - up to 80 something...)
 
 % AIM THESIS
-\clearpage
+\clearpage \thispagestyle{empty}
 \section{Aim of Thesis}
-\input{sections/aim_thesis/aim_thesis.tex}
+
+\subsection{Research Aim and Objectives}
+\input{sections/aim_thesis/research_aims_and_objectives.tex}
+
+\subsection{Structure of the Thesis}
+\input{sections/aim_thesis/structure_thesis.tex}
 
 % 1D QUENCH PROPAGATION MODELLING 
 \clearpage
@@ -187,128 +193,55 @@ Wilson: \\
 \label{subsection: 1D_quench_propagation_no_insulation}
 \input{sections/1D_quench_modelling/analysis_no_insulation.tex}
 
-\clearpage
 \subsection{1D Analysis with Insulation}
 \label{subsection: 1D_quench_propagation_with_insulation}
 \input{sections/1D_quench_modelling/analysis_with_insulation.tex}
- 
+
+\subsection{Conclusion}
+\label{subsection: 1D_quench_propagation_conclusions}
+\input{sections/1D_quench_modelling/conclusions.tex}
  
 % QUENCH VELOCITY MODELLING
 \clearpage
 \section{Quench Velocity Modelling}
 \label{section:quench_velocity_modelling}
 
-When quench occurs, one can notice that the point at which the cable transforms from superconducting to normal state propagates with time. This point remains at the critical temperature, $T_\text{c}$ for a given magnetic field strength. For the purpose of quench velocity modelling, the interesting feature of this point is how it changes its position in time, as described in Fig. \ref{fig:modelling_approach}. Depending on the electro-magneto-thermal conditions at which quench occurs, quench velocity can remain constant or change in time. 
+\subsection{Concept}
+\label{subsection:quench_velocity_concept}
+\input{sections/q_vel_modelling/quench_velocity_concept.tex}
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-\draw [thick, ->] (0.0,0.0) -- (8.0,0);
+\subsection{Problematics}
+\label{subsection:quench_velocity_problematics}
+\input{sections/q_vel_modelling/quench_velocity_problematics.tex}
 
-\draw [thick, blue] (0.0,0.5) -- (2.75,0.5);
-\draw [thick, blue] (5.25,0.5) -- (8.0,0.5);
+\subsection{Co-simulation Modelling}
+\label{subsection:quench_velocity_cosimulation}
+\input{sections/q_vel_modelling/q_vel_cosimulation.tex}
 
-\draw [thick, blue] (2.75,0.5) .. controls +(0:1cm) and +(180:1cm) .. (4.0,1.5);
-\draw [thick, blue] (4.0,1.5) .. controls +(0:1cm) and +(180:1cm) .. (5.25,0.5);
+% QUENCH VELOCITY MODELLING BENCHMARKING
+\clearpage
+\section{Quench Velocity Modelling Benchmarking}
+\label{section:quench_velocity_benchmarking}
+\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking.tex}
 
-\draw [thin] (3.25,-0.5) -- (3.25,1.25);
-\draw [thin] (4.75,-0.5) -- (4.75,1.25);
+\subsection{Analysis without Insulation}
+\label{subsection:quench_velocity_benchmarking_no_insulation}
 
-\draw [thick, ->] (4.75,0.75) -- (5.75,0.75);
-\draw [thick, ->] (3.25,0.75) -- (2.25,0.75);
+\subsubsection{Heat Balance - Based Analysis}
+\input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
 
-\draw [thin, red, <->] (3.25,-0.5) -- (4.75,-0.5);
-\draw [thin, blue, ->] (0.0,-0.5) -- (3.25,-0.5);
-\draw [thin, blue, <-] (4.75,-0.5) -- (8.0,-0.5);
+\subsubsection{Quench Velocity - Based Analysis}
+\input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
 
-\node[scale = 0.8] [color = red] at (4.0,-0.25) {Quenched};
-\node[scale = 0.8] [color = blue] at (1.625,-0.25) {Not Quenched};
-\node[scale = 0.8] [color = blue] at (6.375,-0.25) {Not Quenched};
-
-\node[scale = 0.8] at (5.25,1.0) {$v_\text{quench}$};
-\node[scale = 0.8] at (2.75,1.0) {$v_\text{quench}$};
-\node[scale = 0.8] at (8.0,+0.25) {Cable domain};
-
-\end{tikzpicture}
-\caption{Quench velocity approach.}
-\label{fig:modelling_approach}
-\end{figure}
-
-Quench velocity can be approximated with analytic formulas. They are usually a function of current density, material properties of the winding and temperature gradient around the quench front. The quench velocity in ITER applications is mainly estimated based on~\cite{MIT_phd_thesis}. For superconducting accelerator magnets, Wilson's formula is more applicable if cooling with helium is not considered \cite[p.~206]{wilson1987superconducting}, as described below
-\begin{equation}
-    v_\text{quench}=\frac{J}{\gamma C}\sqrt{\frac{\rho k}{T_\text{s}-T_\text{0}}},
-    \label{eqn:Wilson_quench_velocity_formula}
-\end{equation}
-where $T_\text{s}$ -- critical temperature,
-$T_\text{0}$ -- coolant temperature,
-$\rho$ -- resistivity averaged over the conductor volume,
-$J$ -- current density averaged over the conductor volume,
-$k$ -- thermal conductivity averaged over the conductor unit cell,
-$C$ -- specific heat averaged over the conductor unit cell,
-$\gamma$ -- conductor density.
-
-In standard heat conduction multi-dimensional quench problem, the solver tries to find a temperature distribution in a given space and time. It is usually computationally costly because one should cope with a temperature distribution being steep at the level of the quench front. Due to high material non-linearities at cryogenic temperatures, in order to accurately solve temperature distribution in the entire region of the cable, one should refine mesh or decrease the simulation time step (up to the order of a $\mu$s). In both cases the simulation time usually becomes excessively long. All material properties used in scope of the thesis are presented in Appendix \ref{appendix_material_properties_description}.
-
-As presented in Fig. \ref{fig:modelling_approach}, the quenched and non-quenched regions in a superconducting cable have different but relatively uniform temperature distributions. Therefore, the solution of heat conduction equation in two of these regions is easier to solve than at the quench front where both regions meet with their already importantly different material properties such as thermal conductivity or specific heat capacity. The method simplifying the thermal quench modelling, called quench velocity method, bases on predicting quench velocity by an outsourced external routine. Such an approach allows one to have the quench wave explicitly solved and, therefore, an accurate solution of temperature distribution at the quench front is not required. As a result, the mesh refinement along the coil length is not needed anymore and the numerical model is of a smaller size to be solved. Therefore, the numerical model still calculates the heat balance equation but with a fixed and relatively coarse mesh along the coil of a magnet. 
- 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-\draw [thick, ->] (0.0,0.0) -- (8.0,0);
-\foreach \t in {0,0.5,1,...,7.5}
-\filldraw[black] ({\t},0) circle (2pt);
-\node[scale = 0.8] at (8.5,0.25) {Nodal cable 1D domain};
-\draw [thick, red] (3.5,0) -- (3.5,0.5);
-\draw [thick, red] (3.5,0.5) -- (4.5,0.5);
-\draw [thick, red] (4.5,0.5) -- (4.5,0);
-\draw [thick, red] (3,0) -- (3.5,0.7);
-\draw [thick, red] (3.5,0.7) -- (4.5,0.7);
-\draw [thick, red] (4.5,0.7) -- (5,0);
-\draw [thick, red] (2.5,0) -- (3,0.9);
-\draw [thick, red] (3,0.9) -- (5,0.9);
-\draw [thick, red] (5,0.9) -- (5.5,0);
-\draw [thick, ->] (5.25,0.45) -- (6.25,0.45);
-\node[scale = 0.8] at (5.75,0.65) {$v_\text{quench}$};
-\draw [thick, ->] (2.75,0.45) -- (1.75,0.45);
-\node[scale = 0.8] at (2.25,0.65) {$v_\text{quench}$};
-\node[scale = 0.8, red] at (4,1.1) {$T_\text{coil}$};
-\end{tikzpicture}
-\caption{Schematic temperature propagation with quench velocity modelling.}
-\label{fig:modelling_approach}
-\end{figure}
-
-Solving quench propagation by means of quench velocity method assumes that, while  simulating the heat propagation during quench, the quench front velocity is known and estimated separately beforehand. The quench velocity can be:
-\begin{itemize}
-\item assumed constant,
-\item based on available measurements,
-\item calculated analytically,
-\item calculated numerically.
-\end{itemize}
-
-In numerical thermal 3D problem, there are two phenomena to be analysed important for the quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse propagation of quench across the insulation between separate windings of the coil. Only the \nth{1} part is solved by means of a quench velocity - based thermal model. In order to conduct a 3D thermal analysis using quench velocity method, the simulation tools listed below need to be developed: 
-\begin{enumerate}
-\item electro-thermal model simulating longitudinal quench propagation
-\item thermal model simulating transverse thermal propagation across insulation
-\item algorithm mapping multidimensional winding geometry onto 1D coil
-\item algorithm calculating quench velocity
-\item algorithm assigning node numbers to quench position varying in time
-\item algorithm detecting new quenches across multiple windings
-\end{enumerate}
-
-ANSYS environment was chosen to perform the electro-thermal and thermal analyses. The external algorithms are prepared in Python. This chapter describes all the aforementioned algorithms as well as their implementation in Python-ANSYS coupling.
-
-\subsection{Quench Velocity Algorithm}
-\label{subsection:quench_velocity_algorithm}
-\input{sections/q_vel_modelling/q_vel_alg.tex}
-
-\subsection{Quench Velocity Benchmarking}
-\label{subsection:quench_velocity_benchmarking}
-\input{sections/q_vel_modelling/quench_velocity_benchmarking.tex}
+\subsection{Analysis with Insulation}
+\label{subsection:quench_velocity_benchmarking_with_insulation}
+\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking_with_insulation.tex}
 
 % ALGORITHMS AND PYTHON IMPLEMENTATION
 \clearpage
 \section{Algorithms}
 \label{section:algorithms}
+\input{sections/algorithms/introduction.tex}
 
 \subsection{Multidimensional Mapping Algorithm}
 \label{subsection:multidimensional_mapping_algorithm}
