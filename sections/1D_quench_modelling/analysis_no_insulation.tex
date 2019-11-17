@@ -1,20 +1,20 @@
 
-In this section, neither insulation nor epoxy resin are considered. Therefore, the strand cross-section is a yellow part of the domain presented in Fig. \ref{fig: 1d_strand_geometry}. The strand is a composite with a specified non-superconductor to superconductor ratio described in (\ref{eqn: non_super_to_super_ratio}).
+This analysis presents the case for a bare strand, i.e. when neither insulation nor epoxy resin are considered. Therefore, the strand cross-section is a yellow part of the domain presented in Fig. \ref{fig: 1d_strand_geometry}. The strand is a composite with a specified non-superconductor to superconductor ratio described as 
 
 \begin{equation}
     \left\{ \begin{array}{ll}
-    f = \frac{f_\text{Cu}}{f_\text{Nb-Ti}} = \frac{A_\text{Cu}}{A_\text{Nb-Ti}}\\ \\
-    f_\text{Cu} + f_\text{Nb-Ti} = 1
+    f_{Cu/Nb-Ti} = \frac{f_\text{Cu}}{f_\text{Nb-Ti}} = \frac{A_\text{Cu}}{A_\text{Nb-Ti}}\\ \\
+    f_\text{Cu} + f_\text{Nb-Ti} = 1,
     \end{array} \right.
     \label{eqn: non_super_to_super_ratio}
 \end{equation}
-
-Since both materials are characterised by a different heat capacity, the total volumetric heat capacity of a strand should be recalculated as depicted in (\ref{eqn: cv_equiv}). The graphic representation of of this formula is shown in Fig. \ref{fig:eq_wind_cp}.
+where $f_\text{Cu}$ -- volumetric ratio of copper, $f_\text{Nb-Ti}$ -- volumetric ratio of Nb-Ti, $A_\text{Cu}$ -- cross-sectional area of copper, $A_\text{Nb-Ti}$ -- cross-sectional area of Nb-Ti. Since both materials are characterised by a different volumetric heat capacity, the total volumetric heat capacity of a strand is given by
 
 \begin{equation}
-    C_\text{v, strand} = f_\text{Cu} ~ C_\text{v, Cu} + f_\text{Nb-Ti} ~ C_\text{v, Nb-Ti}
+    C_\text{v, strand} = f_\text{Cu} ~ C_\text{v, Cu} + f_\text{Nb-Ti} ~ C_\text{v, Nb-Ti},
     \label{eqn: cv_equiv}
 \end{equation}
+where $C_\text{v, Cu}$ -- volumetric heat capacity of copper, $C_\text{v, Nb-Ti}$ -- volumetric heat capacity of Nb-Ti. The graphic representation of of this formula is shown in Fig. \ref{fig:eq_wind_cp}.
 
 \begin{figure}[h!]
 \centering
@@ -24,7 +24,7 @@ Since both materials are characterised by a different heat capacity, the total v
           width=0.7\linewidth, 
           height = 4.5cm,
           xlabel={$T,~\text{K}$},
-          ylabel={$C_{v},~\frac{\text{J}}{\text{m}^3 \cdot \text{K}}$},
+          ylabel={$C_\text{v, strand},~\frac{\text{J}}{\text{m}^3 \cdot \text{K}}$},
           xmin=0.0,
           ymin=0.0,
           xmax=50.0
@@ -32,35 +32,35 @@ Since both materials are characterised by a different heat capacity, the total v
           \addplot table[x=temperature,y=cv_equiv,col sep=comma] {sections/1D_quench_modelling/figures/cv_equivalent.csv}; 
         \end{axis}
     \end{tikzpicture}
-    \caption{Equivalent winding volumetric heat capacity temperature dependence for $B=2~\text{T}$ and $f=2.2$}
+    \caption{Strand volumetric heat capacity as a function of temperature for $B=2~\text{T}$ and $f_{Cu/Nb-Ti}=2.2$}
     \label{fig:eq_wind_cp}
 \end{figure}
 
-At temperatures above the values when quench occurs, the current flows both through a superconductor and a copper matrix. Both strand components can be represented as a parallel connection of two resistors, $R_\text{Nb-Ti}$ and $R_\text{Cu}$. Above the critical temperature, $R_\text{Nb-Ti} \gg R_\text{Cu}$. Therefore, it is assumed that the current only flows through a copper stabiliser and only this part of the strand contributes to Joule heating. Then, the average power density in the strand cross section is calculated as in (\ref{eqn: p_dens_equiv}). One can notice that, in order to apply power density over the entire strand domain, the copper resistivity $\rho_\text{Cu}$ should be divided by the non-superconductor ratio, $f_\text{Cu}$.
-
+At temperatures above the critical temperature, the current flows both through a superconductor and a copper matrix. Both strand components can be represented as a parallel connection of two resistors, $R_\text{Nb-Ti}$ and $R_\text{Cu}$. Above the critical temperature, $R_\text{Nb-Ti} \gg R_\text{Cu}$. Therefore, it is assumed that the current only flows through copper stabiliser and only this part of the strand contributes to the Joule heating. Then, the average power density in the strand cross-section is calculated as 
 \begin{equation}
-    q_\text{Joule} = J^2~\rho = J_\text{Cu}^2~\rho_\text{Cu}~f_\text{Cu} = \frac{I^2}{f_\text{Cu}^2~A_\text{strand}^2}~\rho_\text{Cu}~f_\text{Cu} = \frac{I^2}{A_\text{strand}^2}~\frac{\rho_\text{Cu}}{f_\text{Cu}} 
+    q_\text{Joule} = J_\text{strand}^2~\rho_\text{strand} = J_\text{Cu}^2~\rho_\text{Cu}~f_\text{Cu} = \frac{I_\text{Cu}^2}{f_\text{Cu}^2~A_\text{strand}^2}~\rho_\text{Cu}~f_\text{Cu} = \frac{I_{Cu}^2}{A_\text{strand}^2}~\frac{\rho_\text{Cu}}{f_\text{Cu}}, 
     \label{eqn: p_dens_equiv}
 \end{equation}
+where $J_{strand}$ -- current density in a strand, $\rho_{strand}$ -- resistivity of a strand, $J_\text{Cu}$ -- current density in copper, $\rho_\text{Cu}$ -- resistivity of copper, $I_\text{Cu}$ -- current in copper, $A_\text{strand}$ -- cross-sectional area of a strand. One can notice that, in order to apply power density over the entire strand domain, the copper resistivity $\rho_\text{Cu}$ should be divided by the non-superconductor ratio, $f_\text{Cu}$.
 
-Since the materials properties of electrical and thermal conductivity are often strictly connected, in this case $k_\text{Cu} \gg k_\text{Nb-Ti}$. Then, it is assumed that the thermal conductivity of Nb-Ti is negligible and only the part of copper contributes to longitudinal heat propagation, as shown in (\ref{eqn: k_equiv}). It is important to highlight that only in section \ref{section: 1d_quench_propagation_modelling}, the thermal conductivity of copper is calculated according to the Wiedemann-Franz law, as presented in (\ref{eqn: k_cu_wiedemann_franz}). In next sections, the thermal conductivity of copper is calculated according to NIST standards, as described in Appendix \ref{appendix_material_properties_description}. All other material properties are entirely based on NIST standards in this section and the next ones, too.
-
+Since the materials properties of electrical and thermal conductivity are often strictly connected, in this case $k_\text{Cu} \gg k_\text{Nb-Ti}$. Then, it is assumed that the thermal conductivity of Nb-Ti is negligible and only the part of copper contributes to longitudinal heat propagation, as 
 \begin{equation}
-    k_\text{strand} = f_\text{Cu} ~ k_\text{Cu} + f_\text{Nb-Ti} ~ k_\text{Nb-Ti} =  f_\text{Cu} ~ k_\text{Cu}
+    k_\text{strand} = f_\text{Cu} ~ k_\text{Cu} + f_\text{Nb-Ti} ~ k_\text{Nb-Ti} =  f_\text{Cu} ~ k_\text{Cu},
     \label{eqn: k_equiv}
 \end{equation}
-
+where $k_\text{strand}$ -- thermal conductivity of a strand, $k_\text{Cu}$ -- thermal conductivity of copper, $k_\text{Nb-Ti}$ -- thermal conductivity of Nb-Ti. It is important to highlight that only in Chapter \ref{section: 1d_quench_propagation_modelling}, the thermal conductivity of copper is calculated according to the Wiedemann-Franz, as
 \begin{equation}
-    k_\text{Cu} = 2.45 \cdot 10^{-8} ~ \frac{T}{\rho_\text{Cu}}
+    k_\text{Cu} = 2.45 \cdot 10^{-8} ~ \frac{T}{\rho_\text{Cu}},
     \label{eqn: k_cu_wiedemann_franz}
 \end{equation}
+where $T$ -- local strand temperature. Wiedeman-Franz formula is used for the sake of comparison of the results with COMSOL in which only such a material property repository was created for the internal use of my working group at CERN. In the remainder of the thesis, thermal conductivity of copper and all other material properties are calculated according to NIST standards, as described in Appendix \ref{appendix_material_properties_description}. 
 
-The Gaussian distribution of initial temperature is assumed according to equation~(\ref{eqn: gaussian_temp_ic}) with~a symmetry condition at the position $x=0~\text{m}$. As presented in Fig. \ref{fig: init_gauss_temp_distr}, one-metre cable represents a half of the analysed domain. The input parameters for the 1D analysis are depicted in Table~\ref{table: 1d_quench_propagation_geometry_parameters}. The initially quenched zone is equal to $L_\text{quench, init}= 0.1~\text{m}$ when symmetry is not taken into consideration. It~means that at $x=0.05~\text{m}$, the strand is at critical temperature for the given magnetic field strength. Therefore, the $\alpha$ parameter in (\ref{eqn: gaussian_temp_ic}) is calculated accordingly. RRR and $f$~are assumed to be equal as in the case of the skew quadrupole further described in section \ref{section:skew_quadrupole_quench_detection_analysis}. 
-
+The Gaussian profile of initial temperature is assumed according to 
 \begin{equation}
-    T(x) = T_\text{init} + (T_\text{max} - T_\text{init}) ~ e^{-(\frac{x}{\alpha})^2}
+    T(x) = T_\text{init} + (T_\text{max} - T_\text{init}) ~ e^{-(\frac{x}{\alpha})^2},
     \label{eqn: gaussian_temp_ic}
 \end{equation}
+where $T(x)$ -- temperature profile along x-axis, $T_\text{init}$ -- initial bath temperature of a strand, $T_\text{max}$ -- maximum temperature of in Gaussian profile, $\alpha$ -- shape factor of Gaussian profile. A symmetry condition is applied at the position $x=0~\text{m}$. As presented in Fig. \ref{fig: init_gauss_temp_distr}, one-metre cable represents a half of the analysed domain. The input parameters for the 1D analysis are depicted in Table~\ref{table: 1d_quench_propagation_analysis_input_parameters}. The initially quenched zone is equal to $L_\text{quench, init}= 0.1~\text{m}$ when symmetry is not taken into consideration. It~means that at $x=0.05~\text{m}$, the strand is at critical temperature for the given magnetic field strength. Therefore, the $\alpha$ parameter in (\ref{eqn: gaussian_temp_ic}) is calculated accordingly. RRR and $f$~are assumed to be equal as in the case of the skew quadrupole further described in Section \ref{section:skew_quadrupole_quench_detection_analysis}. 
 
 \begin{figure}[h!]
 \centering
@@ -106,7 +106,7 @@ The Gaussian distribution of initial temperature is assumed according to equatio
         \hline 
         \end{tabular}
     \end{center}  
-     \label{table: 1d_quench_propagation_geometry_parameters} 
+     \label{table: 1d_quench_propagation_analysis_input_parameters} 
  \end{table}
 
 Three time steps were compared for $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2}. In each of the software, the quench velocity was calculated by comparing the position of the quench front at $t=0.06~\text{s}$ and $t=0.1~\text{s}$. 
@@ -186,4 +186,4 @@ The difference in hot spot temperature at $x=0~\text{m}$ does not exceed 0.06 \%
     \label{fig: ans_comsol_comparison_f_2_2}
 \end{figure}
 
-In ANSYS, the element LINK33 was used to solve this task. It is a standard uniaxial element with the ability to conduct heat between its nodes suitable for steady-state and transient analyses. Power density equation described in (\ref{eqn: p_dens_equiv}), was defined as a heat source. In COMSOL elements are not common. Therefore, the algebraic physical equations related to heat conduction problems between the nodes had to be specified.
+In ANSYS, the element LINK33 was used to solve this task. It is a standard uniaxial element with the ability to conduct heat between its nodes suitable for steady-state and transient analyses~\cite{ansys_element_manual}. Power density equation described in (\ref{eqn: p_dens_equiv}), was defined as a heat source. In COMSOL elements are not common. Therefore, the algebraic physical equations related to heat conduction problems between the nodes had to be specified.

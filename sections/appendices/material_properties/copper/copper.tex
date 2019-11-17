@@ -1,0 +1,257 @@
+
+\subsubsection{RRR Definition}
+Residual resistivity ratio, RRR is a parameter comparing copper resistivity at two different temperatures when no magnetic field is applied. It is calculated as: 
+\begin{equation}
+RRR = \frac{\rho(T_\text{high}, B=0~\text{T})}{\rho(T_\text{low}, B=0~\text{T})},
+\end{equation}
+where in NIST $T_\text{high}=273~\text{K}$ whereas $T_\text{low}=4~\text{K}$.
+
+\subsubsection{Resistivity}
+Copper resistivity depends on temperature and RRR:
+\begin{equation}
+    \rho_\text{N}(T, \text{RRR}) = \rho_\text{0}+\rho_\text{i}+\rho_\text{i0},
+\end{equation}
+\\
+where:
+\begin{equation}
+    \rho_\text{0} = \frac{1.5553\cdot10^{-8}}{\text{RRR}},
+\end{equation}
+
+\begin{equation}
+    \rho_\text{i} = \frac{\text{P}_\text{1}}{1+\text{P}_\text{1}  \text{P}_\text{3}, T^{\text{P}_\text{2} - \text{P}_\text{4}}, \exp{[-(\frac{\text{P}_\text{5}}{T}}^{\text{P}_\text{6}})]},
+\end{equation}
+
+\begin{equation}
+    \rho_\text{i0} = \text{P}_\text{7} \frac{\rho_\text{i} \rho_\text{0}}{\rho_\text{i} + \rho_\text{0}},
+\end{equation}
+with fit parameters depicted in Table \ref{table:nist_resistivity_parameters}. 
+
+\begin{table}[h!]
+    \caption{Fit P-parameters for copper electrical resistivity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ ccccccc }  
+    \hline
+    $\text{P}_1$ & $\text{P}_2$ & $\text{P}_3$ & $\text{P}_4$ & $\text{P}_5$ & $\text{P}_6$ & $\text{P}_7$ \\
+    \hline
+    $1.171\cdot10^{-17}$ & 4.49 & $3.841\cdot10^{10}$ & 1.14 & 50 & 6.428 & 0.4531 \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_resistivity_parameters} 
+ \end{table}
+ 
+In order to apply the resistivity dependence on magnetic field strength, the following formula is applied:
+
+\begin{equation}
+    \rho_\text{N}(T, B, \text{RRR}) = \rho_\text{N}(T, \text{RRR}) \cdot (1 + 10^{a(x)}),  
+\end{equation}
+where:
+\begin{equation}
+    a(x) = \sum_{n=0}^{N} a_\text{n}(\log_\text{10}x)^{n},
+\end{equation}
+
+\begin{equation}
+    x \approx \frac{1.553 \cdot 10^{-8}}{\rho_\text{N}(T, \text{RRR})} \cdot B,
+\end{equation}
+with $B$ -- magnetic field strength, $a$ -- fit parameters described in Table \ref{table:nist_resistivity_parameters2}.
+
+\begin{table}[h!]
+    \caption{Fit a-parameters for copper electrical resistivity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ ccccc }  
+    $\text{a}_0$ & $\text{a}_1$ & $\text{a}_2$ & $\text{a}_3$ & $\text{a}_4$ \\
+    \hline
+    -2.662 & 0.3168 & 0.6229 & -0.1839 & 0.001827 \\
+    \hline
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_resistivity_parameters2} 
+ \end{table}
+
+As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper rises with rise of temperature. It rises with increase of magnetic fields strength as well as with decrease of RRR.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  no markers,
+  legend style={at={(1,0)},anchor=south east},
+  grid style={dashed,gray!30},
+  width=0.85\linewidth, 
+  height = 6cm,
+  xlabel={$T,~\text{K}$},
+  ylabel={$\rho,~\Omega~\text{m}$},
+  xlabel style={below right},
+  ylabel style={above left},
+  xmin=0.0,
+  ymin=0.0,
+  xmax=100.0,
+  legend pos=north west
+  ]
+  \addplot table[x=Time,y=B_0_0_RRR_200,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_resistivity.csv}; 
+  \addplot table[x=Time,y=B_3_0_RRR_200,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_resistivity.csv}; 
+  
+  \legend{
+  \textit{B}(RRR=200)=0 T,
+  \textit{B}(RRR=200)=3 T}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Copper resistivity temperature dependence for two values of magnetic field.}
+    \label{fig:cu_resistivity_plot}
+\end{figure}
+
+%  thermal conductivity
+\subsubsection{Thermal Conductivity}
+Copper thermal conductivity depends on temperature and RRR:
+\begin{equation}
+    k_\text{N}(T, \text{RRR}) = \frac{1}{\text{W}_\text{0} + \text{W}_\text{i} + \text{W}_\text{i0}}, 
+\end{equation}
+where:
+\begin{equation}
+    \text{W}_\text{0} = \frac{\beta}{T},
+\end{equation}
+
+\begin{equation}
+    \text{W}_\text{i} = \frac{\text{P}_\text{1} T^{\text{P}_\text{2}}}{1+\text{P}_\text{1}  \text{P}_\text{3}  T^{\text{P}_\text{2} + \text{P}_\text{4}}  \exp{[-(\frac{\text{P}_\text{5}}{T}}^{\text{P}_\text{6}})]},
+\end{equation}
+
+\begin{equation}
+    \text{W}_\text{i0} = \text{P}_\text{7} \frac{\text{W}_\text{i} \text{W}_\text{0}}{\text{W}_\text{i} + \text{W}_\text{0}},
+\end{equation}
+\\
+with fit parameters presented in Table \ref{table:nist_cu_k_parameters}.
+
+\begin{table}[h!]
+    \caption{Fit \textbeta- and P-parameters for copper thermal conductivity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ cc }  
+    $\upbeta$ & $\upbeta_\text{r}$ \\
+    \hline
+    $0.634/\text{RRR}$ & $\upbeta/0.0003$ \\
+    \hline
+    \end{tabular}
+    
+    \begin{tabular}{ ccccccc }  
+    $\text{P}_1$ & $\text{P}_2$ & $\text{P}_3$ & $\text{P}_4$ & $\text{P}_5$ & $\text{P}_6$ & $\text{P}_7$ \\
+    \hline
+    $1.754\cdot10^{-8}$ & 2.763 & 1102 & -0.165 & 70 & 1.756 & $0.838/\upbeta_\text{r}^{0.1661}$ \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_cu_k_parameters} 
+ \end{table}
+ 
+ In order to include the magnetic induction dependence in the function of thermal conductivity, the following formula is applied: 
+\begin{equation}
+    k_\text{N}(T, B, \text{RRR}) = \frac{\rho\text{N}(T, B=0, \text{RRR})}{\rho\text{N}(T, B=0, \text{RRR})} \cdot k_\text{N}(T, \text{RRR})
+\end{equation}
+
+As presented in Fig. \ref{fig:cu_k_plot}, the thermal conductivity of copper decreases with rise of magnetic field strength. One can also notice that the peak value of thermal conductivity is higher with increase of RRR. 
+ 
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  no markers,
+  legend style={at={(1,0)},anchor=south east},
+  grid style={dashed,gray!30},
+  width=0.85\linewidth, 
+  height = 6cm,
+  xmode=log,
+  xlabel={$T,~\text{K}$},
+  ylabel={$k,~\frac{\text{W}}{\text{m K}}$},
+  xlabel style={below right},
+  ylabel style={above left},
+  xmax=300.0,
+  ymin=0.0,
+  ymax=4200.0,
+  legend pos=north west
+  ]
+  \addplot[smooth, blue] table[x=temperature,y=B0,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_200.csv}; 
+  \addplot[smooth, red] table[x=temperature,y=B3,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_200.csv};
+
+  \addplot[smooth, dashed, blue] table[x=temperature,y=B0,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_50.csv};
+  \addplot[smooth, dashed, red] table[x=temperature,y=B3,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_50.csv};
+
+  \legend{
+  \textit{B}(RRR=200)=0 T,
+  \textit{B}(RRR=200)=3 T,
+  \textit{B}(RRR=50)=0 T,
+  \textit{B}(RRR=50)=3 T}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Thermal conductivity of copper as a function of temperature for two values of magnetic field and RRR.}
+    \label{fig:cu_k_plot}
+\end{figure}
+
+% mass density 
+\subsubsection{Mass Density}
+The mass density of copper is assumed to be constant and equal to $\rho = 8960~\text{kg/m}^{3}$.
+
+% Volumetric heat capacity 
+\subsubsection{Volumetric Heat Capacity}
+Copper specific heat capacity is approximated with a polynomial interpolation as: 
+\begin{equation}
+    x(T) = 10^{\sum_{n=0}^{N} a_\text{n}(\log_\text{10}T)^{n}},
+\end{equation}
+\\
+where $N$ -- order of polynomial, a -- fit parameters described in Table \ref{table:nist_cu_cp_parameters}. 
+
+\begin{table}[h!]
+    \caption{Fit parameters for copper specific heat capacity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ cccccccc }  
+    $\text{a}_0$ & $\text{a}_1$ & $\text{a}_2$ & $\text{a}_3$ & $\text{a}_4$ & $\text{a}_5$ & $\text{a}_6$ & $\text{a}_7$ \\
+    \hline
+    -1.91844 & -0.15973 & 8.61013 & -18.996 & 21.9661 & -12.7328 & 3.54322 & -0.3797 \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_cu_cp_parameters} 
+ \end{table}
+ 
+In order to convert specific into volumetric heat capacity, the polynomial function is divided by copper density. The volumetric heat capacity of copper is presented in Fig. \ref{fig:cu_cv_plot}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  no markers,
+  legend style={at={(1,0)},anchor=south east},
+  grid style={dashed,gray!30},
+  width=0.85\linewidth, 
+  height = 6cm,
+  xlabel={$T,~\text{K}$},
+  ylabel={$C_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
+  xlabel style={below right},
+  ylabel style={above left},
+  xmin=0.0,
+  ymin=0.0,
+  xmax=300.0,
+  legend pos=north west
+  ]
+  \addplot[smooth, blue] table[x=temperature,y=cvcu,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_cv.csv}; 
+
+\end{axis}
+\end{tikzpicture}
+    \caption{Volumetric heat capacity of copper as a function of temperature.}
+    \label{fig:cu_cv_plot}
+\end{figure}

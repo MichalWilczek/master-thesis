@@ -102,7 +102,7 @@ With specified assumptions, the 3D strand domain can be transformed into a 1D+1D
     \label{fig: 1d_strand_geometry_with_insulation}
 \end{figure}
 
-The strand geometry input parameters as well as the initial conditions with respect to the Gaussian temperature distribution remain the same with respect to the analysis described in section \ref{subsection: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_geometry_parameters}. The additional parameters mainly corresponding to the insulation are described in Table \ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ is four times larger.
+The strand geometry input parameters as well as the initial conditions with respect to the Gaussian temperature distribution remain the same with respect to the analysis described in Section~\ref{subsection: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_geometry_parameters}. The additional parameters mainly corresponding to the insulation are described in Table \ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ is four times larger.
 
 \begin{table}[h!]
     \caption{Analysis input parameters} 
@@ -126,7 +126,7 @@ The strand geometry input parameters as well as the initial conditions with resp
      \label{table: 1d_quench_propagation_geometry_parameters_with_insulation} 
  \end{table}
 
-Similarly to the section \ref{subsection: 1D_quench_propagation_no_insulation}, three time steps were compared for $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2}. The methodology of calculating the quench velocity remained the same. The relative error was estimated for: 
+Similarly to Section \ref{subsection: 1D_quench_propagation_no_insulation}, three time steps were compared for $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2}. The methodology of calculating the quench velocity remained the same. The relative error was estimated for: 
 \begin{itemize}
     \item quench velocity, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison},
     \item temperature along the strand length at $t=0.1~\text{s}$, as presented in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}.
@@ -172,7 +172,7 @@ The difference in quench velocity estimation in both software is less than 1\%, 
           \addplot[smooth, red] table[x=posx,y=t_0_03_com,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
           \addplot[smooth, red] table[x=posx,y=t_0_06_com,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
           \addplot[smooth, red] table[x=posx,y=t_0_1_com,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
-
+        
         %   ANSYS plots
           \addplot[smooth, blue] table[x=posx,y=t_0_03_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
           \addplot[smooth, blue] table[x=posx,y=t_0_06_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};

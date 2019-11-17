@@ -1,0 +1,108 @@
+
+% thermal conductivity
+\subsubsection{Thermal Conductivity}
+G10 is an epoxy-impregnated fiberglass, thermally anisotropic. It means that its thermal conductivity along the fibers is higher than across them. In order to simplify computation in the scope of this thesis, the material is assumed to be isotropic. A conservative assumption is made which states that thermal conductivity of G10 in all directions is equal to the one which is normal to the direction of the fibers.
+G10 thermal conductivity as well as its specific heat capacity is approximated with the NIST polynomial interpolation as: 
+\begin{equation}
+    x(T) = 10^{\sum_{n=0}^{N} a_\text{n}(\log_\text{10}T)^{n}},
+    \label{G10_polynomial_interpolation}
+\end{equation}
+\\
+where $x(T)$ -- considered material property, $N$ -- order of polynomial, $a$ -- fit parameters described in Table \ref{table:nist_g10_k_parameters}.
+
+\begin{table}[h!]
+    \caption{Fit parameters for G10 thermal conductivity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ ccccccccc }  
+    $\text{a}_0$ & $\text{a}_1$ & $\text{a}_2$ & $\text{a}_3$ & $\text{a}_4$ & $\text{a}_5$ & $\text{a}_6$ & $\text{a}_7$ & $\text{a}_8$ \\
+    \hline
+    -4.1236 & 13.788 & -26.068 & 26.272 & -14.663 & 4.4954 & -0.6905 & 0.0397 & 0 \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_g10_k_parameters} 
+ \end{table}
+
+The thermal conductivity of G10 as a function of temperature is presented in Fig. \ref{fig:g10_k_plot}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+      no markers,
+      legend style={at={(1,0)},anchor=south east},
+      grid style={dashed,gray!30},
+      width=0.85\linewidth, 
+      height = 6cm,
+      xlabel={$T,~\text{K}$},
+      ylabel={$k,~\frac{\text{W}}{\text{m K}}$},
+      xlabel style={below right},
+      ylabel style={above left},
+      xmin=0.0,
+      ymin=0.0,
+      xmax=300.0
+      ]
+      \addplot[smooth, blue] table[x=temperature,y=g10_thermal_conductivity,col sep=comma] {sections/appendices/material_properties/g10/figures/g10_thermal_conductivity.csv}; 
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{G10 thermal conductivity as a function of temperature.}
+    \label{fig:g10_k_plot}
+\end{figure}
+ 
+% mass density
+ \subsubsection{Mass Density}
+ The mass density is assumed to be constant and equal to $\rho = 1948~\text{kg/m}^{3}$.
+
+% specific heat capacity
+\newpage
+\subsubsection{Volumetric Heat Capacity}
+Specific heat capacity of G10 is based on equation described in (\ref{G10_polynomial_interpolation}) with fit parameters described in \ref{table:nist_g10_cp_parameters}. 
+
+\begin{table}[h!]
+    \caption{Fit parameters for G10 specific heat capacity} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ cccccccc }  
+    $\text{a}_0$ & $\text{a}_1$ & $\text{a}_2$ & $\text{a}_3$ & $\text{a}_4$ & $\text{a}_5$ & $\text{a}_6$ & $\text{a}_7$ \\
+    \hline
+    -2.4083 & 7.6006 & -8.2982 & 7.3301 & -4.2386 & 1.4294 & -0.24396 & 0.015236 \\
+    \hline 
+    \end{tabular}
+    \end{center}  
+     \label{table:nist_g10_cp_parameters} 
+ \end{table}
+
+In order to convert specific into volumetric heat capacity, the polynomial function is divided by G10 density. The volumetric heat capacity of G10 is presented in Fig. \ref{fig:g10_cv_plot}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+      no markers,
+      legend style={at={(1,0)},anchor=south east},
+      grid style={dashed,gray!30},
+      width=0.85\linewidth, 
+      height = 6cm,
+      xlabel={$T,~\text{K}$},
+      ylabel={$C_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
+      xlabel style={below right},
+      ylabel style={above left},
+      xmin=0.0,
+      ymin=0.0,
+      xmax=300.0
+      ]
+      \addplot[smooth, blue] table[x=temperature,y=g10_cv,col sep=comma] {sections/appendices/material_properties/g10/figures/g10_cv.csv}; 
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Volumetric heat capacity of G10 as a function of temperature.}
+    \label{fig:g10_cv_plot}
+\end{figure}

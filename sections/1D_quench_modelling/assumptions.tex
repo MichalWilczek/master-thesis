@@ -1,0 +1,23 @@
+
+In this thesis, there two analyses conducted for a 1D quench propagation: 
+
+\begin{itemize}
+    \item 1D strand analysis without insulation layer,
+    \item 1D strand analysis with an external insulation layer.
+\end{itemize}
+
+For both cases, the mesh density study is conducted. The following assumptions are made in the simulations: 
+
+\begin{itemize}
+    \item There is no helium cooling.
+    \item Temperature in the winding's cross-sectional area is uniform.
+    \item When the insulation layer is considered, the longitudinal heat transfer inside the insulation is neglected with respect to the transversal one.
+\end{itemize}
+
+The \nth{2} assumption allows one to consider this problem as a 1D longitudinal heat propagation. When the insulation layer is analysed, because of the \nth{3} assumption, the analysis becomes a 1D+1D heat propagation problem. It will be further explained in Section \ref{subsection: 1D_quench_propagation_with_insulation}.
+
+In the analysis the heat balance partial differential equation is solved as:
+\begin{equation}
+    \frac{\partial}{\partial x}[k(T, B) \frac{\partial T}{\partial x}] + q_v(T) = \gamma c_p(T) \frac{\partial T}{\partial t},
+\end{equation}
+where $k(T, B)$ -- thermal conductivity of a strand as a function of temperature and magnetic field, $q_v(T)$ -- external heat source, $\gamma$ -- mass density of a strand, $c_p(T)$ -- specific heat of a strand. The external heat source, $q_v(T)$ stands for the Joule effect.

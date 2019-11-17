@@ -1,5 +1,5 @@
 
-In this part of the section, standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in section \ref{subsection: 1D_quench_propagation_no_insulation}. The aim of this study was to find the proper mesh size as well as the time step at which the simulation of 1D thermal quench propagation is relatively accurate. The study with number of nodes varying from 50 up to 5000 was conducted over a 1 metre-long domain. The results from the analysis with 5000 nodes are used as a benchmark. 
+In this part of the section, standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in Section \ref{subsection: 1D_quench_propagation_no_insulation}. The aim of this study was to find the proper mesh size as well as the time step at which the simulation of 1D thermal quench propagation is relatively accurate. The study with number of nodes varying from 50 up to 5000 was conducted over a 1 metre-long domain. The results from the analysis with 5000 nodes are used as a benchmark. 
 
 \begin{figure}[h!]
 \centering
@@ -24,6 +24,8 @@ Moreover, three different time step ranges were tested to check how long the ana
 
 It is interesting to mention that the initial Gaussian distribution of temperature over the domain (see Fig. \ref{fig: init_gauss_temp_distr}) stores a different value of energy in the strand depending on the mesh size, as presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. According to the graph, one can expect the exact solution at the level of 500 nodes. Lower number of nodes would cause the quench front being to slow with respect to the benchmark solution.
 
+With the mesh size of 1000 nodes, the relative error with respect to the benchmark solution varied by far less than 1\% when temperature distribution over the entire domain was considered at final time of the analysis, $t = 0.1~\text{s}$. As presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error for quench velocity value during the analysis reaches less than 1\% for the number of nodes equal to 1000, too. 
+
 \begin{figure}[h!]
 \centering
     \begin{tikzpicture}
@@ -39,13 +41,13 @@ It is interesting to mention that the initial Gaussian distribution of temperatu
           ]
           \addplot[blue, mark=*] table[x=time,y=500_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
           \addplot[red, mark=*] table[x=time,y=1000_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{500 nodes}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1000 nodes}
         \end{axis}
     \end{tikzpicture}
-    \caption{Quench velocity relative error for 500 nodes (in blue) and 1000 nodes (in red).}
+    \caption{Quench velocity relative error for 500 and 1000 nodes.}
     \label{fig: q_vel_modelling_v_quench_rel_error_no_insulation}
 \end{figure}
-
-With the mesh size of 1000 nodes, the relative error with respect to the benchmark solution varied by far less than 1\% when temperature distribution over the entire domain was considered at final time of the analysis, $t = 0.1~\text{s}$. As presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error for quench velocity value during the analysis reaches less than 1\% for the number of nodes equal to 1000, too. 
 
 To conclude, the analysis with 1000 nodes as well as with the time step range of $t=[10, 100]~\mu \text{s}$ results in the general error less or equal to 1\% with respect to the benchmark solution. Therefore, it will be used as a further benchmark result for quench velocity simulation presented in next section. It is an acceptable compromise between  accuracy and time of the simulation. In 1D thermal quench propagation, computing time rises linearly with the number of nodes if the insulation is not considered, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}.
 

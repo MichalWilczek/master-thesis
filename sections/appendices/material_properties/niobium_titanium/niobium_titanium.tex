@@ -1,0 +1,81 @@
+
+% NbTi mass density 
+\subsubsection{Mass Density}
+The mass density is assumed to be constant and equal to $\rho = 6000~\text{kg/m}^{3}$.
+
+% NbTi specific heat capacity
+\subsubsection{Specific Heat Capacity}
+Volumetric heat capacity of Nb-Ti is estimated by means of a piece-wise polynomial function which takes into account a linear magnetic dependence below the critical temperature. The critical temperature is calculated as: 
+\begin{equation}
+    T_\text{c}(B) = T_\text{c0}\cdot(1-\frac{B}{B_\text{c20}})^{0.59},
+\end{equation}
+where $T_\text{c0}$ -- critical temperature for $B=0~\text{T}$, $B_\text{c20}$ -- critical magnetic field for $T=0~\text{K}$. In both parameters, current density is equal to zero.
+
+The volumetric heat capacity is calculated in the following manner: 
+\begin{equation}
+    Cp_\text{ NbTi}(T, T_\text{c}) = \frac{\text{a}_0 + \text{a}_1\cdot T^{1} + \text{a}_2\cdot T^{2} + \text{a}_3\cdot T^{3}+ \text{a}_4\cdot T^{4}} {\rho_{Nb-Ti}},
+\end{equation}
+where $a$ -- fit parameters presented in Table \ref{table:nbti_parameters}.
+
+\begin{table}[h!]
+    \caption{Polynomial parameters for Nb-Ti volumetric heat capacity.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+    \begin{tabular}{ lccccc }  
+    \hline
+    & $\text{a}_0$ & $\text{a}_1$ & $\text{a}_2$ & $\text{a}_3$ & $\text{a}_4$ \\
+    \hline
+    $T \in (0, T_\text{c})$~K & 0 & $64 \cdot B$ & 0 & 49.1 & 0 \\        
+    $T \in [T_\text{c}, 28.358)$~K & 0 & 928 & 0 & 16.24 & 0 \\        
+    $T \in [28.358, 50.99)$~K & 41383 & -7846.1 & 553.71 & 11.9838 & -0.2177 \\        
+    $T \in [50.99, 165.8)$~K & $-1.53\cdot10^{6}$ & 83022 & -716.3 & 2.976 & -0.00482 \\ 
+    $T \in [165.8, 496.54)$~K & $1.24\cdot10^{6}$ & 13706 & -51.66 & 0.09296 & $-6.29\cdot10^{-5}$ \\        
+    $T \in [496.54, 1000)$~K & $2.45\cdot10^{6}$ & 955.5 & -0.257 & 0 & 0 \\       
+    \hline
+     \end{tabular} 
+    \end{center}  
+     \label{table:nbti_parameters} 
+\end{table}
+
+As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti heat capacity at critical temperature. Since the critical temperature decreases with rise of magnetic field strength, the transition occurs at lower temperatures when higher B-field is applied.
+ 
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[spy using outlines=
+	{circle, magnification=8, connect spies}]
+    \begin{axis}[
+      no markers,
+      legend style={at={(1,0)},anchor=south east},
+      grid style={dashed,gray!30},
+      width=0.85\linewidth, 
+      height = 6cm,
+      xlabel={$T,~\text{K}$},
+      ylabel={$C_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
+      xtick={8.5, 50, 100, 150, 200, 250, 300},
+      xlabel style={below right},
+      ylabel style={above left},
+      xmin=0.0,
+      ymin=0.0,
+      xmax=300.0,
+      legend pos=north west
+      ]
+      \addplot[smooth, blue] table[x=temperature,y=B0,col sep=comma] {sections/appendices/material_properties/niobium_titanium/figures/nb_ti_cv.csv}; 
+      \addplot[smooth, red] table[x=temperature,y=B3,col sep=comma] {sections/appendices/material_properties/niobium_titanium/figures/nb_ti_cv.csv}; 
+      
+      \coordinate (spypoint) at (8.5,20000);
+      \coordinate (magnifyglass) at (100, 1000000);
+    
+      \legend{
+      \textit{B}=0 T,
+      \textit{B}=3 T}
+    
+    \end{axis}
+    \spy [black, size=2.5cm] on (spypoint)
+       in node[fill=white] at (magnifyglass);
+    \end{tikzpicture}
+    \caption{Volumetric heat capacity of Niobium-Titanium as a function of temperature.}
+    \label{fig:nbti_cv_plot}
+\end{figure}

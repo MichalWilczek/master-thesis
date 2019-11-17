@@ -4,20 +4,16 @@
 \usepackage[affil-it]{authblk}
 \usepackage[english]{babel}
 \usepackage{polski}
-
-% packages for title page
 \usepackage{siunitx}
 \usepackage[export]{adjustbox}
 \usepackage{graphicx, wrapfig}
 \usepackage{tabularx}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
-
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{mathrsfs}
-
 \usepackage{xcolor}
 \usepackage{subfigure}
 \usepackage[super]{nth}
@@ -25,149 +21,61 @@
 \usepackage{algorithm,algorithmic}
 \usepackage{enumerate}
 \usepackage[toc,page]{appendix}
-
 \usepackage{amsthm}
 \usepackage{pdfcomment}
 \usepackage{textgreek}
-
+\usepackage{upgreek}
 \usepackage[siunitx,americaninductors]{circuitikz}
 \usepackage{schemabloc}
 \usetikzlibrary{circuits}
 \usepackage{tikz, pgfplots}
-\usetikzlibrary{shapes,arrows}
+\pgfplotsset{compat=1.15}
+\usetikzlibrary{shapes,arrows,spy}
 \usepackage{verbatim}
+\usepackage[font=small,labelfont=bf]{caption}
 
 \begin{document}
 
-
+% TITLE PAGE
 \input{title_pages/titlepage_PL.tex}
+
+% TABLE OF CONTENTS
 \clearpage\thispagestyle{empty}
 \tableofcontents
 \clearpage\thispagestyle{empty}
 
+% NOTATION
 \section*{Notation}
-
-\begin{table}[h!]
-    \vspace{-1.em} 
-    \fontsize{10}{10}
-    \selectfont 
-    \renewcommand{\arraystretch}{1.5}
-    \begin{center}
-    \begin{tabular}{ l l }  
-    \hline
-    $A_\text{Cu}$ & cross-sectional area of copper in a wire \\  
-    $B_\text{c20}$ & intercepts of critical surface along magnetic field axis \\  
-    $C_\text{p, equiv}$ & equivalent specific heat capacity of a wire \\  
-    $C_\text{p, Cu}$ & specific heat capacity of copper \\   
-    $C_\text{p, NbTi}$ & specific heat capacity of NbTi \\  
-    $d_\text{strand}$ & real diameter of a wire \\  
-    $d_\text{strand, red}$ & reduced diameter of a wire \\   
-    $f_\text{Cu}$ &  copper volumetric ratio in a wire\\        
-    $f_\text{NbTi}$ &  NbTi volumetric ratio in a wire\\   
-    $T_\text{c}$ & critical temperature \\
-    $T_\text{c0}$ & intercepts of critical surface along temperature axis \\
-    $RRR$ & residual resistivity ratio \\
-    \hline
-     \end{tabular} 
-    \end{center}  
- \end{table}
+\label{section: notation}
+% \input{sections/notation/notation.tex}
 \newpage
 
-% official introduction of the Master thesis
+% general page style
 \pagestyle{fancy}
+
+% INTRODUCTION
 \section{Introduction}
+% \label{section: introduction}
 
 \subsection{About CERN}
+\label{subsection: about cern}
+% \input{sections/introduction/about_cern.tex}
 
 \subsection{Superconductors}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=0.49\linewidth]{figures/introduction/critical_surface_scheme.png}
-\caption{Schematic of the critical surface of $\text{Nb}_\text{3}\text{Sn}$ and Nb-Ti \cite{evans_marvel_of_technology}}
-\label{fig:scheme_critical_surface}
-\end{figure}
+\label{subsection: superconductors}
+% \input{sections/introduction/superconductors.tex}
 
 \subsection{Quench Problem}
+\label{subsection: quench_problem}
+% \input{sections/introduction/quench_problem.tex}
 
-    \subsubsection{Copper Resistivity}
-    Copper residual resistivity ratio according to NIST: 
-    \begin{equation}
-    RRR = \frac{\rho(T=273~\text{K}, B=0~\text{T})}{\rho(T=4~\text{K}, B=0~\text{T})}
-    \end{equation}
-    
-    \subsubsection{Critical Parameters for Superconductivity}
-    Critical current:
-    \begin{equation}
-        I_\text{c}(T) = I \frac{T-T_\text{cs}}{T_\text{c}-T_\text{cs}}
-    \end{equation}
-    \\
-    Critical temperature:
-    \begin{equation}
-        T_\text{c}(B) = 9.2 \cdot [1- \frac{B}{14.5}]^{0.59}~\text{for}~B~<~10~\text{T}
-    \end{equation}
-    \\
-    Critical magnetic field: 
-    \begin{equation}
-        B_\text{c2}(T) = B_\text{c2}(T=0) \cdot [1-(\frac{T}{T_\text{c}(B=0)})^{n}],
-    \end{equation}
-    where
-    $B_\text{c2}(T=0)=14.5~\text{T}$, $T_\text{c}(B=0)=9.2~\text{K}$, $n=1.7$.
-
-    \subsubsection{Current Flow in Copper Matrix}
-    
-    Current sharing temperature: 
-    \begin{equation}
-        T_\text{cs} = T_\text{c} (1 - \frac{I}{\text{c}_1 + \text{c}_2 B }),
-    \end{equation}
-    where $\text{c}_1=3449~\text{A}$ and $\text{c}_2=-257~\text{AT}^{-1}$
-    \\
-    Current in copper matrix: 
-    \begin{equation}
-        \left\{ \begin{array}{lll}
-        I_\text{Cu} = 0 & \text{for}~T < T_\text{cs} \\ \\
-        I_\text{Cu} = I - I_\text{c} & \text{for}~T_\text{cs} \leq T<T_\text{c}  \\ \\
-        I_\text{Cu} = I & \text{for}~T_\text{cs} \leq T
-        \end{array} \right.
-    \end{equation}
-    \\
-    Joule heating: 
-    \begin{equation}
-        \left\{ \begin{array}{lll}
-        q_\text{Joule} = 0 & \text{for}~T < T_\text{cs} \\ \\
-        q_\text{Joule} = \rho_\text{Cu}(T, B) \frac{(I-I_\text{c})^2}{{\text{a}_\text{Cu}}^2}& \text{for}~T_\text{cs} \leq T<T_\text{c}  \\ \\
-        q_\text{Joule} = \rho_\text{Cu}(T, B) \frac{I^2}{{\text{a}_\text{Cu}}^2} & \text{for}~T_\text{cs} \leq T
-        \end{array} \right.
-    \end{equation}
-
-    \begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.49\linewidth]{figures/skew_quad_bcs/magnetic_field_mapping/Heat_Generation_Curve_B_3.png}
-    \caption{Heat Generation Curve as a function of temperature for B=3 T}
-    \label{fig:H_gen_curve}
-    \end{figure}
-    
 \subsection{Accelerator Magnets}
-What type of magnets can we find? \\
-How are they protected? \\
-Passive and active protections \\ 
-Self-protectability
+\label{subsection: accelerator_magnets}
+% \input{sections/introduction/accelerator_magnets.tex}
 
-\subsection{Analyses in Superconductors}
-
-\subsection{Numerical Analyses}
-
-Heat conduction equation: 
-\begin{equation}
-    \frac{\partial}{\partial x}[k(B) \frac{\partial T}{\partial x}] + q_v = \rho c_p \frac{\partial T}{\partial t}
-\end{equation}
-
-\subsection{Thermal Numerical Analyses}
-
-To write in introduction: 
-Wilson: \\
-- point disturbances (page 74) \\
-- minimum propagating zone (MPZ) (same page - up to 80 something...)
+\subsection{Numerical Analyses in Superconductors}
+\label{subsection: numerical_analyses_in_superconductors}
+% \input{sections/introduction/numerical_analyses_in_superconductors.tex}
 
 % AIM THESIS
 \clearpage \thispagestyle{empty}
@@ -183,11 +91,22 @@ Wilson: \\
 \clearpage
 \section{1D Quench Propagation Modelling}
 \label{section: 1d_quench_propagation_modelling}
-\input{sections/1D_quench_modelling/introduction.tex}
 
-\subsection{Geometry}
+\subsection{Motivation}
+\label{subsection: 1d_quench_propagation_motivation}
+\input{sections/1D_quench_modelling/motivation.tex}
+
+\subsection{Assumptions}
+\label{subsection: 1d_quench_propagation_assumptions}
+\input{sections/1D_quench_modelling/assumptions.tex}
+
+\subsection{Reference Geometry - Skew Quadrupole}
 \label{subsection: 1d_quench_propagation_geometry}
 \input{sections/1D_quench_modelling/geometry.tex}
+
+% \subsection{Geometry}
+% \label{subsection: 1d_quench_propagation_geometry}
+% \input{sections/1D_quench_modelling/geometry.tex}
 
 \subsection{1D Analysis without Insulation}
 \label{subsection: 1D_quench_propagation_no_insulation}
@@ -218,26 +137,7 @@ Wilson: \\
 \label{subsection:quench_velocity_cosimulation}
 \input{sections/q_vel_modelling/q_vel_cosimulation.tex}
 
-% QUENCH VELOCITY MODELLING BENCHMARKING
-\clearpage
-\section{Quench Velocity Modelling Benchmarking}
-\label{section:quench_velocity_benchmarking}
-\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking.tex}
-
-\subsection{Analysis without Insulation}
-\label{subsection:quench_velocity_benchmarking_no_insulation}
-
-\subsubsection{Heat Balance - Based Analysis}
-\input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
-
-\subsubsection{Quench Velocity - Based Analysis}
-\input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
-
-\subsection{Analysis with Insulation}
-\label{subsection:quench_velocity_benchmarking_with_insulation}
-\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking_with_insulation.tex}
-
-% ALGORITHMS AND PYTHON IMPLEMENTATION
+% ALGORITHMS 
 \clearpage
 \section{Algorithms}
 \label{section:algorithms}
@@ -247,7 +147,7 @@ Wilson: \\
 \label{subsection:multidimensional_mapping_algorithm}
 \input{sections/algorithms/multidimensional_mapping.tex}
 
-\subsection{Node Searching Algorithm}
+\subsection{Quench and Non-Quenched Zone Assignment Algorithm}
 \label{subsection:node_searching_algorithm}
 \input{sections/algorithms/node_search_alg.tex}
 
@@ -259,31 +159,57 @@ Wilson: \\
 \clearpage
 \section{Analysis Implementation in Python}
 \label{section:python_implementation}
-\input{sections/implementation_python/python_framework.tex}
+% \input{sections/implementation_python/python_framework.tex}
+
+% QUENCH VELOCITY MODELLING BENCH-MARKING
+\clearpage
+\section{Quench Velocity Modelling Benchmarking}
+\label{section:quench_velocity_benchmarking}
+\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking.tex}
+
+\subsection{Analysis without Insulation}
+\label{subsection:quench_velocity_benchmarking_no_insulation}
+
+\subsubsection{Heat Balance - Based Analysis}
+\label{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}
+\input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
+
+\subsubsection{Quench Velocity - Based Analysis}
+\label{subsection:quench_velocity_benchmarking_no_insulation_quench_velocity}
+\input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
+
+\subsection{Analysis with Insulation}
+\label{subsection:quench_velocity_benchmarking_with_insulation}
+\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking_with_insulation.tex}
+
+\subsubsection{Heat Balance - Based Analysis}
+\label{subsection:quench_velocity_benchmarking_with_insulation_heat_balance}
+\input{sections/q_vel_modelling_benchmarking/with_insulation_heat_balance.tex}
+
+\subsubsection{Quench Velocity - Based Analysis}
+\label{subsection:quench_velocity_benchmarking_with_insulation_quench_velocity}
+\input{sections/q_vel_modelling_benchmarking/with_insulation_quench_velocity.tex}
 
 % SKEW QUADRUPOLE ANALYSIS - QUENCH DETECTION
 \clearpage
 \section{Skew Quadrupole Quench Detection Analysis}
 \label{section:skew_quadrupole_quench_detection_analysis}
+% \input{sections/skew_quad_q_det/introduction.tex}
 
-This chapter describes the thermal quench analysis of a skew quadrupole developed by LASA laboratories of INFN-Milano. The skew quadrupole belongs to the group of high-order corrector magnets designed for the upgrade of High-Luminosity LHC. Their design assumes using no quench protection devices such as quench heaters or CLIQ except for crowbars \footnote{Describe what crowbars are...}. Therefore, when any of these magnet quenches, the discharge of energy stored in their magnetic field occurs merely by their own rise in resistivity. i.e. they are self-protected.
+% \subsection{Geometry}
+% \input{sections/skew_quad_q_det/geometry.tex}
 
-Quench velocity approach presented in chapter \ref{section:quench_velocity_modelling} is used to analyze the magnet as a 3-dimensional thermal domain. It is verified by comparing the available measurements of a quenched skew quadrupole with the simulation results conducted in ANSYS. One has to remember that the skew quadrupole is the only high-order corrector which has quench protection system installed, i.e. it is not self-protected. However, it has been used for illustration purposes because of its available quench measurements when quench heaters were not used. 
+% \subsection{Assumptions for Geometry and Material Properties}
+% \input{sections/skew_quad_q_det/geometry_material_assumptions.tex}
 
-\subsection{Geometry}
-\input{sections/skew_quad_q_det/geometry.tex}
+% \subsection{Quench Measurements}
+% \input{sections/skew_quad_q_det/quench_measurements.tex}
 
-\subsection{Assumptions for Geometry and Material Properties}
-\input{sections/skew_quad_q_det/geometry_material_assumptions.tex}
+% \subsection{Initial Conditions...}
+% \input{sections/skew_quad_q_det/initial_conditions.tex}
 
-\subsection{Quench Measurements}
-\input{sections/skew_quad_q_det/quench_measurements.tex}
-
-\subsection{Initial Conditions...}
-\input{sections/skew_quad_q_det/initial_conditions.tex}
-
-\subsection{Quench Velocity Mapping}
-\input{sections/skew_quad_q_det/quench_velocity_mapping.tex}
+% \subsection{Quench Velocity Mapping}
+% \input{sections/skew_quad_q_det/quench_velocity_mapping.tex}
 
 % APPENDICES
 \clearpage
@@ -291,21 +217,21 @@ Quench velocity approach presented in chapter \ref{section:quench_velocity_model
 
 \section{Material Properties}
 \label{appendix_material_properties_description}
-
-The material properties are based on an update of ROXIE database prepared at CERN \cite{material_properties_roxie}. Except for Nb-Ti specific heat capacity, NIST standards for cryogenic materials are used to describe them. Nb-Ti is defined by CUDI which is Arjan Verweij's software for Rutherford cable modelling~\cite{cudi_manual}.  
+\input{sections/appendices/material_properties/introduction.tex}
 
 \subsection{Copper}
 \label{appendix:cu_material_properties}
-\input{sections/appendices/material_properties/copper.tex}
+\input{sections/appendices/material_properties/copper/copper.tex}
 
-% \subsection{Niobium Titanium}
-% \label{appendix:nbti_material_properties}
-% \input{sections/appendices/material_properties/niobium_titanium.tex}
+\subsection{Niobium Titanium}
+\label{appendix:nbti_material_properties}
+\input{sections/appendices/material_properties/niobium_titanium/niobium_titanium.tex}
 
-% \subsection{G10 Material Properties}
-% \label{appendix:g10_material_properties}
-% \input{sections/appendices/material_properties/g10.tex}
+\subsection{G10 Material Properties}
+\label{appendix:g10_material_properties}
+\input{sections/appendices/material_properties/g10/g10.tex}
 
+\clearpage
 \section{Compilation of ANSYS with Python Environment}
 \label{appendix:python_ansys_compilation}
 \input{sections/appendices/compilation_ansys_python/compilation_ansys_python.tex}
