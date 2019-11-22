@@ -1,0 +1,63 @@
+
+Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summarises the different type of improvement rates. Unlike the case of a bare strand, the acceleration in computing time is clearly visible when quench velocity-based analysis is used. In fact, the mesh refinement along the strand also reduces the total number of nodes used for the insulation. It can be easily concluded from equation (\ref{eqn:tot_number_of_nodes}).
+
+\begin{table}[H]
+    \caption{Methodology comparison.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ cccc }  
+        \hline
+          & mesh size, mm & time step, $\upmu \text{s}$ & simulation time, s\\
+        \hline
+        heat balance & 1 & [10, 100] & 17100 \\
+        quench velocity-based & 10 & [100, 1000] & 2530 \\
+        quench velocity-based & 10 & [100, 1000] & 1560 \\
+        \hline 
+        improvement rate & 10-20 times & 10 times & 6.8-11.0 times \\
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_with_insulation_methods_comparison} 
+ \end{table}
+ 
+As presented in Tables~\ref{table: 1d_qv_benchmarking_with_insulation_res_error_conclusion} and~\ref{table: 1d_qv_benchmarking_with_insulation_hot_spot_error_conclusion}, the resistive voltage remains in the range of -5\% of a relative error with the mesh size equal to 20 mm. However, the relative error corresponding to the hot spot temperature may increase in time during the simulation. 
+
+ \begin{table}[H]
+    \caption{Comparison of relative error for resistive voltage.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        mesh size, mm & $t=0.01~\text{s}$ & $t=0.3~\text{s}$ \\
+        \hline
+        10 & -4.20\% & -1.46\% \\
+        20 & -17.76\% & -4.34\% \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_with_insulation_res_error_conclusion} 
+ \end{table}
+
+ \begin{table}[H]
+    \caption{Comparison of relative error for hot spot temperature.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        mesh size, mm & $t=0.01~\text{s}$ & $t=0.3~\text{s}$ \\
+        \hline
+        10 & -0.83\% & -1.47\% \\
+        20 & -0.58\% & -1.66\% \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_with_insulation_hot_spot_error_conclusion} 
+ \end{table}

@@ -1,5 +1,63 @@
 
-Both simulation environments show the similar results when it comes to the problem of 1D quench thermal propagation at cryogenic temperatures. The relative error of different parameters for two software oscillated in the range of 2\%. In every analysis, a relatively dense mesh was applied of 10 nodes/mm. In  \cite{paudel_thesis}, it is recommended to discretise the domain in the scale less than or equal to a millimetre when an adiabatic analysis is conducted. 
-With 10 times less dense mesh, all the analyses with insulation and without showed less than 0.5\% of a relative error. 
+The comparison of quench velocity and hot spot temperatures, being two important parameters in magnet design, is presented in Table \ref{table: 1d_quench_propagation_modelling_conclusion_comparison}. The relative error was not larger than 2\% in analyses without insulation and 2.5\% in analyses with the insulation layer. Therefore, one can conclude that both simulation tools show similar results when it comes to the problem of 1D quench thermal propagation at cryogenic temperatures.
 
-As concluded, in order to solve a one-metre domain, at least 1000 elements should be applied. At this point, it is interesting to estimate the scale of the thermal problem to be solved for 3-dimensional magnet geometries in which the cable length of all windings together can reach several hundreds of metres. By adding to this the influence of insulation and material non-linearities, the computing time of such analyses will easily reach at least a couple of days. Therefore, a numerical method aiming at reducing this nodal domain is strongly desired.
+\begin{table}[H]
+    \caption{Comparison of quench velocity and hot spot in COMSOL and ANSYS.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccLcL }  
+        \hline
+         & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature at $t=0.1~\text{s}$ & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature at $t=0.1~\text{s}$ \\
+        COMSOL & 7.075 & 28.188 & 2.308 & 23.408 \\
+        ANSYS & 6.968& 28.174 & 2.310 & 23.926 \\
+        \hline
+        relative error, \% & -1.519 & -0.050 & 0.108 & 2.213 \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_quench_propagation_modelling_conclusion_comparison} 
+ \end{table}
+
+In every analysis, a relatively dense mesh was applied with the mesh size of 0.1 mm. In  \cite[p.~40]{paudel_thesis}, it is recommended to discretise the domain in the scale less than or equal to a millimetre when an adiabatic analysis is conducted. With 10 times less dense mesh, all the analyses with and without insulation showed less than 0.5\% of a relative error with respect to the solutions with denser meshes applied. 
+
+As concluded, in order to solve the temperature distribution over a one-metre domain, at least 1000 elements should be applied with the mesh size of 1 mm. Every quadrant of the aforementioned skew quadrupole consists of 754 windings which accounts for 841 m-long strand. If the insulation layer is considered, the total number of nodes should be estimated as: 
+\begin{equation}
+    n_\text{nodes, total} = n_\text{nodes, strand}~(1+ 4~n_\text{nodes, insulation}),
+    \label{eqn:tot_number_of_nodes}
+\end{equation}
+where $n_\text{nodes, strand}$ -- total number of nodes along the strand, $n_\text{nodes, insulation}$ -- number of nodes across the insulation layer neighbouring to one strand node. With 6 nodes across the insulation and the strand element size of 1 mm, the mesh of the skew quadrupole would account for more than 20 million nodes. Taking into account that this is not even a fully 3D problem, the number is relatively large. 
+
+As presented in Fig. \ref{fig: quench_propagation_conclusion_computing_time_estimation}, the computing time was compared for the analysis with mesh size of 1 mm and 6 elements across the insulation as a function of the length of the strand. The analysis of 10 metre-long domain lasted more than 7 hours. With a linear interpolation of the obtained results, if one analysed 100 metres of the strand, the simulation would last approximately 72 hours.
+
+\begin{figure}[H]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={$L_\text{strand},~\text{m}$},
+          ylabel={Time, s},
+          xticklabel style={/pgf/number format/fixed},
+          xtick={0.1, 1, 10, 100},
+          xmode=log,
+          ymode=log,
+          legend pos=north west
+          ]
+          \addplot[blue, mark=*] table[x=nodes,y=time,col sep=comma] {sections/1D_quench_modelling/figures/other/computing_time_estimation_vs_strand_length.csv};
+          \addplot[red, dashed] table[x=nodes,y=time,col sep=comma] {sections/1D_quench_modelling/figures/other/computing_time_estimation_trendline.csv};
+          \legend{
+          computing time,
+          linear approximation
+          }
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Computing time as a function of number of nodes.}
+    \label{fig: quench_propagation_conclusion_computing_time_estimation}
+\end{figure}
+
+One of the methods for reducing the mesh size is the application of an adaptive mesh which propagates with the moving quench front. Such a solution would be applicable if a 1D analysis was taken into consideration. In this case, the aim is to conduct a 3D multi-strand thermal simulation with multiple quenches at different strands. Such a complicated adaptive mesh would be very difficult or even impossible to be applied.
+
+

@@ -1,11 +1,11 @@
 
-In this section, all algorithms will be discussed which are necessary for solving a quench thermal problem based on quench velocity - based methodology. As presented in preceding sections, in a thermal problem there are two phenomena to be analysed important for the quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse heat flow the insulation. Out of two phenomena, only in the \nth{1} one quench velocity modelling can be used. The heat flow across the insulation is an important factor if a multi-strand model is analysed which will be the case described in Section \ref{section:skew_quadrupole_quench_detection_analysis}. In order to conduct a multi-strand thermal analysis using quench velocity - based approach, the following simulation tools and algorithms ought to be developed.
+In a thermal problem, there are two phenomena to be analysed important for the quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse heat flow inside the insulation layer. The quench velocity-based methodology can only be used in the \nth{1} case. The heat flow across the insulation is an important factor if a multi-strand model is analysed. In order to conduct a multi-strand thermal analysis using quench velocity-based approach, the following simulation tools and algorithms ought to be developed.
 
 \begin{enumerate}
-\item Electro-thermal model simulating longitudinal quench propagation, as presented in Section~\ref{subsection:quench_velocity_benchmarking_no_insulation}.
-\item Thermal model simulating transverse thermal propagation across insulation, as shown in Section~\ref{subsection:quench_velocity_benchmarking_with_insulation}.
+\item Electro-thermal model simulating longitudinal quench propagation.
+\item Thermal model simulating transverse thermal propagation across insulation.
 \item Algorithm mapping multi-strand and multi-dimensional magnet geometry onto 1D coil.
-\item Algorithm calculating quench position in time based on a quench velocty function.
+\item Algorithm calculating quench position in time which is based on a quench velocity function.
 \item Algorithm which would assign the nodes to the quenched and non-quenched zones in a discretised domain in time.
 \item Algorithm detecting new quenches in a multi-strand domain if the quenched winding heats up the neighbouring ones across the insulation.
 \end{enumerate}

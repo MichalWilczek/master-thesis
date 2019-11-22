@@ -1,5 +1,5 @@
 
-This part of the section describes how the quench velocity method is applied in ANSYS simulations. In order to distinguish the quenched zone from the non-quenched one, the superconducting cable is divided into two domains as presented in Fig. \ref{fig:ansys_material_assignment}. The non-quenched part is characterised by nearly zero-resistivity (not zero for the sake of numerical stability) whereas the quenched cable has non-linear resistivity properties of the strand composite as described in (\ref{eqn: p_dens_equiv}). The non-linear resistivity is reassigned at each time step as the quench propagates in ANSYS model.
+This part of the section describes how the quench velocity method is applied in a numerical solver. In order to distinguish the quenched zone from the non-quenched one, the superconducting cable is divided into two domains as presented in Fig. \ref{fig:ansys_material_assignment}. The non-quenched part is characterised by nearly zero-resistivity (not zero for the sake of numerical stability) whereas the quenched cable has non-linear resistivity properties of the strand composite as described in (\ref{eqn:strand_resistivity}). The non-linear resistivity is reassigned at each time step as the quench propagates in the model of a numerical solver.
 
 \begin{figure}[H]
 \centering
@@ -23,7 +23,16 @@ This part of the section describes how the quench velocity method is applied in 
     \label{fig:ansys_material_assignment}
 \end{figure}
 
-The reassignment of material properties should be handled by an external routine which controls the propagation of quench in time. In this case, one should deal with a co-simulation of a numerical solver (in this case ANSYS) and a quench velocity estimator. This problem can be handled by means of a one-directional (Fig. \ref{fig:unidirectional_coupling_scheme}) or a bi-directional (Fig. \ref{fig:bidirectional_coupling_scheme}) exchange of signals. In a one-directional case, the numerical solver is provided with a quench front position from the previous communication point $T_{j-1}$ and calculates temperature distribution in the current communication point $T_j$. When a bi-directional case is considered, the external routine is provided with the data from the numerical solver at point $T_j$ to estimate quench velocity at point $T_{j-1}$ up to the point $T_j$. The line which describes the information direction is marked in red in Fig. \ref{fig:bidirectional_coupling_scheme}. In both cases the initial quench length is assumed at the beginning of the co-simulation. Between the time steps of the external routine, the numerical solver can handle the problem with a time step smaller than the communication points $T_j$.
+The reassignment of material properties should be handled by an external routine which controls the propagation of quench in time. In this case, one should deal with a co-simulation of a numerical solver and a quench velocity estimator. This problem can be handled by means of: 
+
+\begin{itemize}
+    \item one-directional exchange of signals,
+    \item bi-directional exchange of signals.
+\end{itemize}
+
+As already mentioned, the quench velocity can be: $(i)$ based on available measurements, $(ii)$ calculated numerically, $(iii)$ calculated analytically according to quench velocity equations available in literature. The first 2 above-mentioned methods to calculate quench velocity would require one-directional exchange of signals. If quench velocity is estimated analytically, one can choose between the one-directional and bi-directional case depending on whether the formula to calculate quench velocity requires input data from the solver, e.g. an updated material properties repository or the value of current.
+
+The one-directional exchange of signals is presented in Fig. \ref{fig:unidirectional_coupling_scheme}. In this case, the numerical solver is provided with a quench front position from the previous communication point $T_{j-1}$ and calculates temperature distribution in the current communication point $T_j$.
 
 \begin{figure}[H]
 \centering
@@ -51,12 +60,14 @@ The reassignment of material properties should be handled by an external routine
 \node[scale = 0.8] at (0.5, 0.35) {$\text{x}_{1,j-1}$};
 \node[scale = 0.8] at (2.4, 0.35) {$\text{x}_{1,j}$};
 \node[scale = 0.8] at (4.5, 0.35) {$\text{x}_{1,j+1}$};
-\node[color = black] at (-2.2,1.0)	{External routine};
+\node[color = black] at (-2.2,1.0)	{External Routine};
 \node at (-2.2,0)	{Numerical Solver};
 \end{tikzpicture}
 \caption{Schematic representation of one-directional coupling between a numerical solver and quench velocity estimator.}
 \label{fig:unidirectional_coupling_scheme}
 \end{figure}
+
+The bi-directional exchange of signals is presented in Fig. \ref{fig:bidirectional_coupling_scheme}. In this case, the external routine is provided with the data from the numerical solver at point $T_j$ to estimate quench velocity at point $T_{j-1}$ up to the point $T_j$. The line which describes the information direction is marked in red in Fig.~\ref{fig:bidirectional_coupling_scheme}. 
 
 \begin{figure}[H]
 \centering
@@ -95,7 +106,9 @@ The reassignment of material properties should be handled by an external routine
 \label{fig:bidirectional_coupling_scheme}
 \end{figure}
 
-Provided that data exchange between an external routine and a numerical solver occurs at communication times $T_j$, the quench velocity algorithm is solved as described in Algorithm \ref{alg:weak_coupling}.
+In both cases, the initial quench length is assumed at the beginning of the co-simulation. Between the time steps of the external routine, the numerical solver can handle the problem with an adaptive time step smaller than the communication points $T_j$.
+
+Regardless the type of exchange of signals used, provided that data exchange between an external routine and a numerical solver occurs at communication times $T_j$, the quench velocity algorithm is solved as described in Algorithm~\ref{alg:weak_coupling}.
 
 \begin{algorithm}
   \caption{Weak Coupling between a numerical solver and quench velocity estimator.}
@@ -104,12 +117,10 @@ Provided that data exchange between an external routine and a numerical solver o
     \STATE assume initial quench position $x_{1,j-1}$ 
     \STATE \textbf{for} $j=1,2,...,N$ \textbf{do}
     \STATE \hspace{0.5cm} solve temperature distribution at time $T_j$
-    \STATE \hspace{0.5cm} extrapolate solver results $x_{2,j}$ to external routine time $T_{j-1}$ (only for bi-directional case)
+    \STATE \hspace{0.5cm} send solver results $x_{2,j}$ to external routine time $T_{j-1}$ (only for bi-directional case)
     \STATE \hspace{0.5cm} estimate new quench position $x_{1,j}$ for a quench front
     \STATE \hspace{0.5cm} assign quench position $x_{1,j}$ to new nodes for solver time  $T_j$
   \end{algorithmic}
 \end{algorithm}
 
-As already mentioned, the quench velocity can be: $(i)$ based on available measurements, $(ii)$ calculated numerically, $(iii)$ calculated analytically according to quench velocity equations available in literature. The first 2 above-mentioned methods to calculate quench velocity would require one-directional exchange of signals. If quench velocity is estimated analytically, one can choose between the one-directional and bi-directional case depending on whether the formula requires input data from the solver such as an updated material properties repository.
-
-For the purpose of this thesis, the quench velocity is estimated numerically based on a one-directional exchange of signals.
+In this thesis, the quench velocity is estimated numerically based on a one-directional exchange of signals.

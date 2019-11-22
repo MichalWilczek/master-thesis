@@ -1,0 +1,50 @@
+The quench velocity-based analysis seems to be a promising tool when the analysis of large thermal domains is simulated. It is faster compared to the standard approach especially when the insulation is included in the geometry. If this method is used, a certain error should be assumed with respect to the evolving resistive voltage and hot spot temperature. It was proven that because of the co-simulation, both of these values will always be underestimated with respect to the standard solution of a numerical solver such as ANSYS. As it was presented in this section, the total error can be estimated as a function of mesh refinement. Two cases with the longitudinal mesh size of 10 and 20 mm showed an error which in most of the cases converged to a certain value. The mesh size across the insulation layer was chosen to obtain a solution in an assumed tolerance range. 
+
+For the purpose of future multi-strand analysis, a certain tolerance for a relative error is assumed with respect to the standard solution. Two cases are summarised. The analysis without an external insulation layer is presented in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_without_insulation}. The tolerances are based on relative errors at $t=0.01~\text{s}$ of corresponding parameters as well as the final relative errors to which the parameters converged to. When multiple quenches are considered in the 1D domain, the final error should remain between the initial error and the convergence value because separate quenches are initiated at different instants..
+
+ \begin{table}[H]
+    \caption{Tolerance range for a quench velocity-based analysis without insulation.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ cc | c | cc }  
+        
+        \hline
+        \multicolumn{2}{c|}{mesh size} & \multirow{2}{*}{time step, \textmu s} & \multicolumn{2}{|c}{relative error tolerance} \\
+        
+        strand, m & insulation, \textmu m &  & $V_\text{res}$ & $T_\text{hot spot}$ \\
+        \hline
+        10 & 10 & [100, 1000] & -15\% & $>-5\%$ \\
+        20 & 10 & [100, 1000] & -20\% & $>-5\%$ \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_tolerance_range_without_insulation} 
+ \end{table}
+ 
+The analysis with insulation is shown in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_with_insulation}. Since the relative error of a hot spot temperature did not converge, its tolerance was assumed to be three times higher than its maximum value at $t=0.3~\text{s}$.
+
+ \begin{table}[H]
+    \caption{Tolerance range for a quench velocity-based analysis with insulation.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ cc | c | cc }  
+        
+        \hline
+        \multicolumn{2}{c|}{mesh size} & \multirow{2}{*}{time step, \textmu s} & \multicolumn{2}{|c}{relative error tolerance} \\
+        
+        strand, m & insulation, \textmu m &  & $V_\text{res}$ & $T_\text{hot spot}$ \\
+        \hline
+        10 & 10 & [100, 1000] & -5\% & -5\% \\
+        20 & 10 & [100, 1000] & -20\% & -10\% \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_tolerance_range_with_insulation} 
+ \end{table}
+ 

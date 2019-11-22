@@ -1,7 +1,15 @@
 
-In this part of the section, standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in Section \ref{subsection: 1D_quench_propagation_no_insulation}. The aim of this study was to find the proper mesh size as well as the time step at which the simulation of 1D thermal quench propagation is relatively accurate. The study with number of nodes varying from 50 up to 5000 was conducted over a 1 metre-long domain. The results from the analysis with 5000 nodes are used as a benchmark. 
+In this study, the standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in Section \ref{subsection: 1D_quench_propagation_no_insulation}. 
 
-\begin{figure}[h!]
+It is interesting to mention that the initial Gaussian profile of temperature over the domain (see Fig. \ref{fig: init_gauss_temp_distr}) stores a different value of energy in the strand depending on the mesh size. The initial energy in the discretised strand domain is calculated as
+\begin{equation}
+    E_\text{initial} = \sum_{i=1}^{n-1} V_{i,~i+1}~C_\text{v, strand}(\frac{T_i+T_{i+1}}{2})~\frac{T_i+T_{i+1}}{2},
+\end{equation}
+where $n$ -- number of nodes in the initially quenched zone, $V_{i,~i+1}$ -- volume of the domain between two neighbouring nodes, $C_\text{v, strand}$ -- volumetric heat capacity over an average temperature, $T_i$ -- temperature of node $i$, $T_{i+1}$ -- temperature of the neighbouring node $i+1$.
+
+The relation between the initially deposited energy in the strand and the number of nodes over a 1 metre-long domain is presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. The exact energy deposition starts converging for the mesh refinement in the range of 500 and 1000 nodes. The lower number of nodes would cause the quench front being too slow with respect to the result obtained from a denser mesh.
+
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
@@ -16,17 +24,15 @@ In this part of the section, standard thermal numerical analysis based on LINK33
           \addplot[blue, mark=*] table[x=nodes,y=energy,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/energy_deposition.csv};
         \end{axis}
     \end{tikzpicture}
-    \caption{Initial Energy deposition along the strand as a function of number of nodes.}
+    \caption{Initial energy deposition along the strand as a function of number of nodes in a 1 metre-long domain.}
     \label{fig: q_vel_modelling_energy_deposition}
 \end{figure}
 
-Moreover, three different time step ranges were tested to check how long the analysis should take to converge to the proper quench velocity value. The time step ranges in which ANSYS could choose step automatically were as follows:  $t= \{[1, 10], [10, 100], [100, 1000]\}~\mu \text{s}$. The results for quench velocity for first two ranges did not vary by more than 1\%. The largest time step range was causing the increase of quench front velocity. For the sake of decreasing the computing power for the analyses, the middle time step range,  $t=[10, 100]~\mu \text{s}$ is further analysed since it results in the error in the acceptable range.
+The first analyses were conducted with the mesh size of 1 mm (1000 nodes), as it was recommended in Section~\ref{subsection: 1D_quench_propagation_conclusions}. Three different time step ranges, $t=\{[1, 10], [10, 100], [100, 1000]\}~\upmu \text{s}$ were tested to verify the maximum time step at which the analysis remained within an acceptable error. The results for quench velocity for the first two remained in the acceptable relative error range of~0.2\%. The largest time step range increased the quench front velocity by 5\%. The middle time step range of $t=[10, 100]~\upmu \text{s}$ is further analysed and compared for a different mesh size as it gives an error within specified tolerance. Moreover, it is a favourable choice for the sake of decreasing the computing needs for the analyses with respect to the time step range of $t= [1, 10]~\upmu \text{s}$. 
 
-It is interesting to mention that the initial Gaussian distribution of temperature over the domain (see Fig. \ref{fig: init_gauss_temp_distr}) stores a different value of energy in the strand depending on the mesh size, as presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. According to the graph, one can expect the exact solution at the level of 500 nodes. Lower number of nodes would cause the quench front being to slow with respect to the benchmark solution.
+The study over a 1 metre-long domain was conducted with a varying number of nodes, $n=\{50, 100, 500, 1000, 2000, 5000\}$. The results from the analysis with 5000 nodes are used as a benchmark with a time step of $t=[10, 100]~\upmu \text{s}$. With the mesh size of 1000 nodes, as presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error for an incremental quench velocity value during the analysis equals less than 1\%. The average quench velocity is equal to $v_\text{quench}=6.81~\frac{\text{m}}{\text{s}}$.
 
-With the mesh size of 1000 nodes, the relative error with respect to the benchmark solution varied by far less than 1\% when temperature distribution over the entire domain was considered at final time of the analysis, $t = 0.1~\text{s}$. As presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error for quench velocity value during the analysis reaches less than 1\% for the number of nodes equal to 1000, too. 
-
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
@@ -49,9 +55,9 @@ With the mesh size of 1000 nodes, the relative error with respect to the benchma
     \label{fig: q_vel_modelling_v_quench_rel_error_no_insulation}
 \end{figure}
 
-To conclude, the analysis with 1000 nodes as well as with the time step range of $t=[10, 100]~\mu \text{s}$ results in the general error less or equal to 1\% with respect to the benchmark solution. Therefore, it will be used as a further benchmark result for quench velocity simulation presented in next section. It is an acceptable compromise between  accuracy and time of the simulation. In 1D thermal quench propagation, computing time rises linearly with the number of nodes if the insulation is not considered, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}.
+The analysis with 1000 nodes and a time step in the range of $t=[10, 100]~\upmu \text{s}$ is used as a further benchmark result for quench velocity simulation presented in the next section. It is an acceptable compromise between the accuracy and computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in 1D thermal quench propagation, computing time rises monotonically with mesh refinement if the insulation is not considered. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
@@ -62,11 +68,19 @@ To conclude, the analysis with 1000 nodes as well as with the time step range of
           xmin=0,
           xtick={0,1000,2000,...,5000},
           xticklabel style={/pgf/number format/fixed},
-          xmax=5000
+          xmax=5000,
+          legend pos=north west
           ]
           \addplot[blue, mark=*] table[x=nodes,y=time,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/heat_balance_computing_time.csv};
+          \addplot[red, dashed] table[x=nodes,y=linear_approx,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/heat_balance_computing_time.csv};
+          
+          \legend{
+          computing time,
+          linear approximation
+          }
+          
         \end{axis}
     \end{tikzpicture}
-    \caption{Computing time vs. number of nodes.}
+    \caption{Computing time as a function of number of nodes.}
     \label{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}
 \end{figure}

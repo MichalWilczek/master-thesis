@@ -6,14 +6,33 @@ The mass density is assumed to be constant and equal to $\rho = 6000~\text{kg/m}
 % NbTi specific heat capacity
 \subsubsection{Specific Heat Capacity}
 Volumetric heat capacity of Nb-Ti is estimated by means of a piece-wise polynomial function which takes into account a linear magnetic dependence below the critical temperature. The critical temperature is calculated as: 
+
 \begin{equation}
     T_\text{c}(B) = T_\text{c0}\cdot(1-\frac{B}{B_\text{c20}})^{0.59},
 \end{equation}
-where $T_\text{c0}$ -- critical temperature for $B=0~\text{T}$, $B_\text{c20}$ -- critical magnetic field for $T=0~\text{K}$. In both parameters, current density is equal to zero.
+where $T_\text{c0}$ -- maximum critical temperature for $B=0~\text{T}$, $B_\text{c20}$ -- maximum upper critical magnetic field for $T=0~\text{K}$. Their numerical values for Nb-Ti are presented in Table~\ref{table: appendix_nb_ti_crit_temp_params}. In both parameters, the current density is equal to zero. 
+
+\newpage
+\begin{table}[h!]
+    \caption{Critical temperature parameters for Nb-Ti~\cite{empirical_scaling_formulas_for_critical_current}.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        $T_\text{c0}$ & 9.2 & [K] \\
+        $B_\text{c20}$ & 14.5 & [T] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: appendix_nb_ti_crit_temp_params} 
+ \end{table}
 
 The volumetric heat capacity is calculated in the following manner: 
 \begin{equation}
-    Cp_\text{ NbTi}(T, T_\text{c}) = \frac{\text{a}_0 + \text{a}_1\cdot T^{1} + \text{a}_2\cdot T^{2} + \text{a}_3\cdot T^{3}+ \text{a}_4\cdot T^{4}} {\rho_{Nb-Ti}},
+    C_\text{v, Nb-Ti}(T, T_\text{c}) = \frac{\text{a}_0 + \text{a}_1\cdot T^{1} + \text{a}_2\cdot T^{2} + \text{a}_3\cdot T^{3}+ \text{a}_4\cdot T^{4}} {\rho_{Nb-Ti}},
 \end{equation}
 where $a$ -- fit parameters presented in Table \ref{table:nbti_parameters}.
 
@@ -40,7 +59,7 @@ where $a$ -- fit parameters presented in Table \ref{table:nbti_parameters}.
      \label{table:nbti_parameters} 
 \end{table}
 
-As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti heat capacity at critical temperature. Since the critical temperature decreases with rise of magnetic field strength, the transition occurs at lower temperatures when higher B-field is applied.
+As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti heat capacity at critical temperature. Since the critical temperature decreases with rise of magnetic field strength, the transition occurs at lower temperatures when a higher B-field is applied.
  
 \begin{figure}[h!]
     \centering

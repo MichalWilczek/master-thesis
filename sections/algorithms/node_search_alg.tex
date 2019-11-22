@@ -1,5 +1,5 @@
 
-In this section, an algorithm assigning the nodes to the quenched and non-quenched zones in a discretised domain is explained. Regardless the manner how the quench velocity is calculated, the external routine will always understand the quench length as if it was a continuous function of time. Therefore, it is expected that the calculated quench position ~$L$ in a given time will differ from the available positions of a discrete meshed geometry in a numerical solver. 
+Regardless the manner how the quench velocity is calculated, the external routine will always understand the quench length as if it was a continuous function of time. Therefore, it is expected that the calculated quench position~$L$ in a given time will differ from the available positions of a discrete meshed geometry in a numerical solver. Therefore, it is important to create an algorithm assigning the nodes to the quenched and non-quenched zones in a discretised domain.
 
 The quench zone assignment algorithm is presented in Fig. \ref{fig:node_search_algo}. It searches the node $N_\text{search}$ whose geometric position is below the assumed error,~$\epsilon$ compared to the quench length $L$ calculated on the side of an external routine estimating quench velocity. At each time step the algorithm checks whether $N_\text{search}$ is within the space $N$ and ${N+x}$ when jump search is considered. In case of a dense mesh, the step control doubles if the right zone ${[N+(a-1)x, N+ax]}$ is not found after 5 iterations. When the node space ${[N+(a-1)x, N+ax]}$ contains the searched node, it uses the binary search to find the node fulfilling the condition ${\mid L(N_\text{search}) - L \mid \geq \epsilon}$. 
 
@@ -35,14 +35,14 @@ The quench zone assignment algorithm is presented in Fig. \ref{fig:node_search_a
 \node[scale = 1, blue] at (1.5, -1.4) {$L$};
 \node at (-1, -0.8) {b)};
 \end{tikzpicture}
-\caption{ a) Jump search; b) Bi-section search}
+\caption{ a) Jump search; b) Bi-section search.}
 \label{fig:node_search_algo}
 \end{figure}
 
-Provided that searching starts at node $N$, quench length calculated in Python is $L$, searching error is $\epsilon$, step control equals $x$, number of step controls applied equals $a$, the problem is solved as described in Algorithm \ref{alg:node_searching}.
+Provided that searching starts at node $N$, quench length calculated in the external routine is $L$, searching error is $\epsilon$, step control equals $x$, number of step controls applied equals $a$, the problem is solved as described in Algorithm \ref{alg:node_searching}.
 
-\begin{algorithm}
-    \caption{Node Searching}
+\begin{algorithm}[H]
+    \caption{Quench Zone Assignment Algorithm.}
     \label{alg:node_searching}
     \begin{algorithmic}[1]
     \STATE \textbf{while} $L(N) < L$ \textbf{do}
@@ -57,4 +57,4 @@ Provided that searching starts at node $N$, quench length calculated in Python i
     \end{algorithmic}
 \end{algorithm}
 
-The algorithm also works if the mesh is too coarse or if $\epsilon$ is too small to find the right node with binary search. In such a case, the closest node to analytic length is chosen.
+The algorithm also works if the mesh is too coarse or if $\epsilon$ is too small to find the right node with binary search. In such a case, the closest node to the length obtained analytically is chosen.

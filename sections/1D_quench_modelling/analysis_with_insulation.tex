@@ -1,56 +1,41 @@
 
-In this section, the 1D coil is analysed with an external insulation layer. In the superconducting magnet design community, an assumption is often proposed to simulate the materials behaviour outside of the superconducting cable as a single domain characterised by the properties of G10 or Kapton. These are well known material properties which are also thoroughly examined at cryogenic temperatures. Therefore, an assumption is made in this thesis that the thermal material properties of both S2-glass and D10 are similar to the material G10.
+\subsubsection{Geometry, Material Properties and Mesh}
 
-As it was described at the beginning of the chapter, the longitudinal heat transfer inside the insulation is assumed to be negligible with respect to the transversal one. It is a reasonable assumption because the thermal diffusivity of the strand is several orders of magnitude higher than the one of the insulation layer, i.e. G10. It can be proven by calculating the thermal diffusivity ratio between the strand and insulation, as shown in (\ref{eqn: diffusivity_strand_to_insulation_ratio}). As presented in Fig. \ref{fig:diffusivity_strand_to_insulation_ratio}, the thermal diffusivity ratio decreases with rise of temperature but the insulation thermal diffusivity still remains 3 orders of magnitude lower with respect to the strand.
+In this section, the 1D coil is analysed with an external insulation layer. Because of the lack of data about thermal material properties of D10 and S2-glass at cryogenic temperatures, it is assumed in this thesis that the region outside of the composite strand is homogenised and represented by G10. G10 is a material widely known and applied in the superconducting magnet design community. Its material properties are presented in Appendix~\ref{appendix_material_properties_description}.
 
+The longitudinal heat transfer inside the insulation is assumed to be negligible with respect to the transversal one. In order to prove the validity of this assumption, the thermal diffusivity of a composite strand was compared with the one of the insulation layer, i.e. G10. The ratio of two thermal diffusivities is calculated as
 \begin{equation}
-    \frac{\alpha_\text{strand}}{\alpha_\text{ins}} = \frac{k_\text{strand}}{k_\text{ins}}~\frac{C_\text{v, ins}}{C_\text{v, strand}}
+    \frac{\alpha_\text{strand}}{\alpha_\text{ins}} = \frac{k_\text{strand}}{k_\text{ins}}~\frac{C_\text{v, ins}}{C_\text{v, strand}},
     \label{eqn: diffusivity_strand_to_insulation_ratio}
 \end{equation}
+where $\alpha_\text{strand}$ -- thermal diffusivity of a strand, $\alpha_\text{ins}$ -- thermal diffusivity of the insulation layer, $k_\text{ins}$~-- thermal conductivity of the insulation layer, $C_\text{v, ins}$ -- volumetric heat capacity of the insulation layer. 
 
-\begin{figure}[h!]
+As presented in Fig. \ref{fig:diffusivity_strand_to_insulation_ratio}, the longitudinal thermal diffusivity of the strand is in the range of 2 and 5 orders of magnitude higher than the one of the insulation layer. The thermal diffusivity ratio decreases with rise of temperature but still remains 2 orders of magnitude lower with respect to the strand.
+
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
           width=0.7\linewidth, 
           height = 4.5cm,
+          ymode=log,
+          xmode=log,
           xlabel={$T,~\text{K}$},
-          ylabel={$\frac{\alpha_{strand}}{\alpha_{ins}}$},
-          xmin=0.0,
-          ymin=0.0,
-          xmax=50.0
+          ylabel={$\frac{\alpha_\text{strand}}{\alpha_\text{ins}}$},
+          xmax=300.0
           ]
-          \addplot table[x=temperature,y=diffusivity_ratio,col sep=comma] {sections/1D_quench_modelling/figures/diffusivity_strand_insul_ratio.csv}; 
+          \addplot table[x=temperature,y=diffusivity_ratio,col sep=comma] {sections/1D_quench_modelling/figures/other/diffusivity_strand_insul_ratio.csv}; 
         \end{axis}
     \end{tikzpicture}
-    \caption{Strand equivalent thermal diffusivity to insulation thermal diffusivity ratio for $B=2~\text{T}$ and $f=2.2$}
+    \caption{Strand equivalent thermal diffusivity to insulation thermal diffusivity ratio for $B=2~\text{T}$ and $f=2.2$.}
     \label{fig:diffusivity_strand_to_insulation_ratio}
 \end{figure}
 
-With specified assumptions, the 3D strand domain can be transformed into a 1D+1D domain including the strand as well as the insulation, as presented in Fig. \ref{fig: 1d_strand_geometry_with_insulation}. Each of the insulation 1D domains orthogonal to the 1D strand is characterised by an equivalent length, $L_\text{ins}$ and a conduction area, $A_\text{ins, cond}$. Both parameters should be chosen to keep the total heat capacity of two systems equal. $L_\text{ins}$ is calculated by dividing the cross-sectional insulation area by an average perimeter of the strand and the external insulation layer, as shown in (\ref{eqn:cross_sectional_area_insulation}), (\ref{eqn:average_perimeter}) and (\ref{eqn:equivalent_insulation_length}). Such a formula allows for using this approximation also in case if both the strand and the insulation are of the same shapes, e.g. if they are rectangles or circles. As shown in (\ref{eqn:equivalent_insulation_element_area}), each orthogonal 1D insulation domain occupies a quarter of the insulation volume. $A_\text{ins, cond}$ should be divided by the number of nodes which are created along the 1D strand domain.
+With specified assumptions, the 3D strand domain can be transformed into a 1D+1D domain including the strand as well as the insulation, as presented in Fig. \ref{fig: 1d_strand_geometry_with_insulation}. Each of the 1D insulation domains orthogonal to the 1D strand is characterised by an equivalent length, $L_\text{ins}$ and a conduction area, $A_\text{ins, cond}$. Both parameters should be chosen in manner to obtain the total volume of the insulation equal for two cases: 1D+1D and 3D. It allows for obtaining the same volumetric heat capacity for both cases.
 
-\begin{equation}
-    A_\text{ins} = a^2 - \frac{\pi d_\text{strand}^2}{4}
-    \label{eqn:cross_sectional_area_insulation}
-\end{equation}
-
-\begin{equation}
-    p_\text{avg} = \frac{4 a + \pi d_\text{strand}}{2} 
-    \label{eqn:average_perimeter}
-\end{equation}
-
-\begin{equation}
-    L_\text{ins} = \frac{A_\text{ins}}{p_\text{avg}}
-    \label{eqn:equivalent_insulation_length}
-\end{equation}
-
-\begin{equation}
-    A_\text{ins, cond} = \frac{1}{4}~\frac{ V_\text{ins}}{L_\text{ins}}~\frac{1}{n_\text{nodes, strand}}= \frac{1}{4}~\frac{ A_\text{ins} ~ L_{winding}}{L_\text{ins}}~\frac{1}{n_\text{nodes, strand}}
-    \label{eqn:equivalent_insulation_element_area}
-\end{equation}
-
-\begin{figure}[h!]
+\newpage
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale = 1]
         \filldraw[blue] (-0.941,-0.941) rectangle (0.941,0.941);
@@ -98,14 +83,38 @@ With specified assumptions, the 3D strand domain can be transformed into a 1D+1D
         % draw arrow
         \draw[thick, black, ->] (2.2,0) -- (3.2,0);
     \end{tikzpicture}
-    \caption{3-dimensional translation of a 1D+1D strand domain in ANSYS}
+    \caption{3-dimensional transformation of a 1D+1D strand domain in ANSYS.}
     \label{fig: 1d_strand_geometry_with_insulation}
 \end{figure}
 
-The strand geometry input parameters as well as the initial conditions with respect to the Gaussian temperature distribution remain the same with respect to the analysis described in Section~\ref{subsection: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_geometry_parameters}. The additional parameters mainly corresponding to the insulation are described in Table \ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ is four times larger.
+In order to define the geometric parameters for the insulation layer, one should calculate the insulation cross-sectional area as
+\begin{equation}
+    A_\text{ins} = a^2 - \frac{\pi d_\text{strand}^2}{4}, 
+    \label{eqn:cross_sectional_area_insulation}
+\end{equation}
+where $a$ -- strand side, $d_\text{strand}$ -- strand diameter. Then, the average insulation perimeter is estimated as
+\begin{equation}
+    p_\text{avg} = \frac{4 a + \pi d_\text{strand}}{2}.
+    \label{eqn:average_perimeter}
+\end{equation}
+With two first formulae one can calculate the equivalent insulation length as 
+\begin{equation}
+    L_\text{ins} = \frac{A_\text{ins}}{p_\text{avg}}.
+    \label{eqn:equivalent_insulation_length}
+\end{equation}
+Calculating the equivalent insulation length in such a manner allows for using this approximation also in case if both the strand and the insulation are of the same shapes, e.g. if they are rectangles or circles. The conduction area of transverse elements is calculated as
+\begin{equation}
+    A_\text{ins, cond} = \frac{1}{4}~\frac{ V_\text{ins}}{L_\text{ins}}~\frac{1}{n_\text{nodes, strand}}= \frac{1}{4}~\frac{ A_\text{ins} ~ L_{winding}}{L_\text{ins}}~\frac{1}{n_\text{divisions, strand}},
+    \label{eqn:equivalent_insulation_element_area}
+\end{equation}
+where $V_\text{ins}$ -- total insulation volume, $n_\text{divisions, strand}$ -- number of divisions applied along the 1D strand domain. One should remember that the end nodes of an analysed geometry, where heat only flows in one longitudinal direction, should be divided by two.
 
-\begin{table}[h!]
-    \caption{Analysis input parameters} 
+\subsubsection{Initial and Boundary Conditions}
+
+The strand geometry input parameters as well as the initial conditions with respect to the Gaussian temperature profile remain the same with respect to the analysis described in Section~\ref{subsection: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_analysis_init_temp_input_parameters}. The time stepping is also applied, as presented in Table \ref{table: 1d_quench_propagation_analysis_time_stepping_input_parameters}, as well as the heat source over the strand with $I=100~\text{A}$. The additional parameters corresponding to the insulation are described in Table \ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. 
+
+\begin{table}[H]
+    \caption{Insulation input parameters.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -113,57 +122,33 @@ The strand geometry input parameters as well as the initial conditions with resp
     \begin{center}
         \begin{tabular}{ ccc }  
         \hline
-        time total & 0.1 & [s] \\   
-        time step & 10 & [\textmu s] \\   
-        number of elements (strand) & $10^4$ & [-] \\   
-        number of nodes (strand) & $10^4+1$ & [-] \\ 
-        number of elements (insulation) & 240 024 & [-] \\
         $L_\text{ins}$ & 0.1679 & [mm] \\
-        $A_\text{ins, cond}$ & 0.0745 & [$\text{mm}^2$] \\
+        mesh size (insulation) & 28 & [\textmu m] \\
         \hline 
         \end{tabular}
     \end{center}  
      \label{table: 1d_quench_propagation_geometry_parameters_with_insulation} 
  \end{table}
 
-Similarly to Section \ref{subsection: 1D_quench_propagation_no_insulation}, three time steps were compared for $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2}. The methodology of calculating the quench velocity remained the same. The relative error was estimated for: 
-\begin{itemize}
-    \item quench velocity, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison},
-    \item temperature along the strand length at $t=0.1~\text{s}$, as presented in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}.
-\end{itemize}
+Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ is four times larger.
 
-The difference in quench velocity estimation in both software is less than 1\%, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison}. As shown in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}, the relative error oscillates in the range of +2\% at the hot spot to -2\% at the quench front. It means that ANSYS overestimates the hot spot temperature and underestimates it at the quench front with respect to COMSOL.
+\subsubsection{Results}
 
-\begin{table}[h!]
-    \caption{Quench velocity comparison in COMSOL and ANSYS} 
-    \vspace{-1.em} 
-    \fontsize{10}{10}
-    \selectfont 
-    \renewcommand{\arraystretch}{1.5}
-    \begin{center}
-        \begin{tabular}{ ccc }  
-        \hline
-        $v_\text{quench, COMSOL}$ & 2.308 & [m/s] \\
-        $v_\text{quench, ANSYS}$ & 2.310 & [m/s] \\
-        Relative error & 0.108 & [\%] \\
-        \hline 
-        \end{tabular}
-    \end{center}  
-     \label{table: 1d_with_insulation_v_quench_comparison} 
- \end{table}
+Similarly to Section \ref{subsubsection:1d_quench_propagation_analysis_results_no_insulation}, the results are compared at three time steps $t=\{0.03, 0.06, 0.1\}$ s, as presented in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.7\linewidth, 
-          height = 4.5cm,
+          width=0.8\linewidth, 
+          height = 5.0cm,
           xlabel={$L_\text{strand},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
           ymin=0.0,
-          xmax=1.0
+          xmax=1.0,
+          legend pos=north east
           ]
         %   Initial temperature curve
           \addplot[smooth, black] table[x=posx,y=t_0_0_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
@@ -178,18 +163,58 @@ The difference in quench velocity estimation in both software is less than 1\%, 
           \addplot[smooth, blue] table[x=posx,y=t_0_06_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
           \addplot[smooth, blue] table[x=posx,y=t_0_1_ans,col sep=comma] {sections/1D_quench_modelling/figures/results_with_insulation/10ms_1e4elemsf2_2ins_insTem_in.csv};
           
+          \legend{
+          $T_\text{init}$ profile,
+          COMSOL,,,
+          ANSYS
+          }
+          
         \end{axis}
     \end{tikzpicture}
-    \caption{Temperature distribution calculated in COMSOL (red) and ANSYS (blue) for three time frames: $t=\{0.03, 0.06, 0.1\}$ s.}
+    \caption{Temperature distribution calculated in COMSOL and ANSYS for three time steps: $t=\{0.03, 0.06, 0.1\}$ s.}
     \label{fig: 1d_with_insulation_temp_along_strand_comparison}
 \end{figure}
 
-\begin{figure}[h!]
+        %   legend pos=north west
+        %   ]
+        %   \addplot[blue, mark=*] table[x=nodes,y=time,col sep=comma] {sections/1D_quench_modelling/figures/other/computing_time_estimation_vs_strand_length.csv};
+        %   \addplot[red, dashed] table[x=nodes,y=time,col sep=comma] {sections/1D_quench_modelling/figures/other/computing_time_estimation_trendline.csv};
+        %   \legend{
+        %   computing time,
+        %   linear approximation
+        %   }
+
+
+The methodology of calculating the quench velocity as well as the relative error remained the same. The relative error was estimated for: 
+\begin{itemize}
+    \item quench velocity, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison},
+    \item temperature along the strand length at $t=0.1~\text{s}$, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2_with_insulation}.
+\end{itemize}
+
+\begin{table}[H]
+    \caption{Quench velocity comparison in COMSOL and ANSYS.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        $v_\text{quench, COMSOL}$ & 2.308 & [m/s] \\
+        $v_\text{quench, ANSYS}$ & 2.310 & [m/s] \\
+        relative error & 0.108 & [\%] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_with_insulation_v_quench_comparison} 
+ \end{table}
+
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
-          height = 4.5cm,
+          height = 4.0cm,
           xlabel={$L_\text{strand},~\text{m}$},
           ylabel={Relative error, \%},
           xmin=0.0,
@@ -201,3 +226,6 @@ The difference in quench velocity estimation in both software is less than 1\%, 
     \caption{Relative error along the strand for $t=0.1~\text{s}$.}
     \label{fig: ans_comsol_comparison_f_2_2_with_insulation}
 \end{figure}
+
+The difference in quench velocity estimation in both software is less than 1\%, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison}. As shown in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}, the relative error oscillates in the range of +2\% at the hot spot to -2\% at the quench front. It means that ANSYS overestimates the hot spot temperature and underestimates it at the quench front with respect to COMSOL.
+

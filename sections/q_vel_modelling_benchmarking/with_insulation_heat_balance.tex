@@ -1,9 +1,9 @@
 
-In this part of the section, the heat balance - based analysis of a one metre-long strand was conducted with insulation. The created 1D+1D geometry does not vary with respect to Section \ref{subsection: 1D_quench_propagation_with_insulation} and is presented in Fig. \ref{fig: 1d_strand_geometry_with_insulation}. As it was proven in Section \ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, the longitudinal mesh of 1000 nodes with time step range of $t=[10, 100]~\mu \text{s}$ is sufficient to simulate a longitudinal quench propagation with a relative error lower than 1\%. Therefore, in this section, the attention is paid to the number of elements across the insulation which would assure the proper temperature distribution in the strand along its length. The analysis was conducted with 3, 5, 10, 20 and 30 elements across the insulation layer.
+As it was proven in Section \ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, the quench propagation analysis conducted with the mesh size of 1 mm and a time step in the range of $t=[10, 100]~\upmu \text{s}$ gives results remaining withing the tolerance of 1\%. Therefore, this section focuses on the mesh size across the insulation. The varying number of insulation nodes is set to $n=\{3, 5, 10, 20, 30\}$. The geometric assumptions as well as initial conditions were the same as in Section~\ref{subsection: 1D_quench_propagation_with_insulation}. 
 
-In Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the hot spot temperature was presented a variable of a number of elements across the insulation. One can notice that starting from 20 elements, the temperature reaches a stable value for each time step. As presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation}, the change of relative error for quench velocity was compared taking the solution with 30 elements as a benchmark. The average quench velocity for 20 insulation elements did not vary by more than 1\%. 
+As presented in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the hot spot temperature stabilises with 10-20 nodes used in the insulation zone. The solution with 30 nodes is used as a reference result. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
@@ -30,7 +30,9 @@ In Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the h
     \label{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}
 \end{figure}
 
-\begin{figure}[h!]
+In Fig.~\ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation}, the relative error for incremental quench velocity is presented. With 20 nodes across the insulation, the relative error of an average quench velocity remained withing the tolerance of~1\%.
+
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
@@ -41,34 +43,47 @@ In Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the h
           xtick={0,0.02,0.04,...,0.1},
           xticklabel style={/pgf/number format/fixed},
           xmin=0.0,
-          xmax=0.1
+          xmax=0.1,
+          legend pos=south east
           ]
           \addplot[blue, mark=*] table[x=time,y=10_ins_elems,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
           \addplot[red, mark=*] table[x=time,y=20_ins_elems,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
           
           \addplot[dashed, blue] table[x=time,y=10_ins_elems_average,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
           \addplot[dashed, red] table[x=time,y=20_ins_elems_average,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
+          
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{10 nodes}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{20 nodes}
         \end{axis}
     \end{tikzpicture}
-    \caption{Quench velocity relative error for 10 (in blue) and 20 (in red) elements across the insulation layer; average error marked with dashed lines.}
+    \caption{Quench velocity relative error for 10 and 20 nodes across the insulation layer; average relative error marked with dashed lines.}
     \label{fig: q_vel_modelling_v_quench_rel_error_with_insulation}
 \end{figure}
 
-It can be concluded that, if the simulation is supposed to be analysed, 20 insulation elements should be applied. It accounts for approximately $10~\mu\text{m}$ long insulation element. Similarly to Section \ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, the solution with 20 insulation elements will be used as a further benchmark result for quench velocity simulation presented in next section. In 1D thermal quench propagation with insulation layer, computing time rises linearly too, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}.
+20 nodes across the insulation layer accounts for the mesh size of $10~\upmu \text{m}$. Similarly to Section~\ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, this solution is used as a reference result for quench velocity-based analysis. The obtained average quench velocity is equal to $v_\text{quench}=2.18~\frac{\text{m}}{\text{s}}$.
 
-\begin{figure}[h!]
+In 1D thermal quench propagation with insulation layer, computing time rises monotonically with increase of number of nodes in the insulation layer, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}. The analysis with 20 nodes lasted over 2 hours. Therefore, further refinement is not recommended.
+
+\begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
           height = 4.5cm,
-          xlabel={Number of elements across insulation},
+          xlabel={Number of nodes across insulation},
           ylabel={Computing time, $\text{s}$},
           xmin=0,
           xtick={0,3,5,10,20,30},
           xticklabel style={/pgf/number format/fixed},
+          legend pos=north west
           ]
           \addplot[blue, mark=*] table[x=ins_elements,y=time,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_computing_time.csv};
+           \addplot[red, dashed] table[x=ins_elements,y=time_linear_approx,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_computing_time.csv};
+           
+          \legend{
+          computing time,
+          linear approximation
+          }
         \end{axis}
     \end{tikzpicture}
     \caption{Computing time vs. number of nodes.}

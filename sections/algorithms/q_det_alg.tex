@@ -1,10 +1,11 @@
 
-In this section, an algorithm detecting new quenches in a multi-strand domain is presented. It is only valid when a multi-filament geometry is analysed when a quenched winding heats up the neighbouring ones across the insulation layer. In detail, the algorithm detects quenches and initiates a new quench front propagation  when the temperature outside of the quenched zone exceeds the critical temperature of a superconductor. It is responsible for turn-to-turn propagation across the insulation layer between windings.
+When a multi-strand thermal quench problem is analysed, a quenched zone belonging to one winding heats up the neighbouring ones across the insulation layer. Therefore, it is required to create an algorithm that detects the temperature above the critical temperature, $T_\text{c}$ in windings where quench has not occurred, yet. In detail, the algorithm detects quenches and initiates a new quench front propagation  when the temperature outside of the quenched zone exceeds the critical temperature of a superconductor. It is responsible for turn-to-turn propagation across the insulation layer between windings.
 
-Provided that searching starts at node $N$, winding number is $W$, magnetic field strength of the winding $W$ is $B_W$, node temperature is $T_N$ and critical temperature of related winding is $T_{c,W}$, the problem is solved as described in Algorithm \ref{alg:quench_detection}.
+\newpage
+Provided that searching starts at node $N$, winding number is $W$, magnetic field strength of the winding $W$ is $B_W$, node temperature is $T_N$ and critical temperature of related winding is $T_{\text{c},~W}$, the problem is solved as described in Algorithm \ref{alg:quench_detection}.
 
-\begin{algorithm}
-    \caption{Quench detection algorithm description}
+\begin{algorithm}[H]
+    \caption{Quench detection algorithm description.}
     \label{alg:quench_detection}
     \begin{algorithmic}[1]
     \STATE \textbf{for} $N$ which is not quenched \textbf{do}

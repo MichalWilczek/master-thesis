@@ -1,0 +1,45 @@
+
+From magnet design standpoint, the important results to compare are: $(i)$ resistive voltage along the magnet coil, $(ii)$ hot spot temperature. Temperature is rarely measured in experiments due to low accessibility of space inside the magnet. It is physically deduced from resistive voltage verified across the magnet as quench propagates. The place where quench starts propagating is usually characterised by the highest temperature in the entire magnet during quench. Thus, its value allows for defining whether the materials reach their safety limits at which they loose mechanical, thermal or electro-magnetic properties leading to the magnet destruction.
+
+The comparison criteria for the standard heat balance equation analysis and quench velocity-based simulation are: 
+\begin{itemize}
+    \item number of nodes,
+    \item time step applied,
+    \item computing time,
+    \item relative error with respect to the hot spot temperature and resistive voltage.
+\end{itemize}
+
+The standard numerical solution and quench velocity-based study is conducted for two cases separately: 
+\begin{itemize}
+    \item 1D strand analysis without insulation layer,
+    \item 1D strand analysis with an external insulation layer.
+\end{itemize}
+
+In order to conduct a quench velocity-based analysis, the value of quench velocity in time is required. The standard heat balance equation analysis serves for two purposes: ($i$) reference model for a relative error, ($ii$) average quench velocity value to be used in the quench velocity-based model. The quench velocity in the standard numerical solution is calculated in a different manner with respect to Section \ref{section: 1d_quench_propagation_modelling} where the method was imposed by the STEAM-BBQ COMSOL tool. In this section, it is calculated as a quench position time derivative with time increment of~$\Delta t=0.01~\text{s}$. 
+
+The heat balance analysis aims at finding the mesh size and time step at which the analysis remains within the tolerance of 1\% of a relative error. As presented in Table~\ref{table: 1d_qv_benchmarking_tolerance_assumptions}, the tolerance criteria are different for the case with and without the insulation layer. The analysis with additional insulation layer requires more computing power. Therefore, the tolerance criteria for this case are less demanding. The total simulation time for bench-marking purposes equals $t=0.1~\text{s}$.
+
+\begin{table}[H]
+    \caption{Tolerance assumptions for a standard solver to define an accurate mesh size.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccccc }  
+        \hline
+        Solution type & Error type & Tolerance & Variable type & Time scope  \\
+        \hline
+        With insulation & Relative & 1\%  & Incremental quench velocity & $\Delta t=0.01~\text{s}$ \\
+        Without insulation & Relative & 1\% & Average quench velocity & $\Delta t=0.01~\text{s}$ \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_tolerance_assumptions} 
+ \end{table}
+
+The relative error range, in which the heat balance analysis is assumed to be accurate, is calculated as
+\begin{equation}
+    E_\text{r} = \frac{r_\text{ref}-r_{i}}{r_\text{ref}}~100\%,
+\end{equation}
+where $r_\text{ref}$ -- reference simulation with maximum number of nodes taken into consideration, $r_{i}$ -- compared analysis. This optimised result from the heat balance analysis is, then, taken as a reference solution and compared with the quench velocity-based methodology. The average quench velocity value also comes from this analysis. In addition, all material properties are based on NIST material library described in Appendix~\ref{appendix_material_properties_description}. 

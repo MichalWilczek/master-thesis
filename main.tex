@@ -33,6 +33,9 @@
 \usetikzlibrary{shapes,arrows,spy}
 \usepackage{verbatim}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
+\usepackage{multirow}
 
 \begin{document}
 
@@ -104,11 +107,7 @@
 \label{subsection: 1d_quench_propagation_geometry}
 \input{sections/1D_quench_modelling/geometry.tex}
 
-% \subsection{Geometry}
-% \label{subsection: 1d_quench_propagation_geometry}
-% \input{sections/1D_quench_modelling/geometry.tex}
-
-\subsection{1D Analysis without Insulation}
+\subsection{1D Analysis Without Insulation}
 \label{subsection: 1D_quench_propagation_no_insulation}
 \input{sections/1D_quench_modelling/analysis_no_insulation.tex}
 
@@ -133,7 +132,7 @@
 \label{subsection:quench_velocity_problematics}
 \input{sections/q_vel_modelling/quench_velocity_problematics.tex}
 
-\subsection{Co-simulation Modelling}
+\subsection{Co-simulation of an External Routine with Numerical Solver}
 \label{subsection:quench_velocity_cosimulation}
 \input{sections/q_vel_modelling/q_vel_cosimulation.tex}
 
@@ -165,30 +164,44 @@
 \clearpage
 \section{Quench Velocity Modelling Benchmarking}
 \label{section:quench_velocity_benchmarking}
-\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking.tex}
 
-\subsection{Analysis without Insulation}
+\subsection{Motivation}
+\input{sections/q_vel_modelling_benchmarking/motivation.tex}
+
+\subsection{Comparison Methodology}
+\input{sections/q_vel_modelling_benchmarking/methodology.tex}
+
+\subsection{1D Analysis Without Insulation}
 \label{subsection:quench_velocity_benchmarking_no_insulation}
 
-\subsubsection{Heat Balance - Based Analysis}
+\subsubsection{Heat Balance Analysis}
 \label{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
 
-\subsubsection{Quench Velocity - Based Analysis}
+\subsubsection{Quench Velocity-Based Analysis}
 \label{subsection:quench_velocity_benchmarking_no_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
 
-\subsection{Analysis with Insulation}
-\label{subsection:quench_velocity_benchmarking_with_insulation}
-\input{sections/q_vel_modelling_benchmarking/quench_velocity_benchmarking_with_insulation.tex}
+\subsubsection{Conclusion}
+\input{sections/q_vel_modelling_benchmarking/no_insulation_conclusion.tex}
 
-\subsubsection{Heat Balance - Based Analysis}
+\subsection{1D Analysis with Insulation}
+\label{subsection:quench_velocity_benchmarking_with_insulation}
+
+\subsubsection{Heat Balance Analysis}
 \label{subsection:quench_velocity_benchmarking_with_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_heat_balance.tex}
 
-\subsubsection{Quench Velocity - Based Analysis}
+\subsubsection{Quench Velocity-Based Analysis}
 \label{subsection:quench_velocity_benchmarking_with_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_quench_velocity.tex}
+
+\subsubsection{Conclusion}
+\input{sections/q_vel_modelling_benchmarking/with_insulation_conclusion.tex}
+
+\subsection{General Remarks}
+\input{sections/q_vel_modelling_benchmarking/general_remarks.tex}
+
 
 % SKEW QUADRUPOLE ANALYSIS - QUENCH DETECTION
 \clearpage
