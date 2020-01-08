@@ -1,5 +1,5 @@
 
-Similarly to Section~\ref{subsection:quench_velocity_benchmarking_no_insulation_quench_velocity}, the electro-thermal element, LINK68 is used along the strand. The insulation layer is represented by a thermal element LINK33 since no Joule effect occurs in this zone. Two time step ranges were chosen: $t=\{[10, 100], [100, 1000]\}~\upmu \text{s}$. The study over a 1 metre-long domain was conducted with a varying number of nodes, $n=\{50, 100, 1000\}$. The geometric assumptions as well as initial conditions were the same as in Section \ref{subsection: 1D_quench_propagation_with_insulation} without a heat source. The additional parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. In order to observe convergence of relative errors, the total simulation time was extended to $t=0.3~\text{s}$
+Similarly to Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}, the electro-thermal element LINK68 is used along the strand. Since no Joule heating occurs in the insulation layer, it is represented by a thermal element, LINK33. Two time step ranges were chosen: $t=\{[10, 100], [100, 1000]\}~\upmu \text{s}$. The study of a 1~metre-long domain was conducted with a varying number of nodes, $n=\{50, 100, 1000\}$ with a time step range of $t=[100, 1000]~\upmu \text{s}$ deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. The geometric assumptions as well as initial conditions were the same as in Section \ref{section: 1D_quench_propagation_with_insulation} without a heat source. The additional parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. In order to observe convergence of relative errors, the total simulation time was extended to $t=0.3~\text{s}$
 
 \begin{table}[H]
     \caption{Analysis input parameters.} 
@@ -10,6 +10,8 @@ Similarly to Section~\ref{subsection:quench_velocity_benchmarking_no_insulation_
     \begin{center}
         \begin{tabular}{ ccc }  
         \hline
+        parameter & value & unit \\
+        \hline
         communication time step & 0.0025 & [s] \\
         average quench velocity & 2.18 & [m/s] \\
         total simulation time & 0.3 & [s] \\
@@ -19,7 +21,7 @@ Similarly to Section~\ref{subsection:quench_velocity_benchmarking_no_insulation_
     \label{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity} 
 \end{table}
 
-Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution over a strand domain when 50 nodes are applied with a quench velocity-based methodology. The quench front lags behind the benchmark solution analogously to the case without the insulation layer.
+Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution over a strand domain when 50 nodes are applied with a quench velocity-based method. The quench front remains behind the benchmark solution analogously to the case without the insulation layer, as presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}.
 
 \begin{figure}[H]
 \centering
@@ -43,13 +45,11 @@ Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compare
           \addplot[red] table[x=position,y=t_0_03,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_1000_nodes_benchmark.csv};
           \addplot[red] table[x=position,y=t_0_06,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_1000_nodes_benchmark.csv};
           \addplot[red] table[x=position,y=t_0_1,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_1000_nodes_benchmark.csv};
-        %   \addplot[red] table[x=position,y=t_0_3,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/heat_balance_1000_nodes_benchmark.csv};
 
         %   Quench Velocity Modelling plots
           \addplot[blue] table[x=position,y=t_0_03,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_50_nodes.csv};
           \addplot[blue] table[x=position,y=t_0_06,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_50_nodes.csv};
           \addplot[blue] table[x=position,y=t_0_1,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_50_nodes.csv};
-        %   \addplot[blue] table[x=position,y=t_0_3,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_50_nodes.csv};
           
           \legend{
           $T_\text{init}$ profile,
@@ -57,8 +57,12 @@ Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compare
           quench velocity
           }
         \end{axis}
+        
+        \draw[black, thick, ->] (1,3) -- (2,3);
+        \node[scale = 1] at (2.8, 3) {$\vec{v}_\text{quench}$}; 
+        
     \end{tikzpicture}
-    \caption{Temperature distribution of a heat balance-based benchmark solution and a quench velocity-based solution with 50 nodes along the domain and 20 nodes across the insulation layer for three time steps: $t=\{0.03, 0.06, 0.1\}$~s.}
+    \caption{Temperature distribution of a heat balance-based benchmark solution and a quench velocity-based solution with 50 nodes along the domain and 20 nodes across the insulation layer for three time steps: $t=\{0.03, 0.06, 0.1\}$~s with a specified direction of quench velocity, $\vec{v}_\text{quench}$.}
     \label{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation}
 \end{figure}
 
@@ -136,11 +140,9 @@ Fig.~\ref{fig: q_vel_modelling_hot_spot_rel_error_with_insulation} shows the evo
           ]
           \addplot[blue, mark=*] table[x=time,y=50_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
           \addplot[red, mark=*] table[x=time,y=100_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
-        %   \addplot[green, mark=*] table[x=time,y=1000_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
           \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{50 nodes}
           \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{100 nodes}
-        %   \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1000 nodes}
-          
+
         \end{axis}
     \end{tikzpicture}
     \caption{Relative error of hot spot temperature for 50 and 100 nodes used for quench velocity-based simulation.}

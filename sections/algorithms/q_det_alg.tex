@@ -1,14 +1,13 @@
 
-When a multi-strand thermal quench problem is analysed, a quenched zone belonging to one winding heats up the neighbouring ones across the insulation layer. Therefore, it is required to create an algorithm that detects the temperature above the critical temperature, $T_\text{c}$ in windings where quench has not occurred, yet. In detail, the algorithm detects quenches and initiates a new quench front propagation  when the temperature outside of the quenched zone exceeds the critical temperature of a superconductor. It is responsible for turn-to-turn propagation across the insulation layer between windings.
+When a multi-strand thermal quench problem is analysed, a quenched zone belonging to one winding heats up the neighbouring ones across the insulation layer. Therefore, it is required to create an algorithm that detects the temperature above the critical temperature, $T_\text{c}$ in windings where quench has not occurred, yet. In detail, the algorithm detects quenches and initiates a new quench front propagation when the temperature outside of the quenched zone exceeds the critical temperature of a superconductor. In other words, it is responsible for turn-to-turn propagation across the insulation layer between different windings.
 
-\newpage
 Provided that searching starts at node $N$, winding number is $W$, magnetic field strength of the winding $W$ is $B_W$, node temperature is $T_N$ and critical temperature of related winding is $T_{\text{c},~W}$, the problem is solved as described in Algorithm \ref{alg:quench_detection}.
 
 \begin{algorithm}[H]
-    \caption{Quench detection algorithm description.}
+    \caption{Quench Detection.}
     \label{alg:quench_detection}
     \begin{algorithmic}[1]
-    \STATE \textbf{for} $N$ which is not quenched \textbf{do}
+    \STATE \textbf{for} $N$ not quenched \textbf{do}
     \STATE \hspace{0.5cm} check the winding $W$ which node $N$ belongs to
     \STATE \hspace{0.5cm} assign magnetic field $B_W$ of given winding $W$
     \STATE \hspace{0.5cm} calculate $T_{c,W}$ for given magnetic field $B_W$

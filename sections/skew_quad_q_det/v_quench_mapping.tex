@@ -1,0 +1,48 @@
+
+In order to conduct a quench velocity-based analysis with multiple strands, one should estimate the quench velocity for a varying values of magnetic field that can be found in the magnet. In the previous section, it was concluded that the maximum magnetic field in the skew quadrupole equals $B=3~\text{T}$ and occurs at the initial value of current, $I=86~\text{A}$. Moreover, as the current drops during the discharge, the quench velocity should also decrease because of the lower amount of energy deposited in the coil. Therefore, there are two main variables that have a direct impact on the quench velocity: 
+\begin{itemize}
+    \item magnetic field,
+    \item current.
+\end{itemize}
+These two parameters are examined in 1D standard simulations with geometries of a relatively short length. 
+
+\subsubsection{Adjustment of Insulation Layer}
+
+
+
+
+\subsubsection{Quench Velocity Map}
+
+\begin{figure}[H]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=0.7\linewidth, 
+          height = 5.5cm,
+          xlabel={$B$, $\text{T}$},
+          ylabel={$v_\text{quench}$, $\text{V}$},
+        %   xticklabel style={/pgf/number format/fixed},
+        %   yticklabel style={/pgf/number format/fixed},
+          xmin=0.0,
+          xmax=3.0,
+          ymin=0.0,
+          ymax=6.0,
+          legend pos = north west
+          ]
+          \addplot[black, mark=*] table[x=B_field,y=I_26,col sep=comma] {sections/skew_quad_q_det/figures/v_quench_map/v_quench_map.csv};
+          \addplot[red, mark=*] table[x=B_field,y=I_46,col sep=comma] {sections/skew_quad_q_det/figures/v_quench_map/v_quench_map.csv};
+          \addplot[blue, mark=*] table[x=B_field,y=I_66,col sep=comma] {sections/skew_quad_q_det/figures/v_quench_map/v_quench_map.csv};
+          \addplot[green, mark=*] table[x=B_field,y=I_86,col sep=comma] {sections/skew_quad_q_det/figures/v_quench_map/v_quench_map.csv};
+          
+          \legend{
+          $I=26~\text{A}$,
+          $I=46~\text{A}$,
+          $I=66~\text{A}$,
+          $I=86~\text{A}$
+          }
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Quench velocity map as a function of magnetic field and current.}
+    \label{fig: v_quench_map_current_b_field}
+\end{figure}

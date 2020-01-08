@@ -1,6 +1,6 @@
 
 % thermal conductivity
-\subsubsection{Thermal Conductivity}
+\subsection{Thermal Conductivity}
 G10 is an epoxy-impregnated fiberglass, thermally anisotropic. It means that its thermal conductivity along the fibers is higher than across them. In order to simplify computation in the scope of this thesis, the material is assumed to be isotropic. A conservative assumption is made which states that thermal conductivity of G10 in all directions is equal to the one which is normal to the direction of the fibers.
 G10 thermal conductivity as well as its specific heat capacity is approximated with the NIST polynomial interpolation as: 
 \begin{equation}
@@ -10,7 +10,7 @@ G10 thermal conductivity as well as its specific heat capacity is approximated w
 \\
 where $x(T)$ -- considered material property, $N$ -- order of polynomial, $a$ -- fit parameters described in Table \ref{table:nist_g10_k_parameters}.
 
-\begin{table}[h!]
+\begin{table}[H]
     \caption{Fit parameters for G10 thermal conductivity} 
     \vspace{-1.em} 
     \fontsize{10}{10}
@@ -29,7 +29,7 @@ where $x(T)$ -- considered material property, $N$ -- order of polynomial, $a$ --
 
 The thermal conductivity of G10 as a function of temperature is presented in Fig. \ref{fig:g10_k_plot}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -55,15 +55,14 @@ The thermal conductivity of G10 as a function of temperature is presented in Fig
 \end{figure}
  
 % mass density
- \subsubsection{Mass Density}
+ \subsection{Mass Density}
  The mass density is assumed to be constant and equal to $\rho = 1948~\text{kg/m}^{3}$.
 
 % specific heat capacity
-\newpage
-\subsubsection{Volumetric Heat Capacity}
+\subsection{Volumetric Heat Capacity}
 Specific heat capacity of G10 is based on equation described in (\ref{G10_polynomial_interpolation}) with fit parameters described in \ref{table:nist_g10_cp_parameters}. 
 
-\begin{table}[h!]
+\begin{table}[H]
     \caption{Fit parameters for G10 specific heat capacity} 
     \vspace{-1.em} 
     \fontsize{10}{10}
@@ -82,7 +81,7 @@ Specific heat capacity of G10 is based on equation described in (\ref{G10_polyno
 
 In order to convert specific into volumetric heat capacity, the polynomial function is divided by G10 density. The volumetric heat capacity of G10 is presented in Fig. \ref{fig:g10_cv_plot}.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}
     \begin{axis}[

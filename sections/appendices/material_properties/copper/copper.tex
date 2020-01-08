@@ -1,12 +1,13 @@
 
-\subsubsection{RRR Definition}
+\subsection{RRR Definition}
+\label{appendix:subsection_rrr_definition}
 Residual resistivity ratio, RRR is a parameter comparing copper resistivity at two different temperatures when no magnetic field is applied. It is calculated as: 
 \begin{equation}
 RRR = \frac{\rho(T_\text{high}, B=0~\text{T})}{\rho(T_\text{low}, B=0~\text{T})},
 \end{equation}
 where in NIST $T_\text{high}=273~\text{K}$ whereas $T_\text{low}=4~\text{K}$.
 
-\subsubsection{Resistivity}
+\subsection{Resistivity}
 Copper resistivity depends on temperature and RRR:
 \begin{equation}
     \rho_\text{N}(T, \text{RRR}) = \rho_\text{0}+\rho_\text{i}+\rho_\text{i0},
@@ -26,7 +27,7 @@ where:
 \end{equation}
 with fit parameters depicted in Table \ref{table:nist_resistivity_parameters}. 
 
-\begin{table}[h!]
+\begin{table}[H]
     \caption{Fit P-parameters for copper electrical resistivity} 
     \vspace{-1.em} 
     \fontsize{10}{10}
@@ -78,7 +79,7 @@ with $B$ -- magnetic field strength, $a$ -- fit parameters described in Table \r
 
 As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper rises with rise of temperature. It rises with increase of magnetic fields strength as well as with decrease of RRR.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -110,7 +111,7 @@ As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper ri
 \end{figure}
 
 %  thermal conductivity
-\subsubsection{Thermal Conductivity}
+\subsection{Thermal Conductivity}
 Copper thermal conductivity depends on temperature and RRR:
 \begin{equation}
     k_\text{N}(T, \text{RRR}) = \frac{1}{\text{W}_\text{0} + \text{W}_\text{i} + \text{W}_\text{i0}}, 
@@ -130,7 +131,7 @@ where:
 \\
 with fit parameters presented in Table \ref{table:nist_cu_k_parameters}.
 
-\begin{table}[h!]
+\begin{table}[H]
     \caption{Fit \textbeta- and P-parameters for copper thermal conductivity} 
     \vspace{-1.em} 
     \fontsize{10}{10}
@@ -161,7 +162,7 @@ with fit parameters presented in Table \ref{table:nist_cu_k_parameters}.
 
 As presented in Fig. \ref{fig:cu_k_plot}, the thermal conductivity of copper decreases with rise of magnetic field strength. One can also notice that the peak value of thermal conductivity is higher with increase of RRR. 
  
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -199,11 +200,11 @@ As presented in Fig. \ref{fig:cu_k_plot}, the thermal conductivity of copper dec
 \end{figure}
 
 % mass density 
-\subsubsection{Mass Density}
+\subsection{Mass Density}
 The mass density of copper is assumed to be constant and equal to $\rho = 8960~\text{kg/m}^{3}$.
 
 % Volumetric heat capacity 
-\subsubsection{Volumetric Heat Capacity}
+\subsection{Volumetric Heat Capacity}
 Copper specific heat capacity is approximated with a polynomial interpolation as: 
 \begin{equation}
     x(T) = 10^{\sum_{n=0}^{N} a_\text{n}(\log_\text{10}T)^{n}},
@@ -211,7 +212,7 @@ Copper specific heat capacity is approximated with a polynomial interpolation as
 \\
 where $N$ -- order of polynomial, a -- fit parameters described in Table \ref{table:nist_cu_cp_parameters}. 
 
-\begin{table}[h!]
+\begin{table}[H]
     \caption{Fit parameters for copper specific heat capacity} 
     \vspace{-1.em} 
     \fontsize{10}{10}
@@ -230,7 +231,7 @@ where $N$ -- order of polynomial, a -- fit parameters described in Table \ref{ta
  
 In order to convert specific into volumetric heat capacity, the polynomial function is divided by copper density. The volumetric heat capacity of copper is presented in Fig. \ref{fig:cu_cv_plot}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[

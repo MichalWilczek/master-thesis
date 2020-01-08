@@ -1,0 +1,32 @@
+
+The execution script runs the consecutive steps of a simulation. It specifies material properties, creates the magnet geometry, applies boundary and initial conditions for the analysis, sets a time step to solve in ANSYS APDL, adjusts material properties and nonlinear inductance during the solution. It also uses the functions of the quench detection system which checks whether the quench has been detected as it happens in the real case of a magnet discharge.
+
+Provided that the initial time step is $t$, the total simulation time is $t_\text{total}$, the problem is solved as described in Algorithm \ref{alg:execution_script}. The statements marked in red refer to the preprocessor, as described in Fig.~\ref{fig:block_diagram_python_architecture}. The ones marked in blue correspond to the solver, whereas the green ones -- to the postprocessor.
+
+\begin{algorithm}[H]
+  \caption{Description of the execution script implemented in Python.}
+  \label{alg:execution_script}
+  \begin{algorithmic}[1]
+    \STATE upload user's input parameters from the text file
+    \color{red} \STATE  define material properties
+    \STATE create geometry 
+    \STATE connect circuit to the geometry
+    \STATE create initial temperature profile
+    \STATE check initial quench state in the temperature profile
+    \STATE adjust resistive material properties in the quenched zone in ANSYS APDL
+    \STATE couple separate windings thermally and electrically in ANSYS APDL
+    \color{blue} \STATE apply initial temperature profile
+    
+    \color{black} \STATE \textbf{while} magnet is not discharged or $t < t_\text{total}$ \textbf{do}
+        \color{blue} \STATE \hspace{0.5cm} set the current time step $t$
+        \STATE \hspace{0.5cm} solve the problem
+        \color{ForestGreen} \STATE \hspace{0.5cm} get the temperature profile and current from ANSYS APDL
+        \STATE \hspace{0.5cm} estimate resistive voltage from ANSYS APDL
+        \STATE \hspace{0.5cm} check the quench state
+        \STATE \hspace{0.5cm} update the magnetic field in windings
+        \color{red} \STATE \hspace{0.5cm} adjust material properties with the current drop and quench propagation
+        \STATE \hspace{0.5cm} check if quench is detected with the quench detection system
+        \STATE \hspace{0.5cm} update nonlinear inductance with current drop
+
+  \end{algorithmic}
+\end{algorithm}

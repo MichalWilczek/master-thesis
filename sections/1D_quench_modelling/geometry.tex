@@ -1,15 +1,15 @@
 
-In this thesis, all the simulations are based on the geometry of a skew quadrupole which belongs to the group of high-order corrector magnets designed for the upgrade of the High-Luminosity LHC. Skew quadrupole is developed by LASA laboratories of INFN-Milano. Its geometry is presented in Fig. \ref{fig:Skew_quad_geometry}. Its two half-quadrants of two separate quadrants are positioned in one mechanical support. The entire magnet is placed inside the iron yoke. 
+In this thesis, all the simulations are based on the geometry of a skew quadrupole which belongs to the group of high-order corrector magnets designed for the High-Luminosity LHC. The skew quadrupole is developed by LASA laboratories of INFN-Milano. Its geometry is presented in Fig. \ref{fig:Skew_quad_geometry}. Each of the coils of the skew quadrupole (marked in red in the right picture) is positioned in two mechanical supports (marked in grey). The entire magnet is surrounded by an iron yoke (marked in blue). 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.225\linewidth]{sections/1D_quench_modelling/figures/geometry/SkewQuad3D.png}
     \includegraphics[width=0.30\linewidth]{sections/1D_quench_modelling/figures/geometry/Quadrupole_Cross_Section.png}
-    \caption{Left: quarter of skew quadrupole 3D geometry~\cite{marco_prioli_mails}; right: cross-section of skew quadrupole~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.}
+    \caption{Left: one coil of the skew quadrupole 3D geometry~\cite{marco_prioli_mails}; right: cross-section of the skew quadrupole~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.}
     \label{fig:Skew_quad_geometry}
 \end{figure}
 
-Each quadrant of the magnet consists of 754 windings. The entire length of the coil equals 841~m. The 1D geometry is based on geometrical parameters of a single strand of a skew quadrupole whose simulations are further described in next section. As presented in Fig. \ref{fig: 1d_strand_geometry}, it consists of a strand with a circular cross-section (in yellow). It is made of Nb-Ti with copper as a stabiliser. The strand is fully insulated with an S2-glass material (in red). Then, it is immersed in D10 epoxy resin (in blue)~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.
+Each coil of the magnet consists of 754 windings. The entire length of one coil equals 841~m. The 1D geometry is based on geometrical parameters of a single strand of a skew quadrupole whose simulations are further described in the next section. As presented in Fig. \ref{fig: 1d_strand_geometry}, the coil consists of a strand with a circular cross-section (in yellow). The composite strand is made of Nb-Ti with copper as a stabiliser. The composite is fully insulated with an S2-glass material (in red). Then, the strand with the insulation layer is immersed in D10 epoxy resin (in blue)~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.
 
 \begin{figure}[H]
     \centering
@@ -36,10 +36,10 @@ Each quadrant of the magnet consists of 754 windings. The entire length of the c
     \label{fig: 1d_strand_geometry}
 \end{figure}
 
-The parameters of the skew quadrupole are presented in Table \ref{table:skew_quad_params_table_basic}. None of the presented parameters changes in any of further analyses presented in the thesis. Last two: $(i)$ residual resistivity ratio, RRR, $(ii)$ copper-to-superconductor ratio, $f_\text{Cu/Nb-Ti}$ come from a measured prototype of this magnet examined at INFN \cite{marco_prioli_mails}.
+The parameters of the skew quadrupole are presented in Table \ref{table:skew_quad_params_table_basic}. None of the presented parameters change in the remainder of the thesis. The last two: $(i)$ residual resistivity ratio, RRR, $(ii)$ copper-to-superconductor ratio, $r_\text{Cu/Nb-Ti}$ are obtained from the measurements of the prototype magnet performed at INFN~\cite{marco_prioli_mails}.
 
 \begin{table}[H]
-    \caption{Geometrical parameters for skew quadrupole \cite{hl_lhc_tech_design_report_v01, marco_prioli_mails}.} 
+    \caption{Geometrical parameters of the skew quadrupole \cite{marco_prioli_mails, hl_lhc_tech_design_report_v01}.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -47,9 +47,11 @@ The parameters of the skew quadrupole are presented in Table \ref{table:skew_qua
     \begin{center}
     \begin{tabular}{ ccc }  
     \hline
+    parameter & value & unit \\
+    \hline
     strand diameter, $d_\text{strand}$ & 0.7 & [mm] \\
     strand side, $a$ & 0.941 & [mm] \\
-    $f_\text{Cu/Nb-Ti}$ & 2.2 & [-] \\
+    $r_\text{Cu/Nb-Ti}$ & 2.2 & [-] \\
     RRR & 193 & [-] \\  
     \hline 
     \end{tabular}

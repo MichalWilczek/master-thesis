@@ -1,5 +1,4 @@
-
-As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_comparison}, the solver converges to the solution with 10 times larger time step compared to the normal solution. The nodal domain is also reduced by a factor ranging from 10 to 20. The simulation time remains the same. It might come from the fact that the co-simulation procedure with an external routine costs time when a signal is exchanged. As shown in Tables \ref{table: 1d_qv_benchmarking_no_insulation_res_error_conclusion} and \ref{table: 1d_qv_benchmarking_no_insulation_hot_spot_error_conclusion}, the relative error converges to -5\% for resistive voltage and to -0.5\% for the hot spot temperature if the mesh size is reduced 20 times.
+As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_comparison}, when a quench velocity-based analysis is conducted, the mesh density can be reduced by a factor ranging from 10 to 20. Moreover, the time step range can be increased by a factor of 10 keeping the results within the precision of 0.01\%. However, the simulation time remains the same. It comes from the fact that the co-simulation procedure with an external routine costs time when a signal is exchanged. In performed analyses, the co-simulation lasted approximately 80~s. As shown in Table \ref{table: 1d_qv_benchmarking_no_insulation_res_and_hot_spot_error_conclusion}, the relative error converges to -5\% for resistive voltage and to -0.5\% for the hot spot temperature if the mesh size is reduced 20 times.
 
 \begin{table}[H]
     \caption{Methodology comparison.} 
@@ -21,44 +20,23 @@ As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_compa
      \label{table: 1d_qv_benchmarking_no_insulation_methods_comparison} 
  \end{table}
  
-
- 
  \begin{table}[H]
-    \caption{Comparison of relative error for resistive voltage.} 
+    \caption{Comparison of relative error for resistive voltage and hot spot temperature.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ ccc }  
+        \begin{tabular}{ c | cc | cc }  
         \hline
-        mesh size, mm & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ \\
+        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{resistive voltage} & \multicolumn{2}{c}{hot spot temperature} \\ 
+           & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ \\
         \hline
-        1 & -13.65\% & -2.39\% \\
-        10 & -14.52\% & -2.87\% \\
-        20 & -14.66\% & -4.41\% \\
+        1 & -13.65\% & -2.39\% & -1.82\% & -0.48\% \\
+        10 & -14.52\% & -2.87\% & -1.69\% & -0.46\% \\
+        20 & -14.66\% & -4.41\% & -1.34\% & -0.47\% \\
         \hline 
         \end{tabular}
     \end{center}  
-     \label{table: 1d_qv_benchmarking_no_insulation_res_error_conclusion} 
- \end{table}
-
- \begin{table}[H]
-    \caption{Comparison of relative error for hot spot temperature.} 
-    \vspace{-1.em} 
-    \fontsize{10}{10}
-    \selectfont 
-    \renewcommand{\arraystretch}{1.5}
-    \begin{center}
-        \begin{tabular}{ ccc }  
-        \hline
-        mesh size, mm & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ \\
-        \hline
-        1 & -1.82\% & -0.48\% \\
-        10 &  -1.69\% & -0.46\% \\
-        20 & -1.34\% & -0.47\% \\
-        \hline 
-        \end{tabular}
-    \end{center}  
-     \label{table: 1d_qv_benchmarking_no_insulation_hot_spot_error_conclusion} 
+     \label{table: 1d_qv_benchmarking_no_insulation_res_and_hot_spot_error_conclusion} 
  \end{table}

@@ -1,5 +1,5 @@
 
-During the experiments, the spot heater was attached to the external grounding insulation of the magnet. The contact area of the heater was 4~$\text{mm}^2$ and it was centered at the layer 13 on the aperture side of the magnet, as presented in Fig.~\ref{fig:spot_heater_placement}. 
+During the measurements, the spot heater was attached to the external ground insulation of one of the four coils of the magnet. The contact area of the heater was 4~$\text{mm}^2$ and it was centered at the layer 13 on the aperture side of the magnet, as presented in Fig.~\ref{fig:spot_heater_placement}.
 
 \begin{figure}[H]
 \centering
@@ -18,7 +18,7 @@ During the experiments, the spot heater was attached to the external grounding i
           ymin=-5.0,
           ymax=32.29,
           ]
-          \addplot[blue, only marks, mark size=1pt] table[x=x,y=y,col sep=comma] {sections/skew_quad_q_det/figures/winding_location_cross_section.csv};
+          \addplot[blue, only marks, mark size=1pt] table[x=x,y=y,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_design/winding_location_cross_section.csv};
         \end{axis}
         \draw[scale=0.172, black, ultra thick] (3.0,4.5) -- (32.0,4.5); 
         \node[black, scale=0.8] at (4.9,0.5) {ground insulation};
@@ -30,7 +30,7 @@ During the experiments, the spot heater was attached to the external grounding i
     \label{fig:spot_heater_placement}
 \end{figure}
 
-As presented in Fig.~\ref{fig:spot_heater_capacitor_discharge}, quenching the magnet occurs by discharging the capacitor being the RC system of the \nth{1}~order. Its capacitance was equal to $C=14~\text{mF}$.
+The coil is quenched by the heat generated in the spot-heater. The heat is a result of a current discharge in a \nth{1} order RC circuit as shown in Fig.~\ref{fig:spot_heater_capacitor_discharge}. Its capacitance was equal to $C=14~\text{mF}$.
 
 \begin{figure}[H]
 	\centering
@@ -52,11 +52,11 @@ The spot heater resistance is calculated as
 \begin{equation}
     R_\text{spot heater} = \frac{\tau}{C},
 \end{equation}
-where $\tau$ -- time constant, $C$ -- capacitance. The energy stored in the capacitor is directly dissipated in the spot heater. Therefore, the power generation at the spot heater is calculated as
+where $\tau$ -- time constant, $C$ -- capacitance. The electric field of the capacitor is directly dissipated in the spot-heater. Therefore, the power generation at the spot heater is calculated as
 \begin{equation}
-    P(t)_\text{spot heater} = -P(t)_\text{capacitor} = -\frac{1}{\text{dt}} (\frac{1}{2} \text{C}V_\text{C}^2),
+    P(t)_\text{spot heater} = -P(t)_\text{capacitor} = -\frac{1}{\text{dt}} (E_\text{C}) = -\frac{1}{\text{dt}} (\frac{1}{2} \text{C}V_\text{C}^2),
 \end{equation}
-where $C$ -- constant capacitance, $V_\text{C}$ -- voltage across the capacitor, $P(t)$ -- power being a function of time. Fig.~\ref{fig:capacitor_discharge} presents the measured drop of capacitive voltage during quenching of the magnet as well as the power dissipation at the spot heater. The sampling frequency during the measurements was equal to $f=5000~\text{Hz}$. It can be concluded that the energy is sent to the system in approximately $t=5~\text{ms}$.
+where $C$ -- capacitance, $V_\text{C}$ -- voltage across the capacitor, $E_\text{C}$ -- energy stored in the capacitor, $P(t)$ -- power being a function of time. Fig.~\ref{fig:capacitor_discharge} presents the measured drop of capacitive voltage during quenching of the magnet as well as the power dissipation at the spot heater. The sampling frequency during the measurements was equal to $f=5000~\text{Hz}$. Based on the power curve in Fig.~\ref{fig:capacitor_discharge}, one can notice that most of the energy is transmitted to the coil in $t=5~\text{ms}$ and the capacitor is fully discharged in $t=10~\text{ms}$.
 
 \begin{figure}[H]
 \centering
@@ -77,7 +77,7 @@ where $C$ -- constant capacitance, $V_\text{C}$ -- voltage across the capacitor,
   xlabel={Time, s},
   ylabel={Capacitive voltage,~V},
 ]
-\addplot[smooth, red] table[x=time,y=v_capacitor,col sep=comma] {sections/skew_quad_q_det/figures/capacitor_discharge.csv};
+\addplot[smooth, red] table[x=time,y=v_capacitor,col sep=comma] {sections/skew_quad_q_det/figures/measurements/capacitor_discharge.csv};
 \label{plot_voltage_discharge_capacitor}
 \end{axis}
 
@@ -87,7 +87,7 @@ where $C$ -- constant capacitance, $V_\text{C}$ -- voltage across the capacitor,
   ymin=0, ymax=2200,
   ylabel={Power, W},
 ]
-\addplot[smooth, blue] table[x=time,y=p_capacitor,col sep=comma] {sections/skew_quad_q_det/figures/capacitor_discharge.csv}; 
+\addplot[smooth, blue] table[x=time,y=p_capacitor,col sep=comma] {sections/skew_quad_q_det/figures/measurements/capacitor_discharge.csv}; 
 \label{plot_power_deposition_resitor}
 
 \addlegendentry{$P_\text{spot heater}$}
@@ -99,7 +99,7 @@ where $C$ -- constant capacitance, $V_\text{C}$ -- voltage across the capacitor,
 \label{fig:capacitor_discharge}
 \end{figure}
 
-With the shape of the voltage drop, the time constant and spot heater resistance were deduced, as shown in Table~\ref{table:rc_circuit_characteristics}. Moreover, the entire energy deposited in the magnet was approximately equal to $E=2.5~\text{J}$.
+With the shape of the voltage drop, the time constant and spot heater resistance were deduced, as shown in Table~\ref{table:rc_circuit_characteristics}. Moreover, the entire capacitive energy deposited in the magnet was approximately equal to $E_\text{C}=2.5~\text{J}$.
 
  \begin{table}[H]
     \caption{RC heating circuit characteristics.} 
@@ -108,30 +108,32 @@ With the shape of the voltage drop, the time constant and spot heater resistance
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ ccc }  
+        \begin{tabular}{ ccc } 
         \hline
-        time constant & 3.5 & [ms] \\
-        spot heater resistance & 0.25 & [\textOmega] \\
-        energy deposition & 2.5 & [J] \\
+        parameter & value & unit \\
+        \hline
+        $\tau$ & 3.5 & [ms] \\
+        $R_\text{spot heater}$ & 0.25 & [\textOmega] \\
+        $E_\text{C}$ & 2.5 & [J] \\
         \hline 
         \end{tabular}
     \end{center}  
      \label{table:rc_circuit_characteristics} 
  \end{table}
 
-The schematic electrical circuit of the skew quadrupole is presented in Fig.~\ref{fig:skew_quad_electrical_scheme}. Four quadrants are connected in series. Each of them is characterised by the same inductance $L_\text{quad}$. When the entire magnet is in the superconducting state, $R_\text{quench}=0$. In order to detect the quench, the voltages $V_1$ and $V_2$ are compared. If their difference exceeds a threshold value during a certain period of time, the quench detection system (QDS) is switched on. It cuts of the power source and allows the magnet to discharge by itself as an RL circuit. During the discharge, the resistance $R_\text{quench}$ grows because the temperature of one of the quadrants rises with time. Fig.~\ref{fig:skew_quad_electrical_scheme} shows the principles of work of the quench detection system if only one quadrant quenches. This is the case of the quench measurements for the skew quadrupole. During the entire duration of the discharge only one quadrant was in a normal conducting state.
+The schematic electrical circuit of the skew quadrupole is presented in Fig.~\ref{fig:skew_quad_electrical_scheme}. Four coils are connected in series. Each of them is characterised by the same inductance $L_\text{quad}$. During the measurements, the heat was not transmitted to other coils of the skew quadrupole, i.e. only one coil out of four quenched. $R_\text{coil}$ in Fig.~\ref{fig:skew_quad_electrical_scheme} represents the internal resistance of the coil where the spot heater was placed. When the skew quadrupole is in the superconducting state, $R_\text{coil}=0$. After the quench is initiated by depositing heat through the spot heater, $R_\text{coil}$ starts increasing. In order to detect the quench, the voltages $V_1$ and $V_2$ are compared. If their difference exceeds a threshold value during a certain period of time, the quench is detected. The time after which the quench is detected after exceeding the threshold $V_\text{r}$ for quench detection is referred as a time delay. When quench is detected, the power converter $P_\text{converter}$ is switched off and the energy extraction switch $E_\text{switch}$ is closed. At this moment the magnet starts discharging.
 
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}[american currents, american inductors, american resistors, scale = 0.8] 
 	\draw[semithick] 
 	(0,-0.5) -- (0,2)
-	to[L,l^=$L_\text{quad}$, o-] (2,2)
-	to[L,l^=$L_\text{quad}$, -o] (4,2)
-	to[L,l^=$L_\text{quad}$] (6,2)
-	to[L,l^=$L_\text{quad}$] (8,2)
-	to[R,l^=$R_\text{quench}$, -o] (10,2) -- (10,-0.5)
-	(0,-0.5) to[I, i^=$I$]  (10,-0.5);
+	to[L,l^=$L_\text{coil}$, o-] (2,2)
+	to[L,l^=$L_\text{coil}$, -o] (4,2)
+	to[L,l^=$L_\text{coil}$] (6,2)
+	to[L,l^=$L_\text{coil}$] (8,2)
+	to[R,l^=$R_\text{coil}$, -o] (10,2) -- (10,-0.5)
+	(0,-0.5) to[I, l_=$P_\text{converter}$, i^=$I$]  (10,-0.5);
 	\draw[semithick]
 	(4,2) -- (4,4)
 	to[voltmeter, l=$V_1$] (10,4) -- (10,2);
@@ -139,23 +141,28 @@ The schematic electrical circuit of the skew quadrupole is presented in Fig.~\re
     (0,2) -- (0,4)
     to[voltmeter, l=$V_2$] (4,4);
     \draw[semithick]
-    (3.5,-0.5) -- (3.5,0.5)
-    to[closing switch, l=QDS] (6.5,0.5) -- (6.5,-0.5);
+    (3,-0.5) -- (3,0.5)
+    to[closing switch, l=$E_\text{switch}$] (5,0.5) 
+    to[R,l^=$R_\text{extraction}$] (7,0.5) -- (7,-0.5);
+    \draw[semithick]
+    (0,-0.5) -- (0,-0.5) node[ground]{}; 
 	\end{tikzpicture}
-	\caption{Circuit scheme of the skew quadrupole without energy extraction system.}
+	\caption{Circuit scheme of the skew quadrupole with energy extraction system.}
 	\label{fig:skew_quad_electrical_scheme}
 \end{figure}
 
-QDS characteristics is presented in Table~\ref{table:qds_characteristics}. The voltage threshold $V_\text{r}$ should be measured during the period of $=20~\text{ms}$ in order to switch of the power supply in the magnet.
+The quench detection system parameters are presented in Table~\ref{table:qds_characteristics}. The voltage threshold $V_\text{r}$ should be exceeded during the period of $=20~\text{ms}$ in order to switch off the power converter connected to the the magnet.
 
 \begin{table}[H]
-    \caption{QDS characteristics.} 
+    \caption{Quench detection system characteristics.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ ccc }  
+        \begin{tabular}{ ccc } 
+        \hline
+        parameter & value & unit \\
         \hline
         $V_\text{r}$ threshold & 0.2 & [V] \\
         time delay & 20 & [ms] \\
@@ -165,7 +172,30 @@ QDS characteristics is presented in Table~\ref{table:qds_characteristics}. The v
      \label{table:qds_characteristics} 
 \end{table}
 
-The quench measurements were conducted for $I=86~\text{A}$ which is a lower value than the designed nominal operating current of the skew quadrupole. As presented in Fig.~\ref{fig:skew_quad_discharge_before_quench_detection}, the quench resistive voltage reaches the threshold value for the QDS at $t=130~\text{ms}$. The quench is detected at $t=150~\text{ms}$.
+After the quench is detected, the circuit is represented, as shown in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme}. The total magnet inductance $L_\text{magnet}$ is equal to the sum of all four inductances $L_\text{coil}$. The initial discharge current $I_0$ is equal to the operating current of the magnet during the measurements.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[american currents, american inductors, american resistors, scale = 0.8] 
+	\draw[semithick] 
+	(0,0) -- (0,2)
+	to[L,l^=$L_\text{magnet}$, i_=$I_0$] (6,2)
+	to[R,l^=$R_\text{coil}$] (6,0)
+	to[R,l^=$R_\text{extraction}$] (0,0);
+    \draw[semithick]
+    (0,0) -- (0,0) node[ground]{}; 
+	\end{tikzpicture}
+	\caption{Simplified circuit scheme of the skew quadrupole after the quench is detected.}
+	\label{fig:skew_quad_discharge_electrical_scheme}
+\end{figure}
+
+The time constant of this circuit is calculated as 
+\begin{equation}
+    \tau = \frac{L_\text{magnet}}{R_\text{coil}+R_\text{extraction}}.
+\end{equation}
+If the magnet is self-protected, $R_\text{extraction}=0$. In case of a skew quadrupole, $R_\text{extraction}=1.557$~\textOmega. One should remember that $\tau$ is not constant during the discharge due to the nonlinear inductance as a function of current and increasing $R_\text{coil}$ as the quench propagates.
+
+The quench measurements were conducted for $I=86~\text{A}$ which is a lower value than the designed nominal operating current of the skew quadrupole. As presented in Fig.~\ref{fig:skew_quad_discharge_before_quench_detection}, the quench resistive voltage reaches the threshold value for the quench detection system at $t=130~\text{ms}$. The quench is detected at $t=150~\text{ms}$.
 
 \begin{figure}[H]
 \centering
@@ -185,9 +215,9 @@ The quench measurements were conducted for $I=86~\text{A}$ which is a lower valu
   xlabel={Time, s},
   ylabel={Resistive Voltage, V},
 ]
-\addplot[smooth, red] table[x=Time,y=Resistive_Voltage,col sep=comma] {sections/skew_quad_q_det/figures/current_voltage_quench_detection.csv}; 
+\addplot[smooth, red] table[x=Time,y=Resistive_Voltage,col sep=comma] {sections/skew_quad_q_det/figures/measurements/current_voltage_quench_detection.csv}; 
 \label{plot_resistive_voltage_rise_quench_detection}
-\addplot[smooth, black, dashed] table[x=Time,y=QDS_v_threshold,col sep=comma] {sections/skew_quad_q_det/figures/current_voltage_quench_detection.csv};
+\addplot[smooth, black, dashed] table[x=Time,y=QDS_v_threshold,col sep=comma] {sections/skew_quad_q_det/figures/measurements/current_voltage_quench_detection.csv};
 \label{plot_resistive_voltage_qds_threshold}
 \end{axis}
 
@@ -197,7 +227,7 @@ The quench measurements were conducted for $I=86~\text{A}$ which is a lower valu
   ymin=0, ymax=100,
   ylabel={Current, A},
 ]
-\addplot[smooth, blue] table[x=Time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/current_voltage_quench_detection.csv}; 
+\addplot[smooth, blue] table[x=Time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/measurements/current_voltage_quench_detection.csv}; 
 \label{plot_current_constant_quench_detection}
 \addlegendentry{$I$}
 \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage_qds_threshold}\addlegendentry{$V_\text{r, QDS}$}
@@ -209,7 +239,7 @@ The quench measurements were conducted for $I=86~\text{A}$ which is a lower valu
 \label{fig:skew_quad_discharge_before_quench_detection}
 \end{figure}
 
-Fig.~\ref{fig:skew_quad_discharge} presents the current profile as well as the change of resistive voltage across the magnet during the discharge of the skew quadrupole. Being a function of current and resistance, the resistive voltage is a result of the quench propagation inside the magnet as well as the decreasing current with time. The discharge ends at $t=9~\text{s}$.
+Fig.~\ref{fig:skew_quad_discharge} presents the measured current profile as well as the change of resistive voltage across the magnet during the discharge of the skew quadrupole. Resistive voltage is a function of coil resistance $R_\text{coil}$ and the value of current in the circuit. Therefore, the resistive voltage in Fig.~\ref{fig:skew_quad_discharge} is a result of discharging current in time and increasing coil resistance inside of the coil. The quench measurements end at $t=9~\text{s}$.
 
 \begin{figure}[H]
 \centering
@@ -228,7 +258,7 @@ Fig.~\ref{fig:skew_quad_discharge} presents the current profile as well as the c
   xlabel={Time, s},
   ylabel={Resistive Voltage, V},
 ]
-\addplot[smooth, red] table[x=Time,y=Resistive_Voltage,col sep=comma] {sections/skew_quad_q_det/figures/current_voltage_discharge.csv}; 
+\addplot[smooth, red] table[x=Time,y=Resistive_Voltage,col sep=comma] {sections/skew_quad_q_det/figures/measurements/current_voltage_discharge.csv}; 
 \label{plot_resistive_voltage_entire_discharge_skew_quad}
 \end{axis}
 \begin{axis}[
@@ -237,7 +267,7 @@ Fig.~\ref{fig:skew_quad_discharge} presents the current profile as well as the c
   ymin=0, ymax=100,
   ylabel={Current, A}
 ]
-\addplot[smooth, blue] table[x=Time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/current_voltage_discharge.csv}; 
+\addplot[smooth, blue] table[x=Time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/measurements/current_voltage_discharge.csv}; 
 \label{plot_current_entire_discharge_skew_quad}
 \addlegendentry{$I$}
 \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage_entire_discharge_skew_quad}\addlegendentry{$V_\text{r}$}
@@ -246,3 +276,4 @@ Fig.~\ref{fig:skew_quad_discharge} presents the current profile as well as the c
 \caption{Current and Resistive Voltage change during the discharge of skew quadrupole}
 \label{fig:skew_quad_discharge}
 \end{figure}
+

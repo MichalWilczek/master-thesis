@@ -1,5 +1,5 @@
 
-When quench propagates, the point at which the cable transforms from superconducting to normal state moves forward with time, as shown in Fig. \ref{fig:quench_front_propagation_illustration}. This point remains at the critical temperature, $T_\text{c}$ for a given magnetic field strength. Its time derivative is called quench velocity. Depending on electro-magneto-thermal conditions at which quench occurs, quench velocity can remain constant or change in time. 
+When quench propagates, the point at which the cable transitions from superconducting to the normal conducting state propagates with time, as shown in Fig. \ref{fig:quench_front_propagation_illustration}. This point remains at the critical temperature, $T_\text{c}$ for a given magnetic field strength. Its time derivative is referred to as quench velocity. Depending on electro-magneto-thermal conditions at which quench occurs, quench velocity can remain constant or change in time. 
 
 \begin{figure}[H]
 \centering
@@ -35,22 +35,9 @@ When quench propagates, the point at which the cable transforms from superconduc
 \label{fig:quench_front_propagation_illustration}
 \end{figure}
 
-Quench velocity can be approximated with analytic formulae. They are usually a function of current density, material properties of the winding and temperature gradient around the quench front. The quench velocity in ITER applications is mainly estimated based on~\cite{MIT_phd_thesis}. For superconducting accelerator magnets, Wilson's formula is more applicable if cooling with helium is not considered \cite[p.~206]{wilson1987superconducting}, as
-\begin{equation}
-    v_\text{quench}=\frac{J}{\gamma C}\sqrt{\frac{\rho k}{T_\text{s}-T_\text{0}}},
-    \label{eqn:Wilson_quench_velocity_formula}
-\end{equation}
-where $T_\text{s}$ -- critical temperature,
-$T_\text{0}$ -- coolant temperature,
-$\rho$ -- electrical resistivity averaged over the conductor volume,
-$J$ -- current density averaged over the conductor volume,
-$k$ -- thermal conductivity averaged over the conductor unit cell,
-$C$ -- volumetric heat capacity averaged over the conductor unit cell,
-$\gamma$ -- conductor density.
-
-In general, quench velocity can be estimated in three different manners. It can be:
-\begin{itemize}
+Quench velocity can be approximated with analytic formulae. They are usually a function of current density, material properties of the winding and temperature gradient around the quench front. The quench velocity in ITER applications is mainly estimated based on~\cite{MIT_phd_thesis}. For superconducting accelerator magnets, Wilson's formula is more applicable if cooling with helium is not considered \cite[p.~206]{wilson1987superconducting}. In general, quench velocity can be estimated in three different manners. It can be:
+\begin{enumerate}
 \item based on available measurements,
 \item calculated analytically based on available formulae,
 \item calculated numerically based on short numerical model with refined mesh to solve the quench front with sufficient precision.
-\end{itemize}
+\end{enumerate}

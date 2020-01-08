@@ -10,7 +10,7 @@ The comparison of quench velocity and hot spot temperatures, being two important
     \begin{center}
         \begin{tabular}{ ccLcL }  
         \hline
-         & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature at $t=0.1~\text{s}$ & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature at $t=0.1~\text{s}$ \\
+         & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature, at $t=0.1~\text{s}$,~K & $v_\text{quench},~\frac{\text{m}}{\text{s}}$ & hot spot temperature at $t=0.1~\text{s}$,~K \\
         COMSOL & 7.075 & 28.188 & 2.308 & 23.408 \\
         ANSYS & 6.968& 28.174 & 2.310 & 23.926 \\
         \hline
@@ -21,16 +21,16 @@ The comparison of quench velocity and hot spot temperatures, being two important
      \label{table: 1d_quench_propagation_modelling_conclusion_comparison} 
  \end{table}
 
-In every analysis, a relatively dense mesh was applied with the mesh size of 0.1 mm. In  \cite[p.~40]{paudel_thesis}, it is recommended to discretise the domain in the scale less than or equal to a millimetre when an adiabatic analysis is conducted. With 10 times less dense mesh, all the analyses with and without insulation showed less than 0.5\% of a relative error with respect to the solutions with denser meshes applied. 
+In every analysis, a relatively dense mesh was applied with the mesh size of 0.1 mm. In  \cite[p.~40]{paudel_thesis}, it is recommended to discretise the domain in the scale less than or equal to a millimetre when an adiabatic analysis is conducted. With 10 times less dense mesh, all the analyses with and without insulation showed less than 0.5\% of a relative error with respect to the solutions with denser meshes. 
 
-As concluded, in order to solve the temperature distribution over a one-metre domain, at least 1000 elements should be applied with the mesh size of 1 mm. Every quadrant of the aforementioned skew quadrupole consists of 754 windings which accounts for 841 m-long strand. If the insulation layer is considered, the total number of nodes should be estimated as: 
+As concluded, in order to solve the temperature distribution over a one-metre domain, at least 1000 elements should be applied with the mesh size of 1 mm. Every quadrant of the aforementioned skew quadrupole consists of 754 windings which accounts for an 841 metre-long strand. If the insulation layer is considered, the total number of nodes should be estimated as: 
 \begin{equation}
     n_\text{nodes, total} = n_\text{nodes, strand}~(1+ 4~n_\text{nodes, insulation}),
     \label{eqn:tot_number_of_nodes}
 \end{equation}
 where $n_\text{nodes, strand}$ -- total number of nodes along the strand, $n_\text{nodes, insulation}$ -- number of nodes across the insulation layer neighbouring to one strand node. With 6 nodes across the insulation and the strand element size of 1 mm, the mesh of the skew quadrupole would account for more than 20 million nodes. Taking into account that this is not even a fully 3D problem, the number is relatively large. 
 
-As presented in Fig. \ref{fig: quench_propagation_conclusion_computing_time_estimation}, the computing time was compared for the analysis with mesh size of 1 mm and 6 elements across the insulation as a function of the length of the strand. The analysis of 10 metre-long domain lasted more than 7 hours. With a linear interpolation of the obtained results, if one analysed 100 metres of the strand, the simulation would last approximately 72 hours.
+As presented in Fig. \ref{fig: quench_propagation_conclusion_computing_time_estimation}, the computing time was estimated for the analysis with the mesh size of 1 mm and 6 elements across the insulation. Three analyses were conducted with a varying length of the strand. The analysis of a 10 metre-long domain lasted more than 7 hours. With a linear interpolation of the obtained results, if one analysed 100 metres of the strand, the simulation would last approximately 72 hours\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
 
 \begin{figure}[H]
 \centering
@@ -58,6 +58,6 @@ As presented in Fig. \ref{fig: quench_propagation_conclusion_computing_time_esti
     \label{fig: quench_propagation_conclusion_computing_time_estimation}
 \end{figure}
 
-One of the methods for reducing the mesh size is the application of an adaptive mesh which propagates with the moving quench front. Such a solution would be applicable if a 1D analysis was taken into consideration. In this case, the aim is to conduct a 3D multi-strand thermal simulation with multiple quenches at different strands. Such a complicated adaptive mesh would be very difficult or even impossible to be applied.
+One of the methods for reducing the mesh size is the application of an adaptive mesh which propagates with the moving quench front. Such a solution would be applicable if a 1D analysis was taken into consideration. In this case, the aim is to conduct a 3D multi-strand thermal simulation with multiple quenches at different strands. Such a complicated adaptive mesh would be very difficult or even impossible to perform.
 
 

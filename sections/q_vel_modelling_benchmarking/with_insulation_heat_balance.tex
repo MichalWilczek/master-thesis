@@ -1,7 +1,31 @@
+As presented in the benchmarking workflow in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation} in Section~\ref{section:quench_velocity_benchmarking_benchmarking_methodology}, this section focuses on finding the mesh size across the insulation layer that gives results remaining within the tolerance of 1\% with respect to the average quench velocity. The input number of insulation nodes is set to $a=3$. The longitudinal mesh size as well as the time step range are taken from the reference solution without the insulation layer. The geometric assumptions as well as initial conditions were the same as in Section~\ref{section: 1D_quench_propagation_with_insulation}. 
 
-As it was proven in Section \ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, the quench propagation analysis conducted with the mesh size of 1 mm and a time step in the range of $t=[10, 100]~\upmu \text{s}$ gives results remaining withing the tolerance of 1\%. Therefore, this section focuses on the mesh size across the insulation. The varying number of insulation nodes is set to $n=\{3, 5, 10, 20, 30\}$. The geometric assumptions as well as initial conditions were the same as in Section~\ref{subsection: 1D_quench_propagation_with_insulation}. 
+The iteration loops~$i$ for the insulation mesh size was performed four times with the increment of $b$ (see Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}) in order to obtain the following number of insulation nodes $a=\{3, 5, 10, 20, 30\}$. As shown in Fig.~\ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation}, with 20 nodes across the insulation the relative error of an average quench velocity remained within the tolerance of~1\% with respect to the analysis with 30 nodes. 
 
-As presented in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the hot spot temperature stabilises with 10-20 nodes used in the insulation zone. The solution with 30 nodes is used as a reference result. 
+\begin{figure}[H]
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          width=0.7\linewidth, 
+          height = 4.5cm,
+          xlabel={Time, $\text{s}$},
+          ylabel={Relative error, \%},
+          xtick={0,0.02,0.04,...,0.1},
+          xticklabel style={/pgf/number format/fixed},
+          xmin=0.0,
+          xmax=0.1,
+          legend pos=south east
+          ]
+          \addplot[blue, mark=*] table[x=time,y=20_ins_elems,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
+          \addplot[dashed, blue] table[x=time,y=20_ins_elems_average,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
+
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Incremental and average (dashed) quench velocity relative error for 20 nodes across the insulation layer.}
+    \label{fig: q_vel_modelling_v_quench_rel_error_with_insulation}
+\end{figure}
+
+As shown in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, the hot spot temperature also stabilises with 20 nodes used in the insulation zone. 
 
 \begin{figure}[H]
 \centering
@@ -30,39 +54,30 @@ As presented in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insul
     \label{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}
 \end{figure}
 
-In Fig.~\ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation}, the relative error for incremental quench velocity is presented. With 20 nodes across the insulation, the relative error of an average quench velocity remained withing the tolerance of~1\%.
+The reference analysis for the benchmarking purposes with quench velocity-based simulations is the one with the mesh size of 1~mm and with the time step range of $t=[10, 100]~\upmu \text{s}$ and with 20 nodes across the insulation layer. 20 nodes across the insulation layer accounts for the mesh size of $10~\upmu \text{m}$. The analysis settings used for the benchmarking with the quench velocity-based method are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_with_insulation}. 
 
-\begin{figure}[H]
-\centering
-    \begin{tikzpicture}
-        \begin{axis}[
-          width=0.7\linewidth, 
-          height = 4.5cm,
-          xlabel={Time, $\text{s}$},
-          ylabel={Relative error, \%},
-          xtick={0,0.02,0.04,...,0.1},
-          xticklabel style={/pgf/number format/fixed},
-          xmin=0.0,
-          xmax=0.1,
-          legend pos=south east
-          ]
-          \addplot[blue, mark=*] table[x=time,y=10_ins_elems,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
-          \addplot[red, mark=*] table[x=time,y=20_ins_elems,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
-          
-          \addplot[dashed, blue] table[x=time,y=10_ins_elems_average,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
-          \addplot[dashed, red] table[x=time,y=20_ins_elems_average,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/v_quench_rel_error.csv};
-          
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{10 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{20 nodes}
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Quench velocity relative error for 10 and 20 nodes across the insulation layer; average relative error marked with dashed lines.}
-    \label{fig: q_vel_modelling_v_quench_rel_error_with_insulation}
-\end{figure}
+\begin{table}[H]
+    \caption{Analysis input parameters.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        parameter & value & unit \\
+        \hline
+        longitudinal mesh size & 1 & [mm] \\
+        insulation mesh size & 10 & [$\upmu \text{m}$] \\
+        time step range & [10, 100] & [\textmu s] \\
+        $v_\text{quench, average}$ & 2.18 & [m/s] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_reference_analysis_settings_with_insulation} 
+ \end{table}
 
-20 nodes across the insulation layer accounts for the mesh size of $10~\upmu \text{m}$. Similarly to Section~\ref{subsection:quench_velocity_benchmarking_no_insulation_heat_balance}, this solution is used as a reference result for quench velocity-based analysis. The obtained average quench velocity is equal to $v_\text{quench}=2.18~\frac{\text{m}}{\text{s}}$.
-
-In 1D thermal quench propagation with insulation layer, computing time rises monotonically with increase of number of nodes in the insulation layer, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}. The analysis with 20 nodes lasted over 2 hours. Therefore, further refinement is not recommended.
+In 1D thermal quench propagation with insulation layer, computing time rises linearly with increase of number of nodes in the insulation layer, as presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}. The analysis with 20 nodes lasted over 2 hours. Therefore, further refinement is not recommended.
 
 \begin{figure}[H]
 \centering

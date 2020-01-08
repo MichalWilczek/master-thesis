@@ -1,0 +1,103 @@
+
+As explained in Chapter~\ref{chapter:quench_velocity_modelling}, the co-simulation in a quench velocity-based analysis requires using an external routine that controls the quench propagation in time. This routine was prepared in Python. The programme has four main functions: 
+
+\begin{enumerate}
+    \item Translation of a Python code into ANSYS APDL internal commands in order to allow the external routine to communicate with the software. 
+    \item Implementation of pre-processing, solution and post-processing steps in the thermo-electric simulations conducted in ANSYS APDL.
+    \item Implementation of all algorithms explained in Chapter~\ref{chapter:algorithms}.
+    \item Execution of a quench velocity-based analysis by controlling the propagation of quench in time. 
+\end{enumerate}
+
+The first three points allow the Python code to conduct not only a quench velocity-based analysis, but also a standard thermal quench simulation. Therefore, in this thesis, all simulations are controlled by one external Python script. The exemplary code depicting how the Python communicates with ANSYS APDL is described in Appendix~\ref{appendix:python_ansys_compilation}. In order to run the programme, Python 3.7 is required as well as ANSYS APDL~2019~R1. The programme is open source and available on GitLab at \url{https://gitlab.cern.ch/steam/steam-ansys-modelling} which is an official repository for TE-MPE-PE section at CERN.
+
+As presented in Fig.~\ref{fig:block_diagram_python_architecture}, the script is divided into four main components: execution script, general purpose classes, workflow classes and main classes. The programme uses a text file where all input parameters required for the analysis are specified. The execution scripts is a core of the programme which performs consecutive steps of the analysis. The workflow classes are created to execute the code similarly to ANSYS APDL so that the script remains intuitive with respect to the ANSYS commercial tool. The workflow classes use the main classes in which the core methods of the Python script are implemented. The general purpose classes are used by most of the remaining classes. The analysis engine chooses a specific case for the analysis based on the input text file filled by a user at the beginning of the analysis. 
+
+\begin{figure}[H]
+    \renewcommand{\baselinestretch}{0.7} 
+    \centering
+    \begin{tikzpicture}[node distance = 1.5cm, auto]
+        \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=3cm, text badly centered, node distance=2.5cm, inner sep=0pt, scale=0.8]
+        \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=3.0cm, text centered, rounded corners, node distance=0.85cm, scale=0.8, minimum height=0.5cm]
+        \tikzstyle{line} = [draw, -latex']
+        \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=1.5cm, minimum height=2em, scale=0.8]
+  
+    \node [block] (analysis_engine) {analysis engine};
+    \node [block, below of=analysis_engine] (common functions) {common functions};
+    \node [block, right of=analysis_engine, node distance=5cm] (preprocessor) {preprocessor};
+    \node [block, below of=preprocessor] (solver) {solver};
+    \node [block, below of=solver] (postprocessor) {postprocessor};
+     
+    \node [block, above of=preprocessor, node distance=1.5cm, fill=red!20] (execution_script) {execution script};
+    \node [cloud, above of=execution_script] (json_file) {Input text file};
+    \node [block, below of=postprocessor, node distance=1.5cm] (ansys_interface) {ansys interface};
+    \node [block, below of=ansys_interface] (geometry) {geometry};
+    \node [block, below of=geometry] (materials) {materials};
+    \node [block, below of=materials] (physics) {physics};
+
+    \node [block, right of=physics, node distance=5cm] (magnetic field) {magnetic field};
+    \node [block, above of=magnetic field] (initial temperature) {initial temperature};
+    \node [block, above of=initial temperature] (circuit) {circuit};
+    \node [block, below of=magnetic field] (quench velocity) {quench velocity};
+    \node [block, below of=quench velocity] (time stepping) {time stepping};
+
+    \path [line] (circuit) -| (6,-4) |- (physics);
+    \path [draw] (initial temperature) -- (6,-3.9);
+    \path [draw] (magnetic field) -- (6,-4.6);
+    \path [draw] (quench velocity) -- (6,-5.3);
+    \path [draw] (time stepping) -| (6,-4.6);
+    
+    \node [rectangle, draw, dashed, rounded corners, node distance=0.85cm, below of=preprocessor, minimum height=2.5cm, text width=3cm, node distance=0.75cm] (solver_block) { };
+    \node [rectangle, draw, dashed, rounded corners, minimum height=4.2cm, text width=7cm] at (6, -4.3) { };
+    \node [rectangle, draw, dashed, rounded corners, minimum height=1.8cm, text width=3cm] at (0, -0.35) { };
+
+    \path [line] (json_file) -- (execution_script);
+    \path [line] (execution_script) -- (solver_block);
+
+    \node [scale=0.8, text width=3.25cm] at (7.1,0) {workflow classes};
+    \node [scale=0.8, text width=3.25cm] at (9,-1.9) {main classes};
+    \node [scale=0.8, text width=3.25cm] at (-0.25,1) {general purpose classes};
+
+    \end{tikzpicture}
+    \caption{Schematic of the Python script.}
+    \label{fig:block_diagram_python_architecture}
+\end{figure}
+
+As described in Table~\ref{table:python_analysis_options}, the user can conduct a standard analysis and a quench velocity-based one. The Python script is able to create two types of geometries: a high-order corrector magnet as well a stack of extruded strands. The analysis may be executed with or without the insulation layer. The initial temperature is a Gaussian profile or a step function. The script has a repository of thermal and electric material properties of copper, Nb-Ti and G10 based on fits provided by NIST. When the quench velocity-based analysis is considered, the user can specify a constant constant value or a quench velocity as a function of current and magnetic field. The multi-strand simulations aim at using a quench velocity-based analysis. Therefore, the quench velocity-based case is equipped with a tool able to simulate the discharge of a magnet with a varying inductance as a function of current and the dump resistor connected in series with the magnet.  Since some of the material properties of copper and Nb-Ti (see in Appendix~\ref{appendix_material_properties_description}) are a function of the magnetic field, the user can specify whether the magnetic field is constant or is a function of the position in (x, y) plane from the magnet cross-section. One can specify multiple such maps for different values of current.
+
+\begin{table}[H]
+    \caption{Analysis options in the analysis} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ c | c | m{5cm} }  
+        \hline
+        \textbf{analysis type} & \textbf{standard} & \textbf{quench-velocity based} \\
+        \hline
+        geometry & \multicolumn{2}{c}{3D high-order corrector,  extruded (multi-)strand} \\
+        \hline
+        analysis with insulation & \multicolumn{2}{c}{available} \\
+        \hline
+        initial temperature profile & \multicolumn{2}{c}{step function, Gaussian profile} \\
+        \hline
+        available material properties & \multicolumn{2}{c}{Cu, Nb-Ti, G10 (all based on NIST)} \\
+        \hline
+        quench velocity model & N/A & constant, function of current and B-field \\
+        \hline
+        circuit analysis & constant current & constant current, RL discharge with dump resistor \\ 
+        \hline
+        B-field analysis & constant & constant, function of current and position in 2D space
+        \end{tabular}
+    \end{center}  
+     \label{table:python_analysis_options} 
+ \end{table}
+
+
+
+
+
+
+% Fig. \ref{fig:python_script_architecture} describes the Python code consisting of 4 different Classes and one executive script. The \textit{executive\_script} launches the simulation and executes pre-processing, solution as well as post-processing part of ANSYS simulation. It uses the Class \textit{ansys} to translate Python functions into APDL scripting language. The Class \textit{geometry} imports a meshed geometry and assigns the position in space for each node. Then, the class \textit{quench\_velocity} assigns new quench front position at each time step depending on a current quench velocity. Since the Class \textit{quench\_velocity} operates in meters, it requires a separate class \textit{node\_search} which maps a node number for the calculated quench length as described in Section \ref{subsection:node_searching_algorithm}.\\
+
+% At this stage, the class \textit{quench\_velocity} assumes that the quench velocity is constant. In further steps, the quench velocity will be estimated in two-way coupling manner as described in Section \ref{subsection:quench_velocity_algorithm}. In order to reach this step, a new Class called \textit{quench\_detection} will be created. It will initialize the new quench front as soon as the critical temperature is achieved outside of the quenched zone of the coil (turn to turn heat propagation).

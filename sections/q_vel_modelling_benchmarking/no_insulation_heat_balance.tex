@@ -1,13 +1,11 @@
 
-In this study, the standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in Section \ref{subsection: 1D_quench_propagation_no_insulation}. 
-
-It is interesting to mention that the initial Gaussian profile of temperature over the domain (see Fig. \ref{fig: init_gauss_temp_distr}) stores a different value of energy in the strand depending on the mesh size. The initial energy in the discretised strand domain is calculated as
+In this study, the standard thermal numerical analysis based on LINK33 element was conducted in ANSYS. The geometric assumptions as well as initial conditions were the same as in Section~\ref{section: 1D_quench_propagation_no_insulation}. It is interesting to mention that the initial Gaussian profile of temperature over the domain (see Fig. \ref{fig: init_gauss_temp_distr}) stores a different value of energy in the strand depending on the longitudinal mesh size. The initial energy in the discretised strand domain is calculated as
 \begin{equation}
-    E_\text{initial} = \sum_{i=1}^{n-1} V_{i,~i+1}~C_\text{v, strand}(\frac{T_i+T_{i+1}}{2})~\frac{T_i+T_{i+1}}{2},
+    E_\text{initial} = \sum_{i=1}^{n-1} V_{i,i+1}~C_\text{v, strand}\left(\frac{T_i+T_{i+1}}{2}\right)~\frac{T_i+T_{i+1}}{2},
 \end{equation}
-where $n$ -- number of nodes in the initially quenched zone, $V_{i,~i+1}$ -- volume of the domain between two neighbouring nodes, $C_\text{v, strand}$ -- volumetric heat capacity over an average temperature, $T_i$ -- temperature of node $i$, $T_{i+1}$ -- temperature of the neighbouring node $i+1$.
+where $n$ -- number of nodes in the initially quenched zone, $V_{i,~i+1}$ -- volume of the domain between two neighbouring nodes, $C_\text{v, strand}$ -- volumetric heat capacity calculated for an average temperature, $T_i$ -- temperature of node $i$, $T_{i+1}$ -- temperature of the neighbouring node $i+1$.
 
-The relation between the initially deposited energy in the strand and the number of nodes over a 1 metre-long domain is presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. The exact energy deposition starts converging for the mesh refinement in the range of 500 and 1000 nodes. The lower number of nodes would cause the quench front being too slow with respect to the result obtained from a denser mesh.
+The relation between the initially deposited energy in the strand and the number of nodes over a 1 metre-long domain is presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. The exact energy deposition starts converging for the number of mesh nodes in the range of 1000 nodes. The lower number of nodes would cause the quench front being too slow with respect to the result obtained from a denser mesh.
 
 \begin{figure}[H]
 \centering
@@ -28,9 +26,27 @@ The relation between the initially deposited energy in the strand and the number
     \label{fig: q_vel_modelling_energy_deposition}
 \end{figure}
 
-The first analyses were conducted with the mesh size of 1 mm (1000 nodes), as it was recommended in Section~\ref{subsection: 1D_quench_propagation_conclusions}. Three different time step ranges, $t=\{[1, 10], [10, 100], [100, 1000]\}~\upmu \text{s}$ were tested to verify the maximum time step at which the analysis remained within an acceptable error. The results for quench velocity for the first two remained in the acceptable relative error range of~0.2\%. The largest time step range increased the quench front velocity by 5\%. The middle time step range of $t=[10, 100]~\upmu \text{s}$ is further analysed and compared for a different mesh size as it gives an error within specified tolerance. Moreover, it is a favourable choice for the sake of decreasing the computing needs for the analyses with respect to the time step range of $t= [1, 10]~\upmu \text{s}$. 
+As described in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation} in the previous section, the first analysis was conducted with the longitudinal mesh size of 1~mm and the time step range $t=[100, 1000]~\upmu \text{s}$. There were three iteration loops~$i$ conducted within the time stepping iteration loop, as shown in Table~\ref{table: 1d_qv_benchmarking_results_heat_balance_no_insulation}. The relative error of the time step range $t=[10, 100]~\upmu \text{s}$ remained below 1\% with respect to the time step range $t= [1, 10]~\upmu \text{s}$. Therefore, the condition is satisfied for the analysis with the time step range of $t=[10, 100]~\upmu \text{s}$ and this analysis is sent to the mesh size loop.
 
-The study over a 1 metre-long domain was conducted with a varying number of nodes, $n=\{50, 100, 500, 1000, 2000, 5000\}$. The results from the analysis with 5000 nodes are used as a benchmark with a time step of $t=[10, 100]~\upmu \text{s}$. With the mesh size of 1000 nodes, as presented in Fig. \ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error for an incremental quench velocity value during the analysis equals less than 1\%. The average quench velocity is equal to $v_\text{quench}=6.81~\frac{\text{m}}{\text{s}}$.
+\begin{table}[H]
+    \caption{Quench results for analysed time step ranges.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ cccc }  
+        \hline
+        time step range & [1, 10] & [10, 100] & [100, 1000] \\
+        $v_\text{quench, average}$ & 6.80 & 6.81 & 7.1 \\
+        $E_\text{r}$ & - & 0.17\% & 4.26\% \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_results_heat_balance_no_insulation} 
+ \end{table}
+
+In the mesh size loop, the reference analysis from the time step loop was compared with the analysis conducted with a doubled number of nodes over a 1 metre-long strand. As presented in Fig.~\ref{fig: q_vel_modelling_v_quench_rel_error_no_insulation}, the relative error with respect to the average quench velocity value during the analysis is less than 1\%. 
 
 \begin{figure}[H]
 \centering
@@ -45,17 +61,37 @@ The study over a 1 metre-long domain was conducted with a varying number of node
           xmin=0.0,
           xmax=0.1
           ]
-          \addplot[blue, mark=*] table[x=time,y=500_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
-          \addplot[red, mark=*] table[x=time,y=1000_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{500 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1000 nodes}
+          \addplot[blue, mark=*] table[x=time,y=1000_nodes_rel_error,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
+          \addplot[blue, dashed] table[x=time,y=1000_nodes_av_rel_error,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_no_insulation/v_quench_rel_error.csv};
         \end{axis}
     \end{tikzpicture}
-    \caption{Quench velocity relative error for 500 and 1000 nodes.}
+    \caption{Incremental and average (dashed) quench velocity relative error for 1000 nodes with respect to 2000 nodes for the time step range of $t=[10, 100]~\upmu \text{s}$.}
     \label{fig: q_vel_modelling_v_quench_rel_error_no_insulation}
 \end{figure}
 
-The analysis with 1000 nodes and a time step in the range of $t=[10, 100]~\upmu \text{s}$ is used as a further benchmark result for quench velocity simulation presented in the next section. It is an acceptable compromise between the accuracy and computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in 1D thermal quench propagation, computing time rises monotonically with mesh refinement if the insulation is not considered. 
+Therefore, the reference analysis for the benchmarking purposes with quench velocity-based simulations is the one with the mesh size of 1~mm and with the time step range of $t=[10, 100]~\upmu \text{s}$. The analysis settings used for the benchmarking with the quench velocity-based method are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation}. 
+
+\begin{table}[H]
+    \caption{Analysis input parameters.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        parameter & value & unit \\
+        \hline
+        mesh size & 1 & [mm] \\
+        time step range & [10, 100] & [\textmu s] \\
+        $v_\text{quench, average}$ & 6.81 & [m/s] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation} 
+ \end{table}
+
+The analysis chosen as a reference for benchmarking purposes is an acceptable compromise between the accuracy and computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in 1D thermal quench propagation, computing time rises monotonically with mesh refinement while keeping the time step range equal to $t=[10, 100]~\upmu \text{s}$.
 
 \begin{figure}[H]
 \centering
