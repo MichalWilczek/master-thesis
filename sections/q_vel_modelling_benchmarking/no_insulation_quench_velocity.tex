@@ -1,7 +1,5 @@
 
-In this analysis, an electro-thermal simulation using the LINK68 element is conducted in ANSYS. LINK68 is a uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule effect. Similarly to the element LINK33, it is used for steady-state and transient numerical problems. In preceding simulations, the Joule effect was implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 allows for omitting this step since the solver computes the heat source by an internal routine based on material property state. The element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
-
-In order to obtain the same solver settings as in case of the analysis performed in Section~\ref{section:quench_velocity_benchmarking_no_insulation_heat_balance}, the 1D strand domain was grounded and constant value of current was applied, as shown in Fig. \ref{fig: q_vel_benchmarking_electrical_settings}.
+In the quench velocity-based approach, an electro-thermal element LINK68 element is used, as discussed in Section~\ref{subsection:algorithms_geometry}. In order to obtain the same solver settings as in case of the analysis performed in Section~\ref{section:quench_velocity_benchmarking_no_insulation_heat_balance}, the 1D strand domain was grounded and constant value of current was applied, as shown in Fig. \ref{fig: q_vel_benchmarking_electrical_settings}.
 
 \begin{figure}[H]
 \centering
@@ -19,10 +17,10 @@ In order to obtain the same solver settings as in case of the analysis performed
 \label{fig: q_vel_benchmarking_electrical_settings}
 \end{figure}
 
-The additional parameters related to the co-simulation of a quench velocity-based analysis are shown in Table \ref{table: 1d_qv_benchmarking_geometry_parameters_quench_velocity}. At the communication time instants of the co-simulation, the external routine exchanges data with ANSYS in order to update the material properties in the model. 
+The additional parameters related to the co-simulation in the quench velocity-based approach are shown in Table \ref{table: 1d_qv_benchmarking_geometry_parameters_quench_velocity}. At the communication time instants of the co-simulation, the external routine exchanges the data with ANSYS in order to update the material properties in the model. 
 
 \begin{table}[H]
-    \caption{Analysis input parameters.} 
+    \caption{Input parameters of the quench velocity-based analysis.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -42,7 +40,7 @@ The additional parameters related to the co-simulation of a quench velocity-base
 
 First of all, the possibility of increasing the time step range was checked. Two time step ranges were chosen: $t=\{[10, 100], [100, 1000]\}~\upmu \text{s}$. The relative error with respect to the average quench velocity cannot be compared in this case because the quench velocity is an input parameter for the quench velocity-based analysis. Therefore, the relative error is estimated for the resistive voltage with respect to the reference standard solution. The relative error for two time step ranges varied by less than 0.01\%. Therefore, in all further simulations with varying mesh size, the time step range is equal to $t=[100, 1000]~\upmu \text{s}$.
 
-The study over a 1 metre-long domain was conducted with a varying number of nodes, $n=\{30, 50, 100, 500, 1000\}$. The geometric assumptions as well as initial conditions were the same as in Section~\ref{section: 1D_quench_propagation_no_insulation} without a heat source. As presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}, quench velocity-based co-simulation results in the quench front remaining behind the benchmark solution. 
+The study over a 1 metre-long domain was conducted with a varying number of nodes, $n=\{30, 50, 100, 500, 1000\}$. The geometric assumptions as well as the initial conditions were the same as in Section~\ref{section: 1D_quench_propagation_no_insulation} without a heat source. As presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}, quench velocity-based co-simulation results in the quench front remaining behind the benchmark solution. 
 
 \begin{figure}[H]
 \centering
@@ -83,17 +81,17 @@ The study over a 1 metre-long domain was conducted with a varying number of node
         \node[scale = 1] at (3.8, 3) {$\vec{v}_\text{quench}$}; 
         
     \end{tikzpicture}
-    \caption{Temperature distribution of a heat balance-based benchmark solution and a quench velocity-based solution with 50 nodes along the domain for three time steps: $t=\{0.03, 0.06, 0.1\}$~s with a specified direction of quench velocity, $\vec{v}_\text{quench}$.}
+    \caption{Temperature distribution of a heat balance-based benchmark solution and a quench velocity-based approach with 50 nodes along the domain for three time steps: $t=\{0.03, 0.06, 0.1\}$~s with a specified direction of quench velocity, $\vec{v}_\text{quench}$.}
     \label{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}
 \end{figure}
 
 The reasons for differences in the results are twofold:
 \begin{enumerate}
-    \item In Fig.~\ref{fig:unidirectional_coupling_scheme} presented in Section~\ref{section:quench_velocity_cosimulation}, it was explained that the external routine updates resistive material properties at communication point $T_{j-1}$ and ANSYS solves the case for $T_{j}$. Therefore, the quenched zone is underestimated and 'delayed' with respect to the standard quench numerical solution. To reduce this error, the number of communication points was increased to~40 which corresponds to a time window of $t=2.5~\text{ms}$. 
-    \item In quench velocity modelling, the material properties assignment to the strand is binary. The material has resistive properties of the strand composite above its critical temperature and no resistance below this value. The transition region of current sharing temperature is not taken into account. Therefore, the strand might not warm up sufficiently at the transition region.
+    \item In Fig.~\ref{fig:unidirectional_coupling_scheme} presented in Section~\ref{section:quench_velocity_cosimulation}, it was explained that the external routine updates resistive material properties at communication point $t_{j-1}$ and ANSYS solves the case for $t_{j}$. Therefore, the quenched zone is underestimated and 'delayed' with respect to the standard quench numerical solution. To reduce this error, the number of communication points was increased to~40 which corresponds to a time window of $t=2.5~\text{ms}$. 
+    \item In quench velocity-based approach, the material properties assignment to the strand is binary. The material has either resistive properties of the strand composite above its critical temperature or no resistance below this value. The transition region of a~current sharing temperature, being lower than the critical temperature, is not taken into account. At critical temperatures the heat capacity of both Nb-Ti and copper is relatively low. Therefore, even a small difference in heat deposition results in large a~temperature difference in the transition region. 
 \end{enumerate}
 
-As shown in Fig. \ref{fig: q_vel_modelling_res_volt_benchmarking}, the resistive voltage in quench velocity-based method follows the curve of the benchmark solution. However, the resistive voltage remains underestimated with respect to the standard solution.
+As shown in Fig. \ref{fig: q_vel_modelling_res_volt_benchmarking}, the resistive voltage in quench velocity-based method follows the~curve of the benchmark solution. However, the resistive voltage remains underestimated with respect to the standard solution.
 
 \begin{figure}[H]
 \centering
@@ -119,12 +117,12 @@ As shown in Fig. \ref{fig: q_vel_modelling_res_volt_benchmarking}, the resistive
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Resistive voltage comparison for standard numerical solution and quench velocity-based simulation with 50 nodes along the domain.}
+    \caption{Resistive voltage comparison for standard numerical solution and quench velocity-based approach with 50 nodes along the domain.}
     \label{fig: q_vel_modelling_res_volt_benchmarking}
 \end{figure}
 
 As presented in Fig.~\ref{fig: q_vel_modelling_res_volt_rel_error}, one can state that the longer the simulation lasts, the lower relative error is obtained with respect to the reference solution. The relative error converges because the quenched zone propagates with time. For 50 nodes, the relative error converges below -5\%.
-In Fig. \ref{fig: q_vel_modelling_res_volt_rel_error}, the case with 1000 nodes also shows the similar shape of the relative error curve. For that reason, the error cannot be explained by the decrease of mesh density, as it was presented in Fig.~\ref{fig: q_vel_modelling_energy_deposition} where the initial energy deposition may result in slowing down the quench propagation. In this case, the benchmark standard numerical solution was of the same mesh size. Therefore, the error in the given range has to be accepted if one conducts a quench velocity-based analysis.
+In Fig. \ref{fig: q_vel_modelling_res_volt_rel_error}, the case with 1000 nodes also shows the similar shape of the relative error curve. For that reason, the error cannot be explained by the decrease of mesh density, as it was presented in Fig.~\ref{fig: q_vel_modelling_energy_deposition} where the initial energy deposition may result in slowing down the quench propagation. In this case, the benchmark standard numerical solution was of the same mesh size. Therefore, the error in the given range has to be accepted if one conducts an analysis withing a quench velocity-based approach.
 
 \begin{figure}[H]
 \centering
@@ -148,7 +146,7 @@ In Fig. \ref{fig: q_vel_modelling_res_volt_rel_error}, the case with 1000 nodes 
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Relative error of resistive voltage for 50, 100 and 1000 nodes used for quench velocity-based simulation.}
+    \caption{Relative error of resistive voltage for 50, 100 and 1000 nodes used for quench velocity-based approach.}
     \label{fig: q_vel_modelling_res_volt_rel_error}
 \end{figure}
 
@@ -176,7 +174,7 @@ As shown in Fig. \ref{fig: q_vel_modelling_hot_spot_rel_error}, the relative err
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Relative error of hot spot for 50, 100 and 1000 nodes used for quench velocity-based simulation.}
+    \caption{Relative error of hot spot for 50, 100 and 1000 nodes used for quench velocity-based approach.}
     \label{fig: q_vel_modelling_hot_spot_rel_error}
 \end{figure}
 

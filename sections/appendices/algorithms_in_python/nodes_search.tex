@@ -1,7 +1,6 @@
 
 \begin{verbatim}
-    
-
+   
 class SearchNodes(object):
 
     @staticmethod
@@ -18,11 +17,13 @@ class SearchNodes(object):
         
         # check if position is in the coil region
         if position > coil_length[len(coil_length) - 1, 1]:
-            raise Exception("ERROR - search_init_node - init. quench position"
-                            " is further than the coil length.")
+            raise Exception("ERROR - search_init_node - 
+                init. quench position is further than 
+                the coil length.")
         elif position < coil_length[0, 1]:
-            raise Exception("ERROR - search_init_node - init. quench position"
-                            " is below the start of the coil length.")
+            raise Exception("ERROR - search_init_node - 
+                init. quench position is below the start 
+                of the coil length.")
         guess_epsilon = None
         left = 0
         right = len(coil_length)-1

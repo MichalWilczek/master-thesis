@@ -43,9 +43,9 @@ With specified assumptions, the 3D strand domain can be transformed into a 1D+1D
         \draw[thick, cyan] (-0.8*1.5,0.7) -- (0,0.7);
         \draw[thick, cyan] (-0.8*1.5,-0.7) -- (0,-0.7);
         \draw[black, thick, <->] (-0.75*1.6,0.7) -- (-0.75*1.6,-0.7);
-        \node[scale = 1, rotate=90] at (-1.1*1.45, 0) {$d_\text{strand}$};
+        \node[scale = 0.8, rotate=90] at (-1.1*1.45, 0) {$d_\text{strand}$};
         \draw[thick,<->] (-0.941,-0.9*1.5) -- (0.941,-0.9*1.5);
-        \node[scale = 1] at (0, -0.7*1.6) {$a$};
+        \node[scale = 0.8] at (0, -0.7*1.6) {$a$};
         \draw[thick, dotted, blue] (0.941,0.941) -- (2*0.941,2*0.941);
         \draw[thick, dotted, blue] (-0.941,0.941) -- (0,2*0.941);
         \draw[thick, dotted, blue] (0.941,-0.941) -- (2*0.941,0);
@@ -53,7 +53,7 @@ With specified assumptions, the 3D strand domain can be transformed into a 1D+1D
         \draw[thick, dotted, blue] (2*0.941,2*0.941) -- (0,2*0.941);
         % ellipse for insulation area
         \filldraw[red] (5.0,-5.646/8) ellipse (0.25cm and 0.1cm);
-        \node[scale = 1, red] at (6.0, -5.646/8-0.1) {$A_\text{ins,cond}$};
+        \node[scale = 0.8, red] at (6.0, -5.646/8-0.1) {$A_\text{ins,cond}$};
         % third insulation layer
         \definecolor{blue_third_layer}{RGB}{0,225,255}
         \foreach \x in {-5.646,-4.705,...,5.646} 
@@ -76,9 +76,11 @@ With specified assumptions, the 3D strand domain can be transformed into a 1D+1D
         \draw[thick, yellow, ->] (5.0,0) -- (7.0,2.0);
         \foreach \t in {0.0,0.4705,...,1.4115}
             \filldraw[yellow] (5.0+\t,\t) circle (0.08);
-        \node[scale = 1] at (7.4, 1.5) {$L_\text{strand}$};    
+        \node[scale = 0.8] at (7.1, 1.3) {$L_\text{strand}$};    
+        \node[scale = 0.8] at (7, 2.3) {$\bar x$};    
+        \draw[thin] (6.7,1.5) -- (6.7,1.8);
         \draw[thick, black, <->] (4,0) -- (4,5.646/8);
-        \node[scale = 1, rotate=90] at (3.6, 5.646/16) {$L_\text{ins}$}; 
+        \node[scale = 0.8, rotate=90] at (3.6, 5.646/16) {$L_\text{ins}$}; 
         % draw arrow
         \draw[thick, black, ->] (2.2,0) -- (3.2,0);
     \end{tikzpicture}
@@ -106,7 +108,7 @@ Calculating the equivalent insulation length in such a manner allows for using t
     A_\text{ins, cond} = \frac{1}{4}~\frac{ V_\text{ins}}{L_\text{ins}}~\frac{1}{n_\text{nodes, strand}}= \frac{1}{4}~\frac{ A_\text{ins} ~ L_{winding}}{L_\text{ins}}~\frac{1}{n_\text{divisions, strand}},
     \label{eqn:equivalent_insulation_element_area}
 \end{equation}
-where $V_\text{ins}$ -- total insulation volume, $n_\text{divisions, strand}$ -- number of divisions applied along the 1D strand domain. One should remember that the end nodes of an analysed geometry, where heat only flows in one longitudinal direction, should be divided by two.
+where $V_\text{ins}$ -- total insulation volume, $n_\text{divisions, strand}$ -- number of divisions applied along the 1D strand domain. One should remember that $A_\text{ins, cond}$ of the end insulation elements of an analysed geometry, where heat only flows in one longitudinal direction, should be divided by two.
 
 \subsection{Initial and Boundary Conditions}
 

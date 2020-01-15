@@ -72,7 +72,7 @@ In the mesh size loop, the reference analysis from the time step loop was compar
 Therefore, the reference analysis for the benchmarking purposes with quench velocity-based simulations is the one with the mesh size of 1~mm and with the time step range of $t=[10, 100]~\upmu \text{s}$. The analysis settings used for the benchmarking with the quench velocity-based method are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation}. 
 
 \begin{table}[H]
-    \caption{Analysis input parameters.} 
+    \caption{Input parameters of the reference standard solution.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -91,7 +91,7 @@ Therefore, the reference analysis for the benchmarking purposes with quench velo
      \label{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation} 
  \end{table}
 
-The analysis chosen as a reference for benchmarking purposes is an acceptable compromise between the accuracy and computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in 1D thermal quench propagation, computing time rises monotonically with mesh refinement while keeping the time step range equal to $t=[10, 100]~\upmu \text{s}$.
+The analysis chosen as a reference for benchmarking purposes is an acceptable compromise between the accuracy and the computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in 1D thermal quench propagation, computing time rises monotonically with mesh refinement while keeping the time step range equal to $t=[10, 100]~\upmu \text{s}$\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
 
 \begin{figure}[H]
 \centering

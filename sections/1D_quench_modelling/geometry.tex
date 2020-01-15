@@ -1,15 +1,17 @@
 
-In this thesis, all the simulations are based on the geometry of a skew quadrupole which belongs to the group of high-order corrector magnets designed for the High-Luminosity LHC. The skew quadrupole is developed by LASA laboratories of INFN-Milano. Its geometry is presented in Fig. \ref{fig:Skew_quad_geometry}. Each of the coils of the skew quadrupole (marked in red in the right picture) is positioned in two mechanical supports (marked in grey). The entire magnet is surrounded by an iron yoke (marked in blue). 
+In this thesis, all the simulations are based on the geometry of a skew quadrupole which belongs to the group of high-order corrector magnets designed for the High-Luminosity LHC. The skew quadrupole is developed by LASA laboratories of INFN-Milano. Its geometry is presented in Fig. \ref{fig:Skew_quad_geometry}. Each of the coils of the skew quadrupole (marked in red in the left picture) is fully impregnated and positioned in two mechanical supports (marked in grey). The entire magnet is surrounded by an iron yoke (marked in blue). One coil of a magnet out of four in total is presented in the right picture.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.225\linewidth]{sections/1D_quench_modelling/figures/geometry/SkewQuad3D.png}
-    \includegraphics[width=0.30\linewidth]{sections/1D_quench_modelling/figures/geometry/Quadrupole_Cross_Section.png}
-    \caption{Left: one coil of the skew quadrupole 3D geometry~\cite{marco_prioli_mails}; right: cross-section of the skew quadrupole~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.}
+    \begin{tikzpicture}
+    \node at (0,0) {\includegraphics[width=0.3\linewidth]{sections/1D_quench_modelling/figures/geometry/Quadrupole_Cross_Section.png}};
+    \node at (5,0) {\includegraphics[width=0.225\linewidth]{sections/1D_quench_modelling/figures/geometry/SkewQuad3D.png}};
+    \end{tikzpicture}
+     \caption{Left: one coil of the skew quadrupole 3D geometry~\cite{marco_prioli_mails}; right: cross-section of the skew quadrupole~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.}
     \label{fig:Skew_quad_geometry}
 \end{figure}
 
-Each coil of the magnet consists of 754 windings. The entire length of one coil equals 841~m. The 1D geometry is based on geometrical parameters of a single strand of a skew quadrupole whose simulations are further described in the next section. As presented in Fig. \ref{fig: 1d_strand_geometry}, the coil consists of a strand with a circular cross-section (in yellow). The composite strand is made of Nb-Ti with copper as a stabiliser. The composite is fully insulated with an S2-glass material (in red). Then, the strand with the insulation layer is immersed in D10 epoxy resin (in blue)~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}.
+Each coil of the magnet consists of 754 windings which accounts for an 812-metre long cable~\cite{samuele_mariotto_mails}. Every winding is a superconducting strand with a copper stabiliser. It is important to mention that in high-order corrector magnets, the Rutherford cable is not applied. The 1D geometry is based on geometrical parameters of a single strand of a skew quadrupole whose simulations are further described in the next section. As presented in Fig.~\ref{fig: 1d_strand_geometry}, the coil consists of a strand with a circular cross-section (in yellow). The composite strand is made of Nb-Ti with copper as a stabiliser. The composite is fully insulated with an S2-glass material (in red). Then, the strand with the insulation layer is immersed in D10 epoxy resin (in blue)~\cite[p.~103-105]{hl_lhc_tech_design_report_v01}. The one-dimensional coordinate system $\bar x$ in Fig.~\ref{fig: 1d_strand_geometry} represents the longitudinal direction of the strand.
 
 \begin{figure}[H]
     \centering
@@ -27,7 +29,7 @@ Each coil of the magnet consists of 754 windings. The entire length of one coil 
         \draw[thin] (1.75,-0.15) -- (1.75,0.15);
         \draw[thin] (9,-0.15) -- (9,0.15);
         
-        \node[scale = 1] at (9.75, 0.3) {$x$};
+        \node[scale = 1] at (9.75, 0.3) {$\bar x$};
         \node[scale = 1] at (9, -0.4) {$L_\text{strand}$};
         \node[scale = 1] at (1.75, -0.4) {0};
         

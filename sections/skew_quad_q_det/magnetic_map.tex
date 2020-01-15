@@ -1,12 +1,12 @@
 
 \subsection{Material Properties and Geometry}
 
-In the magnetic analysis of the skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. As presented in Fig.~\ref{fig:skew_quad_geometry_ansys}, the~magnet cross-section has three axes of symmetry. Therefore, only the \nth{8} part of the skew quadrupole is simulated. In Fig.~\ref{fig:skew_quad_geometry_ansys}, the iron yoke is marked in red and the coil -- in blue. The~violet part of the~cross-section is air. The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. 
+Fig.~\ref{fig:skew_quad_geometry_ansys} presents the cross-section of the skew quadrupole used for a magnetic analysis with the iron yoke  marked in red and the coil in blue. The~violet part of the~cross-section is considered to be air. The~magnet cross-section has three axes of symmetry. Therefore, only the \nth{8} part of the skew quadrupole is simulated.  
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \node at (0,0) {\includegraphics[width=.3\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_geometry.png}};
+    \begin{tikzpicture}[scale=0.8]
+    \node[scale=0.8] at (0,0) {\includegraphics[width=.3\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_geometry.png}};
 
     \draw[black, thick, ->] (2.5,0) -- (-1.1,0);
     \draw[black, thick, ->] (2.5,-0.95) -- (-1.32,-0.95);
@@ -17,30 +17,31 @@ In the magnetic analysis of the skew quadrupole, it is assumed that the magnet i
     \draw[red, dashed] (-2.35,-3.3) -- (2.5,-3.3);
     \draw[red, dashed] (-2.3,-3.3) -- (-2.3,3.3);
     \draw[red, dashed] (-2.35,-3.45) -- (2.8,1.67);
-    \node[red] (scale=0.8) at (3.5,1.9) {axes of symmetry};
+    \node[red, scale=0.8] at (3.5,1.9) {axes of symmetry};
     
-    \node[black] (scale=0.8) at (3.5,0) {air external};
-    \node[black] (scale=0.8) at (3.5,-0.95) {air hole};
-    \node[black] (scale=0.8) at (3.5,-1.5) {iron yoke};
-    \node[black] (scale=0.8) at (3.5,-2) {coil};
-    \node[black] (scale=0.8) at (3.5,-2.5) {air internal};
+    \node[black, scale=0.8] at (3.5,0) {air external};
+    \node[black, scale=0.8] at (3.5,-0.95) {air hole};
+    \node[black, scale=0.8] at (3.5,-1.5) {iron yoke};
+    \node[black, scale=0.8] at (3.5,-2) {coil};
+    \node[black, scale=0.8] at (3.5,-2.5) {air internal};
 
     \end{tikzpicture}
     \caption{The \nth{8} part of the skew quadrupole cross-section with specified component names.}
     \label{fig:skew_quad_geometry_ansys}
 \end{figure}
 
-In the simulation, the areas considered as the air and the coil are characterised by the magnetic relative permeability equal to one. The magnetic properties of iron yoke are described with a~non-linear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
+The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. In the magnetic analysis of the skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. The areas considered as the air and the coil are characterised by the magnetic relative permeability equal to one. The magnetic properties of iron yoke are described with a~non-linear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
+          scale only axis,
+          height = 3cm,
+          width = 8cm,
           no markers,
           legend style={at={(1,0)},anchor=south east},
           grid style={dashed,gray!30},
-          width=0.85\linewidth, 
-          height = 6cm,
           xlabel={$H,~\text{At~m}$},
           ylabel={$B,~\text{T}$},
           xlabel style={below right},
@@ -56,30 +57,34 @@ In the simulation, the areas considered as the air and the coil are characterise
 
 \subsection{Mesh, Initial and Boundary Conditions}
 
-The meshed geometry is illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}. The element PLANE233 is used for the analysis. It is a 2-D element which has an ability to simulate 2D planar and axisymmetric magnetic fields. The element is defined by 8 nodes~\cite{ansys_element_manual}. For the requirements of the given analysis, only one degree of freedom is used -- a magnetic vector potential $A_\text{z}$. In order to take into consideration the symmetry condition, the magnetic vector potential $A_\text{z}$ was set to zero on the left side of the of geometry. It means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the \nth{2} wall of symmetry, it is assumed by default in ANSYS APDL that the magnetic flux is perpendicular to the wall.
+The meshed geometry is illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}. The element PLANE233 is used for the analysis. It is a 2-D element which has an ability to simulate 2D planar and axisymmetric magnetic fields. The element is defined by 8 nodes~\cite{ansys_element_manual}.
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \node at (0,0) {\includegraphics[width=.3\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_mesh.png}};
-    \node at (5,0) {\includegraphics[width=.25\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_mesh_coil.png}};
+    \begin{tikzpicture}[scale=1]
+    \node[scale=1] at (0,0) {\includegraphics[width=.3\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_mesh.png}};
+    \node[scale=1] at (5,0) {\includegraphics[width=.25\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/skew_quad_mesh_coil.png}};
     \draw[red, very thick, dashed] (-2.3,-3.1) -- (-2.3,3.1);
-    \node[red] at (-3,2) {$A_\text{z}=0$};
+    \node[red, scale=0.8] at (-3,2) {$A_\text{z}=0$};
     
     \draw[black, very thick, ->] (-0.9,-1.9) -- (3.0,0);
-    \node[black] at (5,2.5) {Mesh in the coil};
+    \node[black, scale=0.8] at (5,2.5) {Mesh in the coil};
     
-    \draw[black, ->] (-5,-3) -- (-4,-3);
-    \draw[black, ->] (-5,-3) -- (-5,-2);
-    \node[black] (scale=0.8) at (-4,-2.7) {$\vec{x}$};
-    \node[black] (scale=0.8) at (-4.8,-2) {$\vec{y}$};
+    \draw[scale=1] (-3.5,1-1) circle (0.1cm);
+    \draw[black, ->, scale=1] (-3.5,1-1) -- (-3.5,1.5-1);
+    \draw[black, ->, scale=1] (-3.5,1-1) -- (-3,1-1);
+    \node[scale = 0.8] at (-3.75,0.8-1) {$\vec{z}$};
+    \node[scale = 0.8] at (-2.9,1.2-1) {$\vec{x}$};
+    \node[scale = 0.8] at (-3.7,1.65-1) {$\vec{y}$};
     
     \end{tikzpicture}
     \caption{The \nth{8} part of the skew quadrupole cross-section.}
     \label{fig:skew_quad_magnetic_mesh_ansys}
 \end{figure}
 
-As illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}, the mesh was refined inside of the coil. There were 40 elements placed on each side of a rectangular coil. Then, the mesh was relaxed as a function of a distance from the coil. In Table~\ref{table:mesh_characteristics_magnetic_ansys} the element size in the remaining
+For the requirements of the given analysis, only one degree of freedom is used -- a~magnetic vector potential $A_\text{z}$. In order to take into consideration the symmetry condition, the magnetic vector potential $A_\text{z}$ was set to zero on the left side of the of geometry. It means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the \nth{2} wall of symmetry, it is assumed by default in ANSYS APDL that the magnetic flux is perpendicular to the wall.
+
+As illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}, the mesh was refined inside of the coil. There were 40 elements placed on each side of a rectangular coil. Then, the mesh was relaxed as a function of a~distance from the coil. In Table~\ref{table:mesh_characteristics_magnetic_ansys} the element size in the remaining
 areas of the geometry is specified.
 
 \begin{table}[H]
@@ -103,7 +108,7 @@ areas of the geometry is specified.
      \label{table:mesh_characteristics_magnetic_ansys} 
 \end{table}
 
-During the analysis, an equal current density was applied to the coil area. The current density was calculated as
+In the analysis, an equal current density was applied to the coil area. The current density was calculated as
 \begin{equation}
     J_\text{coil} = \frac{n_\text{windings}~I}{A_\text{coil}},
 \end{equation}
@@ -123,7 +128,7 @@ The magnetic field distribution in the iron yoke and the coil for two values of 
     \label{fig:skew_quad_magnetic_results_geometry_ansys}
 \end{figure}
 
-As presented in Fig.~\ref{fig:skew_quad_magnetic_results_coil_ansys}, the magnetic field also increases in the coil with rise of current. In order to use the results for the quench velocity modelling, the magnetic field at corner nodes of the coil elements was extracted and put together to a 3D numpy array in Python. A linear interpolation was conducted for three parameters: \textit{x-}~and~\textit{y-}direction, and current.
+As presented in Fig.~\ref{fig:skew_quad_magnetic_results_coil_ansys}, the magnetic field also increases in the coil with rise of current. In order to use the results for the quench velocity modelling, the magnetic field at corner nodes of the coil elements was extracted. A linear interpolation was conducted for three parameters: \textit{x-}~and~\textit{y-}direction, and current.
 
 \begin{figure}[H]
     \centering
@@ -135,34 +140,34 @@ As presented in Fig.~\ref{fig:skew_quad_magnetic_results_coil_ansys}, the magnet
     \label{fig:skew_quad_magnetic_results_coil_ansys}
 \end{figure}
 
-As presented in Fig.~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys}, an $(x,y)$ position was used for a centre of each winding. As the magnet discharges in time, the magnetic field of each winding varies differently based on their position in space.
+As presented in Fig.~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys}, an $(x,y)$-position was used for a centre of each winding. As the magnet discharges in time, the magnetic field of each winding varies differently based on their position in space.
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
+    \begin{tikzpicture} [scale=0.8]
     
-    \node at (0,0) {\includegraphics[width=.5\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/Mag_field_distribution.png}};
+    \node[scale=0.8] at (0,0) {\includegraphics[width=.5\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/Mag_field_distribution.png}};
     
-    \node[black] at (-3,-3.5) {0};
-    \node[black] at (-4.1,-2.95) {0};
-    \node[black] at (2.35,-3.6) {25};
-    \node[black] at (-4.1,2.45) {25};
+    \node[black, scale=0.8] at (-3,-3.5) {0};
+    \node[black, scale=0.8] at (-4.1,-2.95) {0};
+    \node[black, scale=0.8] at (2.35,-3.6) {25};
+    \node[black, scale=0.8] at (-4.1,2.45) {25};
     
-    \node[black] at (4.35,-2.82) {0.039};
-    \node[black] at (4.35,-2.2) {0.336};
-    \node[black] at (4.35,-1.5) {0.634};
-    \node[black] at (4.35,-0.8) {0.931};
-    \node[black] at (4.35,-0.1) {1.229};
-    \node[black] at (4.35,0.6) {1.526};
-    \node[black] at (4.35,1.3) {1.824};
-    \node[black] at (4.35,2) {1.121};
-    \node[black] at (4.35,2.7) {2.419};
+    \node[black, scale=0.8] at (4.35,-2.82) {0.039};
+    \node[black, scale=0.8] at (4.35,-2.2) {0.336};
+    \node[black, scale=0.8] at (4.35,-1.5) {0.634};
+    \node[black, scale=0.8] at (4.35,-0.8) {0.931};
+    \node[black, scale=0.8] at (4.35,-0.1) {1.229};
+    \node[black, scale=0.8] at (4.35,0.6) {1.526};
+    \node[black, scale=0.8] at (4.35,1.3) {1.824};
+    \node[black, scale=0.8] at (4.35,2) {1.121};
+    \node[black, scale=0.8] at (4.35,2.7) {2.419};
     
-    \node[black] at (-0.225,-4) {$x$, mm (layers direction)};
-    \node[black, rotate=90] at (-4.75,0) {$x$, mm (layers direction)};
-    \node[black, rotate=90] at (5.3,0) {Magnetic field, T};
+    \node[black, scale=0.8] at (-0.225,-4) {$x$, mm (layers direction)};
+    \node[black, rotate=90, scale=0.8] at (-4.75,0) {$x$, mm (layers direction)};
+    \node[black, rotate=90, scale=0.8] at (5.3,0) {Magnetic field, T};
 
     \end{tikzpicture}
-    \caption{Magnetic field distribution over a magnet domain in the coil for $I=86~\text{A}$ .}
+    \caption{Magnetic field distribution in the coil at $I=86~\text{A}$ applied separately to each winding.}
     \label{fig:skew_quad_magnetic_interpolation_coil_ansys}
 \end{figure}

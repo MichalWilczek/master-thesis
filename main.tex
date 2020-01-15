@@ -40,6 +40,8 @@
 \usepackage{array}
 \newcolumntype{L}{>{\centering\arraybackslash}m{3cm}}
 \usepackage{multirow}
+\usepackage{paralist}
+\usepackage{setspace}
 \usepgfplotslibrary{polar}
 
 \newcommand{\vect}[1]{\textbf{#1}}
@@ -87,10 +89,10 @@
 \chapter{Aim of Thesis}
 \label{chapter: aim_thesis}
 
-\section{Research Aim and Objectives}
+\section{Research Objectives}
 \input{sections/aim_thesis/research_aims_and_objectives.tex}
 
-\section{Structure of the Thesis}
+\section{Thesis Structure}
 \input{sections/aim_thesis/structure_thesis.tex}
 
 % 1D QUENCH PROPAGATION MODELLING 
@@ -147,37 +149,41 @@
 \label{chapter:algorithms}
 \input{sections/algorithms/introduction.tex}
 
+\section{Model Preparation in ANSYS APDL}
+\label{section:model_preparation}
+\input{sections/algorithms/model_preparation.tex}
+
 \section{Multidimensional Mapping Algorithm}
 \label{section:multidimensional_mapping_algorithm}
 \input{sections/algorithms/multidimensional_mapping.tex}
-
-\section{Quench and Non-Quenched Zone Assignment Algorithm}
-\label{section:node_searching_algorithm}
-\input{sections/algorithms/node_search_alg.tex}
 
 \section{Quench Detection Algorithm}
 \label{section:quench_detection_algorithm}
 \input{sections/algorithms/q_det_alg.tex}
 
+\section{Quenched and Non-Quenched Zone Assignment Algorithm}
+\label{section:node_searching_algorithm}
+\input{sections/algorithms/node_search_alg.tex}
+
 % PYTHON IMPLEMENTATION
 \clearpage
-\chapter{Analysis Implementation in Python}
+\chapter{Python Implementation}
 \label{chapter:python_implementation}
 
 \section{Code Overview}
 \label{section:code_overview}
 \input{sections/implementation_python/code_overview.tex}
 
-\section{Description of the Execution Script}
+\section{Description of Execution Script}
 \input{sections/implementation_python/execution_script_description.tex}
 
-\section{Description of the Main Classes}
+\section{Algorithms Implementation in Python}
 \label{section:description_main_classes}
 \input{sections/implementation_python/class_description.tex}
 
 % QUENCH VELOCITY MODELLING BENCH-MARKING
 \clearpage
-\chapter{Quench Velocity Modelling Benchmarking}
+\chapter{Benchmark of Quench Velocity Modelling}
 \label{chapter:quench_velocity_benchmarking}
 
 \section{Motivation}
@@ -223,7 +229,7 @@
 
 % SKEW QUADRUPOLE ANALYSIS - QUENCH DETECTION
 \clearpage
-\chapter{Skew Quadrupole Quench Detection Analysis}
+\chapter{Skew Quadrupole Quench Analysis}
 \label{chapter:skew_quadrupole_quench_detection_analysis}
 
 \section{Motivation}
@@ -238,11 +244,14 @@
 \section{Multi-strand Quench Analysis Workflow}
 \input{sections/skew_quad_q_det/quench_analysis_workflow.tex}
 
-\section{Magnetic Map of the Skew Quadrupole}
+\section{Magnetic Map of Skew Quadrupole}
 \input{sections/skew_quad_q_det/magnetic_map.tex}
 
-\section{Quench Velocity Map of the Skew Quadrupole}
+\section{Quench Velocity Map of Skew Quadrupole}
 \input{sections/skew_quad_q_det/v_quench_mapping.tex}
+
+\section{Minimum Propagating Zone Analysis}
+\input{sections/skew_quad_q_det/figures/mpz_analysis.tex}
 
 \section{Quench Detection Analysis}
 % \input{sections/skew_quad_q_det/analysis_quench_detection.tex}
@@ -250,50 +259,62 @@
 \section{Analysis of Magnet Discharge}
 % \input{sections/skew_quad_q_det/analysis_magnet_discharge.tex}
 
+\clearpage
+\chapter{Discussion over Research Objectives}
+\label{chapter:research_questions_discussions}
+
 % APPENDICES
 \clearpage
 \begin{appendices}
-% \appendix
+
 \chapter{Material Properties}
 \label{appendix_material_properties_description}
-\input{sections/appendices/material_properties/introduction.tex}
+% \input{sections/appendices/material_properties/introduction.tex}
 
 \section{Copper}
 \label{appendix:cu_material_properties}
-\input{sections/appendices/material_properties/copper/copper.tex}
+% \input{sections/appendices/material_properties/copper/copper.tex}
 
 \section{Niobium Titanium}
 \label{appendix:nbti_material_properties}
-\input{sections/appendices/material_properties/niobium_titanium/niobium_titanium.tex}
+% \input{sections/appendices/material_properties/niobium_titanium/niobium_titanium.tex}
 
 \section{G10 Material Properties}
 \label{appendix:g10_material_properties}
-\input{sections/appendices/material_properties/g10/g10.tex}
+% \input{sections/appendices/material_properties/g10/g10.tex}
 
 \clearpage
-\chapter{Algorithms Implementation in Python}
+\chapter{Finite Element Method in Heat Conduction Problems}
+\label{appendix:fem_heat_conduction}
+% \input{sections/appendices/numerical_methods/fem_in_heat_conduction.tex}
 
-\section{Quench Velocity Algorithm}
-\label{appendix:python_quench_velocity_algorithm}
-% \input{sections/appendices/algorithms_in_python/quench_velocity.tex}
+\clearpage
+\chapter{Python Implementation}
+\section{Compilation of ANSYS with Python Environment}
+\label{appendix:python_ansys_compilation}
+% \input{sections/appendices/analysis_in_python/compilation_ansys_python.tex}
 
-\section{Quench Detection Algorithm}
-\label{appendix:python_quench_detection_algorithm}
-% \input{sections/appendices/algorithms_in_python/quench_detection.tex}
+\section{Execution Script in Python}
+\label{appendix:execution_script_python}
+% \input{sections/appendices/analysis_in_python/execution_script.tex}
 
 \section{Quench and Non-Quenched Zone Assignment Algorithm}
 \label{appendix:python_nodes_search_algorithm}
 % \input{sections/appendices/algorithms_in_python/nodes_search.tex}
 
-\clearpage
-\chapter{Analysis Implementation in Python}
-\section{Compilation of ANSYS with Python Environment}
-\label{appendix:python_ansys_compilation}
-\input{sections/appendices/analysis_in_python/compilation_ansys_python.tex}
+\section{Quench Detection Algorithm}
+\label{appendix:python_quench_detection_algorithm}
+% \input{sections/appendices/algorithms_in_python/quench_detection.tex}
 
-\section{Execution Script in Python}
-\label{appendix:execution_script_python}
-% \input{sections/appendices/analysis_in_python/execution_script.tex}
+\clearpage
+\chapter{Analysis Implementation in ANSYS APDL}
+\section{Creation of Slab Geometry}
+\label{appendix:apdl_slab_geometry}
+% \input{sections/appendices/apdl_scripts/slab_geometry_apdl.tex}
+
+\section{Solver and Post-Processing Script}
+\label{appendix:apdl_solver}
+% \input{sections/appendices/apdl_scripts/solve_apdl.tex}
 
 \end{appendices}
 

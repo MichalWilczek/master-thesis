@@ -1,0 +1,180 @@
+
+\subsection{Geometry}
+\label{subsection:algorithms_geometry}
+
+Creating a CAD geometry where a~single strand domain is wound $n$ times would be a~complicated task. Therefore, every winding is considered to be a~separate domain, as shown in Fig. \ref{fig:winding_geom_scheme}. The winding ends marked in green are coupled with the neighbouring ones thermally and electrically, i.e. the coupled nodes are characterised by the same temperature and voltage. With such an approach, one can easily create multi-strand magnet geometries. Moreover, by specifying which windings are coupled together, with the same numerical domain, one can also analyse magnets with a different winding scheme.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale = 1.0]
+
+    \draw [ultra thick] (0,0) arc (-80:260:1);
+    \draw [ultra thick] (0,-0.2) arc (-81:261:1.2);
+    \draw [ultra thick] (0,-0.4) arc (-82:262:1.4);
+    \draw [ultra thick] (0,-0.6) arc (-83:263:1.6);
+    
+    \draw [ultra thick, green] (0,0) -- (-0.36,-0.2);
+    \draw [ultra thick, green] (0,-0.2) -- (-0.37,-0.4);
+    \draw [ultra thick, green] (0,-0.4) -- (-0.38,-0.6);
+    
+    \draw (-3.5,1) circle (0.1cm);
+    \draw[black, ->] (-3.5,1) -- (-3.5,1.5);
+    \draw[black, ->] (-3.5,1) -- (-3,1);
+    
+    \node[scale = 0.8] at (-3.75,0.8) {$\vec{x}$};
+    \node[scale = 0.8] at (-2.9,1.2) {$\vec{y}$};
+    \node[scale = 0.8] at (-3.7,1.65) {$\vec{z}$};
+
+\end{tikzpicture}
+\caption{Domain representation with multiple windings.}
+\label{fig:winding_geom_scheme}
+\end{figure}
+
+Every winding can have an external homogenised insulation layer represented as a~transverse one-dimensional element, as shown in Fig.~\ref{fig: insulation_coupling}. If multiple windings are created, the~end nodes of each insulation layer is thermally coupled with the neighbouring windings. The~model assumes no diagonal heat propagation across the insulation layer, i.e. the~windings are not diagonally coupled. The insulation elements marked in blue are represented by the LINK33 element whereas the composite strand in yellow -- LINK68. LINK68 is a~uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule effect. Similarly to the element LINK33, it is used for steady-state and transient numerical problems. In standard ANSYS simulations, the Joule effect is implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 in quench velocity-based approach allows for omitting this step since the solver computes the heat source by an~internal routine based on material property state. The element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 0.8]
+        
+        % coupling 
+        \foreach \x in {0,2,4}
+            \foreach \y in {3/5, 3/5+2}
+                \draw[very thick, green] (\x, \y) -- (\x, -\y+2);
+        \foreach \y in {0,2,4}
+            \foreach \x in {3/5, 3/5+2}
+                \draw[very thick, green] (\x, \y) -- (-\x+2, \y);
+        
+        % row number 1  
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5, 0) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (0, \y/5) circle (0.05);    
+         \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+2, 0) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (2, \y/5) circle (0.05);   
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+4, 0) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (4, \y/5) circle (0.05);   
+        
+        % row number 2
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5, 2) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (0, \y/5+2) circle (0.05);    
+         \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+2, 2) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (2, \y/5+2) circle (0.05);   
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+4, 2) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (4, \y/5+2) circle (0.05);   
+        
+        % row number 3
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5, 4) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (0, \y/5+4) circle (0.05);    
+         \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+2, 4) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (2, \y/5+4) circle (0.05);   
+        \foreach \x in {-3,-2,...,3}
+            \filldraw[blue] (\x/5+4, 4) circle (0.05);
+        \foreach \y in {-3,-2,...,3}
+            \filldraw[blue] (4, \y/5+4) circle (0.05);   
+        \foreach \x in {0,2,4} 
+            \foreach \y in {0,2,4} 
+                \filldraw[yellow] (\x, \y) circle (0.1);
+    \draw[scale=1] (-3.5+0.5,1+0.5) circle (0.1cm);
+    \draw[black, ->, scale=1] (-3.5+0.5,1+0.5) -- (-3.5+0.5,1.5+0.5);
+    \draw[black, ->, scale=1] (-3.5+0.5,1+0.5) -- (-3+0.5,1+0.5);
+    \node[scale = 0.8] at (-3.75+0.5,0.8+0.5) {$\vec{z}$};
+    \node[scale = 0.8] at (-2.9+0.5,1.2+0.5) {$\vec{x}$};
+    \node[scale = 0.8] at (-3.7+0.5,1.65+0.5) {$\vec{y}$};
+        
+    \end{tikzpicture}
+    \caption{Cross-section of a 1D+1D+1D geometry with coupled insulation nodes marked in green.}
+    \label{fig: insulation_coupling}
+\end{figure}
+
+\subsection{Mesh Generation}
+
+The~mesh generation scheme for a~magnet geometry is illustrated in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The~mesh should be distributed over so called "nodal planes" which are always perpendicular to the~normal vector $\vec{n}$ of a directional spline. The directional spline is a curve that represents a final shape of a designed coil. One nodal plane with nine windings is presented in Fig.~\ref{fig: insulation_coupling}. In order to generate mesh, a~longitudinal number of divisions has to be specified. When the insulation is considered, the number of divisions across the insulation must be defined as well. Each insulation element is characterised by the same volume. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale = 1.5]
+        
+        \draw[thick, red] (-1,1) rectangle (0,0);
+        \draw[thick, red] (-1,1/3) -- (0,1/3);
+        \draw[thick, red] (-1,2/3) -- (0,2/3);
+        \draw[thick, red] (-1/3,0) -- (-1/3,1);
+        \draw[thick, red] (-2/3,0) -- (-2/3,1);
+        
+        \draw[thick, red, dashed, xshift=0.52cm, yshift=0.8cm] (-1,1) rectangle (0,0);
+        \draw[thick, red, dashed, xshift=0.9cm, yshift=1.4cm] (-1,1) rectangle (0,0);
+        
+        \draw[thick, black] (0,0) .. controls +(45:1cm) and +(135:1cm) .. (2,2);
+        \draw[thick, black] (2,2) .. controls +(135:-0.5cm) and +(45:-0.5cm) .. (3,2);
+        \draw[thick, black, ->] (3,2) .. controls +(45:1cm) and +(45:-0.5cm) .. (4.5,1);
+        
+        \draw[thick, black, ->] (0,0) -- (0.5,0.5);
+        \draw[thick, black, ->] (2,2) -- (2.5,1.5);
+        \draw[thick, black, ->] (3,2) -- (3.5,2.5);
+
+        \node[red, scale=0.8, text width=2cm] at (-1.2,1.1) {nodal planes};
+        \node[black, scale=0.8, text width=2cm] at (1.9,2.5) {directional spline};
+        \node[black] at (0.35,0.15) {$\vec{n}$};
+        \node[black] at (2.1,1.65) {$\vec{n}$};
+        \node[black] at (3.15,2.4) {$\vec{n}$};
+        
+        \node[scale = 1.0] at (4.65,1.15) {$\bar x_\text{spline}$};
+
+    \end{tikzpicture}
+    \caption{Multidimensional mesh generation.}
+    \label{fig: mesh_generation_in_multidimensional_case}
+\end{figure}
+
+
+% In Chapter~\ref{chapter: 1d_quench_propagation_modelling}, a uniform temperature was assumed in the cross-section of a strand which allowed for modelling the coil with 1D~elements. If such an assumption is not made, the~composite strand is modelled in 2D or 3D. In such a case, in the~mapping algorithm, the mesh is generated by specifying 2D nodal planes  uniformly distributed in a longitudinal direction of the coil, as presented in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The planes are always perpendicular to the normal vector $\vec{n}$ of a directional spline. 
+
+% As illustrated in Fig.~\ref{fig:ansys_python_mapping scheme_nodes}, 2D nodal planes~$P_\text{n}$ are packed into a set of imaginary nodes~$N_\text{n}$ in the external routine calculating the propagation of quench. Each imaginary node~$N$ represents one plane~$P$. The position of the imaginary node~$N$ in space is an average position of all the nodes belonging to the plane~$P$. The creation of imaginary nodes serves for facilitating the assignment of quenched zones in time by an external routine. This process is performed in order to estimate the quench propagation only in the longitudinal direction.
+
+% \begin{figure}[H]
+% \centering
+% \begin{tikzpicture}[scale = 0.8]
+
+%     \foreach \t in {0,1,...,3}
+%     \filldraw[black] (0,{\t}) circle (5pt);
+%     \foreach \t in {0,1,...,3}
+%     \filldraw[black] (1.5,{\t}) circle (5pt);
+%     \foreach \t in {0,1,...,3}
+%     \filldraw[black] (3.5,{\t}) circle (5pt);
+%     \draw[red] (-0.35,-0.35) rectangle (0.35,3.35);
+%     \draw[red] (1.15,-0.35) rectangle (1.85,3.35);
+%     \draw[red] (3.15,-0.35) rectangle (3.85,3.35);
+%     \draw[thick,->] (2,1.5) -- (3.05,1.5);
+    
+%     \node[scale = 0.8] at (2.5, 1.8) {(...)};
+%     \node[red, scale = 0.8] at (0, -0.7) {$\text{P}_1$};
+%     \node[red, scale = 0.8] at (1.5, -0.7) {$\text{P}_2$};
+%     \node[red, scale = 0.8] at (3.5, -0.7) {$\text{P}_\text{n}$};
+    
+%     \draw[ultra thick,->, cyan] (4,1.5) -- (5,1.5);
+%     \filldraw[red] (5.5,1.5) circle (5pt);
+%     \filldraw[red] (6.5,1.5) circle (5pt);
+%     \draw[thick,->] (6.8,1.5) -- (7.3,1.5);
+%     \filldraw[red] (7.65,1.5) circle (5pt);
+    
+%     \node[scale = 0.8] at (7.05, 1.8) {(...)};
+%     \node[red, scale = 0.8] at (5.5, 1) {$\text{N}_1$};
+%     \node[red, scale = 0.8] at (6.5, 1) {$\text{N}_2$};
+%     \node[red, scale = 0.8] at (7.65, 1) {$\text{N}_\text{n}$};
+
+% \end{tikzpicture}
+% \caption{Schematic of node assignment to imaginary nodes.}
+%     \label{fig:ansys_python_mapping scheme_nodes}
+% \end{figure}

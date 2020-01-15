@@ -4,13 +4,13 @@ The benchmark study is conducted for two cases separately:
     \item 1D strand analysis with an external insulation layer.
 \end{enumerate}
 
-In order to conduct a quench velocity-based analysis, the value of quench velocity in time is required. The standard analysis serves for two purposes:
+In order to conduct the analysis within the quench velocity-based approach, the value of quench velocity in time is required. The standard analysis serves for two purposes:
 \begin{enumerate}
     \item average quench velocity value to be used in the quench velocity-based model,
     \item reference model for a relative error.
 \end{enumerate}
 
-The benchmarking workflow, which compares the standard solution with a quench velocity-based method when no insulation is considered, is illustrated in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation}. As it was recommended in \cite[p.~40]{paudel_thesis}, the mesh should be discretised in the scale of a millimetre when an adiabatic quench thermal problem is considered. Therefore, the input mesh size of $x=1~\text{mm}$ was set as the input parameter with a relatively large time step range of $t= [100, 1000]~\upmu \text{s}$. The workflow is divided into three main parts: 
+The benchmarking workflow, which compares the standard solution with a quench velocity-based method when no insulation is considered, is illustrated in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation}. As it is recommended in \cite[p.~40]{paudel_thesis}, the mesh should be discretised in the scale of a millimetre when an adiabatic quench thermal problem is considered. Therefore, the input mesh size of $x=1~\text{mm}$ was set as the input parameter with a relatively large time step range of $t= [100, 1000]~\upmu \text{s}$. The workflow is divided into three main parts: 
 \begin{enumerate}
     \item find the time step range,
     \item find the mesh size, 
@@ -21,7 +21,7 @@ The first two parts of the workflow are an iteration loop with a condition state
 \begin{equation}
     E_\text{r} = \frac{r_\text{i}-r_{i-1}}{r_\text{i}}~100\%,
 \end{equation}
-where $r_\text{i}$ -- reference analysis, $r_{i-1}$ -- analysis from the preceding iteration loop~$i$. In all the analyses, the condition statement imposes the absolute value of a relative error less or equal to 1\%. In this chapter, the quench velocity is calculated in a different manner with respect to Chapter \ref{chapter: 1d_quench_propagation_modelling} where the method was imposed by the STEAM-BBQ tool. The average quench velocity is calculated as
+where $r_\text{i}$ -- reference analysis, $r_{i-1}$ -- analysis from the preceding iteration loop~$i$. In all the analyses, the condition statement imposes an absolute value of a relative error less or equal to 1\%. In this chapter, the quench velocity is calculated in a different manner with respect to Chapter \ref{chapter: 1d_quench_propagation_modelling} where the method was imposed by the STEAM-BBQ tool. The average quench velocity is calculated as
 \begin{equation}
     v_\text{quench} = \frac{ \sum_{j=1}^{k-1} \frac{x_{j+1}-x_j}{\Delta t} }{k},
 \end{equation}
@@ -77,7 +77,7 @@ where $x_j$ -- quench front position at time window~$j$, $\Delta t$ -- time incr
     \label{fig:block_diagram_benchmarking_methodology_no_insulation}
 \end{figure}
 
-The next step of the benchmarking is the comparison conducted with an external insulation layer. The method workflow is presented in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}. In this case, the longitudinal mesh size as well as a time step range are taken from a reference model without the insulation layer. In the standard analysis, one searches for a mesh size across the insulation layer which allows for obtaining the solution within the precision of a relative error of 1\% with respect to the average quench velocity. When the condition statement of a relative error is fulfilled, the average quench velocity is taken from a reference model and set as an input parameter for the quench velocity-based analyses. 
+The next step of the benchmarking is the comparison conducted with an external insulation layer. The method workflow is presented in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}. In this case, the longitudinal mesh size as well as a time step range are taken from a reference model without the insulation layer. In the standard analysis, one searches for a mesh size across the insulation layer which allows for obtaining the solution within the precision of a relative error of 1\% with respect to the average quench velocity. When the condition statement of a relative error is fulfilled, the average quench velocity is taken from a reference model and set as an input parameter in the quench velocity-based approach. 
 
 \begin{figure}[H]
     \centering

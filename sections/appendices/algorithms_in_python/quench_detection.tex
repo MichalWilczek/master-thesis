@@ -28,7 +28,8 @@
         :return: list of new quench fronts positions in meters
         """
         input_quench_front_vector_sorted = 
-            QuenchDetect.sort_input_quench_front_vector(input_quench_front_vector)
+            QuenchDetect.sort_input_quench_front_vector(
+                input_quench_front_vector)
         temperature_profile_sliced = 
             QuenchDetect.slice_temperature_profile(
             input_quench_front_vector=input_quench_front_vector_sorted, 
@@ -69,7 +70,8 @@
                key=lambda QuenchFront: QuenchFront.x_down)
 
     @staticmethod
-    def slice_temperature_profile(input_quench_front_vector, temperature_profile):
+    def slice_temperature_profile(
+        input_quench_front_vector, temperature_profile):
         """
         :param input_quench_front_vector: list of QuenchFront objects
         :param temperature_profile: temperature profile as numpy array
@@ -196,15 +198,18 @@
         """
         initial_quench_fronts = []
         for items in input_quench_front_vector:
-            initial_quench_fronts.append([items.x_down_node, items.x_up_node])
+            initial_quench_fronts.append(
+                [items.x_down_node, items.x_up_node])
         fronts_to_delete = []
         for i in range(len(initial_quench_fronts)):
             for j in range(len(new_quench_fronts)):
-                if abs(initial_quench_fronts[i][0] - new_quench_fronts[j][1]) == 1:
+                if abs(initial_quench_fronts[i][0] 
+                    - new_quench_fronts[j][1]) == 1:
                     fronts_to_delete.append(j)
         for i in range(len(initial_quench_fronts)):
             for j in range(len(new_quench_fronts)):
-                if abs(initial_quench_fronts[i][1] - new_quench_fronts[j][0]) == 1:
+                if abs(initial_quench_fronts[i][1] 
+                    - new_quench_fronts[j][0]) == 1:
                     fronts_to_delete.append(j)
         return fronts_to_delete
 
@@ -225,7 +230,8 @@
         return final_list
 
     @staticmethod
-    def define_final_new_quench_fronts(fronts_list, new_quench_fronts_nodes):
+    def define_final_new_quench_fronts(
+        fronts_list, new_quench_fronts_nodes):
         """
         :param fronts_list: list of indices of new 
             quench fronts to delete without repetitions
@@ -241,7 +247,8 @@
         for i in range(len(fronts_list)):
             new_quench_fronts_nodes.remove(
             new_quench_fronts_nodes[fronts_list[i]])
-        print("New quench fronts [nodes]: {}".format(new_quench_fronts_nodes))
+        print("New quench fronts [nodes]: 
+            {}".format(new_quench_fronts_nodes))
         return new_quench_fronts_nodes
 
     @staticmethod
@@ -260,5 +267,4 @@
                 x_up= {}".format(new_x_down, new_x_up))
             new_quench_length_list.append([new_x_down, new_x_up])
         return new_quench_length_list
-
 \end{verbatim}

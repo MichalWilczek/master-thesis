@@ -1,22 +1,13 @@
 
 \subsection{Geometry, Material Properties and Mesh}
 
-The strand is a composite with a specified non-superconductor to superconductor ratio given as 
-
-\begin{equation}
-    \left\{ \begin{array}{ll}
-    r_\text{Cu/Nb-Ti} = \frac{f_\text{Cu}}{f_\text{Nb-Ti}} = \frac{A_\text{Cu}}{A_\text{Nb-Ti}}\\ \\
-    f_\text{Cu} + f_\text{Nb-Ti} = 1,
-    \end{array} \right.
-    \label{eqn: non_super_to_super_ratio}
-\end{equation}
-where $f_\text{Cu}$ -- volumetric fraction of copper, $f_\text{Nb-Ti}$ -- volumetric fraction of Nb-Ti, $A_\text{Cu}$ -- cross-sectional area of copper, $A_\text{Nb-Ti}$ -- cross-sectional area of Nb-Ti. Since both materials are characterised by a~different volumetric heat capacity, the total volumetric heat capacity of a strand given by
+Since copper and Nb-Ti are characterised by a~different volumetric heat capacity, the total volumetric heat capacity of a strand is given by
 
 \begin{equation}
     C_\text{v, strand} = f_\text{Cu} ~ C_\text{v, Cu} + f_\text{Nb-Ti} ~ C_\text{v, Nb-Ti},
     \label{eqn: cv_equiv}
 \end{equation}
-where $C_\text{v, Cu}$ -- volumetric heat capacity of copper, $C_\text{v, Nb-Ti}$ -- volumetric heat capacity of Nb-Ti is shown in Fig. \ref{fig:eq_wind_cp}.
+where $C_\text{v, Cu}$ -- volumetric heat capacity of copper, $C_\text{v, Nb-Ti}$ -- volumetric heat capacity of Nb-Ti, $f_\text{Cu}$ -- volumetric fraction of copper, $f_\text{Nb-Ti}$ -- volumetric fraction of Nb-Ti. The~volumetric heat capacity of the composite strand is shown in Fig. \ref{fig:eq_wind_cp}.
 
 \begin{figure}[H]
 \centering
@@ -38,7 +29,7 @@ where $C_\text{v, Cu}$ -- volumetric heat capacity of copper, $C_\text{v, Nb-Ti}
     \label{fig:eq_wind_cp}
 \end{figure}
 
-According to the polynomial interpolation fit used in~\cite[p.~46]{material_props_for_heat_transfer_modelling_in_nb3sn_magnets}, thermal conductivity of Nb-Ti increases linearly in the temperature range of $T \in (20, 200)~\text{K}$ and its value changes from 1 to 9~$\frac{\text{W}}{\text{m K}}$. At temperatures below 20~K, the thermal conductivity of Nb-Ti is lower than~$1~\frac{\text{W}}{\text{m K}}$. By comparing the thermal conductivity of Nb-Ti and copper (see in Appendix~\ref{appendix_material_properties_description}), one can assume that the thermal conductivity of Nb-Ti is negligible and only the part of copper contributes to the longitudinal heat propagation, as 
+According to the polynomial interpolation fit used in~\cite[p.~46]{material_props_for_heat_transfer_modelling_in_nb3sn_magnets}, the thermal conductivity of Nb-Ti increases linearly in the temperature range of $T \in (20, 200)~\text{K}$ and its value changes from 1 to 9~$\frac{\text{W}}{\text{m K}}$. At temperatures below 20~K, the thermal conductivity of Nb-Ti is lower than~$1~\frac{\text{W}}{\text{m K}}$. By comparing the thermal conductivity of Nb-Ti and copper (see in Appendix~\ref{appendix_material_properties_description}), one can assume that the thermal conductivity of Nb-Ti is negligible and only the part of copper contributes to the longitudinal heat propagation, as 
 \begin{equation}
     k_\text{strand} = f_\text{Cu} ~ k_\text{Cu} + f_\text{Nb-Ti} ~ k_\text{Nb-Ti} \approx  f_\text{Cu} ~ k_\text{Cu},
     \label{eqn: k_equiv}
@@ -50,22 +41,11 @@ where $k_\text{strand}$ -- thermal conductivity of a strand, $k_\text{Cu}$ -- th
 \end{equation}
 where $T$ -- local strand temperature. Wiedeman-Franz formula is used for the sake of comparison of the results with COMSOL in which only such a material property was available. In the remainder of the thesis, the thermal conductivity of copper and all other material properties are calculated according to fits provided by NIST, as described in Appendix~\ref{appendix_material_properties_description}. 
 
-In ANSYS, the element LINK33 was used to solve the task of 1D thermal quench propagation. It is a uniaxial linear element with the ability to conduct heat between its nodes suitable for steady-state and transient analyses~\cite{ansys_element_manual}. Unlike ANSYS, COMSOL does not use explicit element types to define physical equations in a domain. Instead, one has to choose from a list of available physics modules, in this case thermal physics. Therefore, the algebraic physical equations related to heat conduction in COMSOL were applied externally to the nodes belonging to the composite strand. In both tools, a uniformly distributed mesh was used with mesh size equal to 0.1 mm.
+In ANSYS, the element LINK33 was used to solve the task of a 1D thermal quench propagation. It is a uniaxial 2-node linear element with the ability to conduct heat between its nodes suitable for steady-state and transient analyses~\cite{ansys_element_manual}. Unlike ANSYS, COMSOL does not use explicit element types to define physical equations in a domain. Instead, one has to choose from a list of available physics modules, in this case thermal physics. Therefore, the algebraic physical equations related to heat conduction in COMSOL were applied externally to the nodes belonging to the composite strand. In both tools, a uniformly distributed mesh was used with mesh size equal to 0.1 mm.
 
 \subsection{Initial and Boundary Conditions}
 
-In the superconducting state, the current flows entirely through a superconductor characterised by zero-resistivity. When a quench occurs, the current starts commuting and strand components can be represented as a parallel connection of two resistors, $R_\text{Nb-Ti}$ and $R_\text{Cu}$. Above the critical temperature, the superconductor resistance is much larger than the one of copper, i.e. $R_\text{Nb-Ti} \gg R_\text{Cu}$. Therefore, it is assumed that the current only flows through a copper stabiliser and only this part of the strand contributes to the Joule heating. Over the entire domain of a strand, a heat source is applied as a power density as
-\begin{equation}
-    q_\text{Joule} = J_\text{strand}^2~\rho_\text{strand} = J_\text{Cu}^2~\rho_\text{Cu}~f_\text{Cu} = \frac{I_\text{Cu}^2}{f_\text{Cu}^2~A_\text{strand}^2}~\rho_\text{Cu}~f_\text{Cu} = \frac{I_\text{Cu}^2}{A_\text{strand}^2}~\frac{\rho_\text{Cu}}{f_\text{Cu}}, 
-    \label{eqn: p_dens_equiv}
-\end{equation}
-where $J_{strand}$ -- current density in a strand, $\rho_\text{strand}$ -- resistivity of a strand, $J_\text{Cu}$ -- current density in copper, $\rho_\text{Cu}$ -- resistivity of copper, $I_\text{Cu}$ -- current in copper stabiliser, $A_\text{strand}$ -- cross-sectional area of a strand. One should notice that the copper resistivity $\rho_\text{Cu}$ should be divided by the non-superconductor fraction as 
-\begin{equation}
-    \rho_\text{strand} = \frac{\rho_\text{Cu}}{f_\text{Cu}}.
-    \label{eqn:strand_resistivity}
-\end{equation}
-
-The Gaussian profile of initial temperature is assumed according to 
+Over the entire length of the strand, the power density was applied according to~(\ref{eqn: p_dens_equiv}). Moreover, the Gaussian profile of initial temperature is assumed according to 
 \begin{equation}
     T(x) = T_\text{init} + (T_\text{max} - T_\text{init}) ~ e^{-(\frac{x}{\alpha})^2},
     \label{eqn: gaussian_temp_ic}
@@ -143,7 +123,7 @@ A symmetry condition is applied at the position $x=0~\text{m}$. As presented in 
     \label{fig: init_gauss_temp_distr}
 \end{figure}
 
-Input parameters related to the time stepping algorithm and the total simulation time are presented in Table \ref{table: 1d_quench_propagation_analysis_time_stepping_input_parameters}. In a time-dependent domain, default values for time stepping convergence were applied in both software.
+The input parameters related to the time stepping algorithm and the total simulation time are presented in Table \ref{table: 1d_quench_propagation_analysis_time_stepping_input_parameters}. In a time-dependent domain, default values for time stepping convergence were applied in both software.
 
 \begin{table}[H]
     \caption{Analysis time stepping input parameters.} 

@@ -1,13 +1,18 @@
 
-There are two important phenomena in thermal quench simulations: $(i)$~longitudinal propagation of quench, $(ii)$~transverse heat flow inside the insulation layer. The quench velocity-based methodology can only be used in the \nth{1} case. The heat flow across the insulation is an important factor if a multi-strand model is analysed. In order to conduct a multi-strand thermal analysis using quench velocity-based approach, the following simulation tools and algorithms ought to be developed.
+There are two important phenomena in thermal quench simulations: $(i)$~longitudinal quench propagation, $(ii)$~transverse heat flow through the insulation layer that causes a~quench in neighbouring windings. The quench velocity-based approach only allows for estimating the longitudinal quench propagation corresponding to the \nth{1} case. The heat flow across the insulation layer should be handled by means of a standard numerical solution. In order to conduct a multi-strand thermo-electric analysis with the insulation layer using a quench velocity-based approach, the following models were developed:
 
 \begin{enumerate}
-\item Electro-thermal model simulating longitudinal quench propagation.
-\item Thermal model simulating transverse thermal propagation across insulation.
-\item Algorithm mapping multi-strand and multi-dimensional magnet geometry onto 1D coil.
-\item Algorithm calculating quench position in time which is based on a quench velocity function.
-\item Algorithm which would assign the nodes to the quenched and non-quenched zones in a discretised domain in time.
-\item Algorithm detecting new quenches in a multi-strand domain if the quenched winding heats up the neighbouring ones across the insulation.
+    \item Electro-thermal model calculating a longitudinal quench propagation with quench onset based on a priori known quench velocity map.
+    \item Thermal model allowing for an estimation of a transverse heat propagation across the~insulation.
 \end{enumerate}
 
-This chapter describes all the aforementioned algorithms except for the quench velocity algorithm which was described in Section~\ref{section:quench_velocity_cosimulation}.
+In addition, the following algorithms were implemented in the developed models in order to meet the requirements of a quench velocity-based approach:
+
+\begin{enumerate}
+    \item Quench velocity algorithm. It calculates a time-dependent quench position based on a~quench velocity function.
+    \item Multidimensional mapping algorithm. It maps multi-dimensional magnet geometries onto a one-dimensional cable.
+    \item Quench detection algorithm. It detects new quenches in a multi-strand domain if a~transverse heat propagation results in a quench of windings directly neighbouring with a quenched zone.
+    \item Quenched and non-quenched zone assignment algorithm. It assigns nodes in a~discretised and time-dependent space.
+\end{enumerate}
+
+This chapter presents how two aforementioned models are implemented in ANSYS APDL. It also describes all algorithms except for the quench velocity algorithm which was depicted in Section~\ref{section:quench_velocity_cosimulation}.
