@@ -1,0 +1,51 @@
+
+Three simulated cases of the magnet discharge allowed for predicting the final temperature profile which would be impossible to achieve even during the measurements. The~baseline of a~quench protection design assumes no turn-to-turn propagation in a simulation process. The temperature evolution is analysed over a period that is needed to discharge the magnet when $R_\text{coil}=0$, as discussed in Fig.~\ref{fig: magnet_discharge_current}. Thanks to the quench velocity-based approach in simulating a multi-strand domain, the conservative assumptions were relaxed in the presented analyses. 
+
+In the last step of the quench analysis of the skew quadrupole, it is required to take into account the relative error associated with the quench velocity-based approach, as discussed in Chapter~\ref{chapter:quench_velocity_benchmarking}. Based on the initial relative error of a hot spot temperature as well as its evolution in time, an~estimation of a real hot spot temperature and peak resistive voltage are presented respectively in Table~\ref{table: skew_quad_general_remarks_hot_spot} and Table~\ref{table: skew_quad_general_remarks_res_voltage}. The~values of relative error were taken for a longitudinal mesh size of 20~mm being higher than an actual value of 15~mm used in the skew quadrupole geometry. 
+
+\begin{table}[H]
+    \caption{Estimation of real hot spot temperature.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ | c | c | c | c | }  
+        \hline
+         & $c_\text{volume}=0.0$ & $c_\text{volume}=0.5$ & $c_\text{volume}=1.0$ \\
+        \hline
+        $T_\text{hot spot},~\text{K}$ & 48.7 & 45.7 & 0.0 \\
+        $E_\text{r, initial}$ & -1.5\% & -1.5\% & -1.5\% \\
+        $E_\text{r, additional}$ & -2.0\%/s & -2.0\%/s & -2.0\%/s \\
+        $t_\text{simulation},~\text{s}$ & $\approx 6$ & $\approx 6$ & $\approx 6$ \\
+        $E_\text{r, total}$ & -13.5\% & -13.5\% & -13.5\% \\
+        $T_\text{hot spot, real},~\text{K}$ & 56.3 & 52.9 & 0.0 \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_general_remarks_hot_spot} 
+\end{table}
+
+\begin{table}[H]
+    \caption{Estimation of real resistive voltage.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ | c | c | c | c | }  
+        \hline
+         & $c_\text{volume}=0.0$ & $c_\text{volume}=0.5$ & $c_\text{volume}=1.0$ \\
+        \hline
+        $V_\text{res, max},~\text{V}$ & 26.8 & 22.5 & 0.0 \\
+        $E_\text{r}$ & -20\% & -20\% & -20\% \\
+        $V_\text{res, max, real},~\text{V}$ & 33.6 & 28.1 & 0.0 \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_general_remarks_res_voltage} 
+\end{table}
+
+In terms of an impact of the insulation mesh size on the hot spot temperature, as discussed in Fig.~\ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}, a coarser mesh results in its overestimation. Therefore, the mesh refinement across the insulation layer should only decrease the maximum hot spot temperature being a favourable case from the magnet design standpoint. The resistive voltage multiplied by the proposed safety coefficients increases the general overestimation obtained from the simulations. However, one should remember that in the presented set of analyses, no influence of helium is considered. In principle, helium is an important additional thermal heat capacity in the system that should decrease the coil temperature during the discharge. This cooling liquid would have a direct impact on drop of temperature and, therefore, decrease of coil resistance and resistive voltage. 
+ 
+Depending on the simulated case, each analysis lasted approximately from five to six days\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}. In principle, the longer the co-simulation process lasts between ANSYS and Python, the more time is needed to analyse the discharge of a magnet.  

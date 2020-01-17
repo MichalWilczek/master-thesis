@@ -30,7 +30,7 @@ Fig.~\ref{fig:skew_quad_geometry_ansys} presents the cross-section of the skew q
     \label{fig:skew_quad_geometry_ansys}
 \end{figure}
 
-The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. In the magnetic analysis of the skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. The areas considered as the air and the coil are characterised by the magnetic relative permeability equal to one. The magnetic properties of iron yoke are described with a~non-linear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
+The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. In the magnetic analysis of the~skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. The areas considered as the air and the~coil are characterised by the magnetic relative permeability equal to one. The magnetic properties of iron yoke are described with a~non-linear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
 
 \begin{figure}[H]
     \centering
@@ -82,7 +82,7 @@ The meshed geometry is illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys
     \label{fig:skew_quad_magnetic_mesh_ansys}
 \end{figure}
 
-For the requirements of the given analysis, only one degree of freedom is used -- a~magnetic vector potential $A_\text{z}$. In order to take into consideration the symmetry condition, the magnetic vector potential $A_\text{z}$ was set to zero on the left side of the of geometry. It means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the \nth{2} wall of symmetry, it is assumed by default in ANSYS APDL that the magnetic flux is perpendicular to the wall.
+For the requirements of the given analysis, only one degree of freedom is used -- a~magnetic vector potential $A_\text{z}$. In order to take into consideration the symmetry condition, the~magnetic vector potential $A_\text{z}$ was set to zero on the left side of the of geometry. It means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the \nth{2} wall of symmetry, it is assumed by default in ANSYS APDL that the magnetic flux is perpendicular to the wall.
 
 As illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}, the mesh was refined inside of the coil. There were 40 elements placed on each side of a rectangular coil. Then, the mesh was relaxed as a function of a~distance from the coil. In Table~\ref{table:mesh_characteristics_magnetic_ansys} the element size in the remaining
 areas of the geometry is specified.
@@ -112,7 +112,7 @@ In the analysis, an equal current density was applied to the coil area. The curr
 \begin{equation}
     J_\text{coil} = \frac{n_\text{windings}~I}{A_\text{coil}},
 \end{equation}
-where $n_\text{windings}$ -- number of windings, $I$ -- current in each winding, $A_\text{coil}$ -- cross-sectional area of the coil with the resin and insulation. 86 static analyses were conducted with the current linearly rising from 1 up to 86 amps. 
+where $n_\text{windings}$ -- number of windings, $I$ -- current in each winding, $A_\text{coil}$ -- cross-sectional area of the coil with the resin and insulation. 86 static analyses were conducted with the~current linearly rising from 1 up to 86 amps. 
 
 \subsection{Results and Magnetic Field Mapping in the Skew Quadrupole}
 
@@ -164,7 +164,7 @@ As presented in Fig.~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys}, an $
     \node[black, scale=0.8] at (4.35,2.7) {2.419};
     
     \node[black, scale=0.8] at (-0.225,-4) {$x$, mm (layers direction)};
-    \node[black, rotate=90, scale=0.8] at (-4.75,0) {$x$, mm (layers direction)};
+    \node[black, rotate=90, scale=0.8] at (-4.75,0) {$y$, mm (layers direction)};
     \node[black, rotate=90, scale=0.8] at (5.3,0) {Magnetic field, T};
 
     \end{tikzpicture}

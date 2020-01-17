@@ -4,7 +4,7 @@ The quench velocity-based approach is a promising tool when a simulation of a la
 While simulating a multi-strand case with the quench velocity-based approach, one should remember that the results will be less precise with respect to a standard solution. A~relative error estimation for the case without an external insulation layer is presented in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_without_insulation}. The tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.3~\text{s}$.
 
  \begin{table}[H]
-    \caption{Tolerance range for a quench velocity-based approach without insulation.} 
+    \caption{Tolerance range in a quench velocity-based approach without insulation.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -28,7 +28,7 @@ While simulating a multi-strand case with the quench velocity-based approach, on
 The results obtained from the benchmarking analysis with the insulation layer are shown in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_with_insulation}. Similarly to the case without the insulation layer, the tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.5~\text{s}$. However, the relative error of a~hot spot temperature did not converge to one specific value. Thus, it is assumed that the error increases by 2\% per second during the simulation. It is a non-optimistic assumption which does not take into consideration a linearisation of the material properties at higher temperatures when their derivatives with respect to the temperature are more constant leading to a higher probability of convergence. 
 
  \begin{table}[H]
-    \caption{Tolerance range for a quench velocity-based analysis with insulation.} 
+    \caption{Tolerance range in a quench velocity-based approach with insulation.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 

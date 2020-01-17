@@ -2,7 +2,7 @@
 Similarly to Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}, the electro-thermal element LINK68 is used along the strand. Since no Joule heating occurs in the insulation layer, it is represented by a thermal element, LINK33. Two time step ranges were chosen: $t=\{[10, 100], [100, 1000]\}~\upmu \text{s}$. The study of a~1.5~metre-long domain was conducted with a varying number of nodes, $n=\{75, 150, 1500\}$ and a time step range of $t=[100, 1000]~\upmu \text{s}$ deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. Therefore, the mesh density remained the same, being $n=\{50, 100, 1000\}$ nodes/m  with respect to the quench velocity-based analysis without an external insulation layer. The geometric assumptions as well as the initial conditions were the same as in Section \ref{section: 1D_quench_propagation_with_insulation} without a heat source. The additional parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. In~order to observe the convergence of relative errors, the total simulation time was extended to $t=0.5~\text{s}$
 
 \begin{table}[H]
-    \caption{Analysis input parameters.} 
+    \caption{Analysis input parameters in the quench velocity-based approach.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -93,7 +93,7 @@ As presented in Fig.~\ref{fig: q_vel_modelling_res_volt_benchmarking_with_insula
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Resistive voltage comparison for standard numerical solution and quench velocity-based simulation with 50~nodes/m.}
+    \caption{Resistive voltage comparison for standard numerical solution and quench velocity-based approach with 50~nodes/m.}
     \label{fig: q_vel_modelling_res_volt_benchmarking_with_insulation}
 \end{figure}
 

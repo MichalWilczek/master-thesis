@@ -1,122 +1,159 @@
 
-Thermal diffusivity is calculated as follows: 
-\begin{equation}
-    \alpha_{strand} = \frac{k_{Cu}}{\rho_{Cu} \cdot C_{p, equiv}}
-\end{equation}
+The quench analysis of the skew quadrupole can be divided into two parts: $(i)$ before the quench detection when the~current is constant, $(ii)$ after the quench detection when the~current starts varying in time until the magnet is fully discharged. This section covers the simulation of the first case. 
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-  no markers,
-  legend style={at={(1,0)},anchor=south east},
-  grid=both, 
-  grid style={dashed,gray!30},
-  width=0.85\linewidth, 
-  height = 6cm,
-  xlabel={$T,~\text{K}$},
-  ylabel={$\alpha,~\text{m}^2\text{s}^{-1}$},
-  xlabel style={below right},
-  ylabel style={above left},
-  xmin=1.0,
-  ymin=0.0,
-  xmax=25.0
-  ]
-  
-  \addplot table[x=Time,y=diff_strand,col sep=comma] {figures/skew_quad_bcs/strand_th_diffusivity.csv}; 
+\subsection{Mesh and Geometry}
 
-\end{axis}
-\end{tikzpicture}
-\caption{Thermal diffusivity of the superconducting cable}
-    \label{fig:strand_diffusivity_plot}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-
-\filldraw [black] (0,0) circle (4pt);
-\draw [ultra thick] (0.0,0.0) -- (4.0,0);
-
-\draw [thin] (2.5,-0.5) -- (2.5,0.5);
-\draw [thin] (4.0,-0.5) -- (4.0,0.5);
-\draw [thin] (0.0,-0.5) -- (0.0,0.5);
-
-\draw [thick, <->, red] (0.0,0.5) -- (2.5,0.5);
-\draw [thick, <->, blue] (2.5,0.5) -- (4.0,0.5);
-
-\node[scale=0.8, color = black] at (-1.0,0.0) {spot heater};
-\node[scale=0.8, color = red] at (1.1,0.75) {1 mm};
-\node[scale=0.8, color = blue] at (3.25,0.75) {0.1679 mm};
-
-\end{tikzpicture}
-\caption{Schematic of 1D insulation modelling; simulation length as a sum of ground insulation (in red) and winding insulation (in blue) connected in series.}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-\draw[thick, black, ->] (-3,0) -- (3,0);
-\filldraw[black] (0,-0.5) circle (0.06);
-\draw[thick, black] (0,0) -- (0,-0.5);
-\draw [thick, red] (-0.5,0) .. controls +(0:0.6cm) and +(180:0.3cm) .. (0,1);
-\draw [thick, red] (0,1) .. controls +(0:0.3cm) and +(180:0.6cm) .. (0.5,0);
-\draw[thick, blue] (-1,0) -- (-1,0.25);
-\draw[thick, blue] (-1,0.25) -- (1,0.25);
-\draw[thick, blue] (1,0.25) -- (1,0);
-\node[scale=0.8, black] at (0.9,-0.5) {spot heater};
-\node[scale=0.8, black] at (3,0.25) {$L_\text{coil}$};
-\node[scale=0.8, blue] at (0.8,0.45) {$T_\text{c}$};
-\node[scale=0.8, red] at (0,1.2) {$T_\text{peak}$};
-\end{tikzpicture}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-\draw[thick, black] (-3,0) -- (3,0);
-\filldraw[red] (3,0) circle (0.06);
-\draw[thick, red] (3,0) -- (3,-0.25);
-\draw[thick, red] (2.75,-0.25) -- (3.25,-0.25);
-\filldraw[red] (0,0) circle (0.06);
-\draw[thick, red] (2.9,-0.4) -- (3.1,-0.4);
-\draw[thin, red, ->] (-3.6,0) -- (-3.1,0);
-\node[scale=0.8, red] at (0,0.25) {$T_\text{node}= f(t)$};
-\node[scale=0.8, red] at (-3.25,0.2) {$I$};
-\end{tikzpicture}
-\caption{Simulation settings}
-\label{fig:sim_settings_3}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale = 1]
-\draw[thick, black] (-3,0) -- (3,0);
-\filldraw[red] (3,0) circle (0.06);
-\draw[thick, red] (3,0) -- (3,-0.25);
-\draw[thick, red] (2.75,-0.25) -- (3.25,-0.25);
-\draw[thick, red] (2.9,-0.4) -- (3.1,-0.4);
-\draw[thin, red, ->] (-3.6,0) -- (-3.1,0);
-\draw[thick, blue] (-0.5,0) -- (-0.5,0.3);
-\draw[thick, blue] (-0.5,0.3) -- (0.5,0.3);
-\draw[thick, blue] (0.5,0.3) -- (0.5,0);
-\draw[thin, black, <->] (-0.5,-0.5) -- (0.5,-0.5);
-\node[scale=0.8] at (0,-0.3) {MPZ};
-\node[scale=0.8, blue] at (0,0.5) {$T_\text{c}$};
-\node[scale=0.8, red] at (-3.25,0.2) {$I$};
-\end{tikzpicture}
-\caption{Simulation settings}
-\label{fig:sim_settings_1}
-\end{figure}
-
-
-
-Until the quench is detected, the current inside the magnet is constant and equal to $I=86~\text{A}$. Therefore, the magnetic field inside the magnet does not vary in time. The analysis of steady-state magnetic field in the middle of the magnet for this value of current was conducted at INFN-Milano in OPERA software \cite{samuele_mariotto_mails}. A 2D interpolation had to be conducted in order to fit the OPERA mesh with the windings' position. For each winding, it is assumed that it is subjected to the magnetic field from the centre of its cross-section estimated by the interpolation map presented in Fig. \ref{fig:Quad_Mag_contour1}.
+Fig.~\ref{fig:skew_quad_ansys_top_view} shows the top view of an already meshed ANSYS geometry. It consists of 754 insulated windings. In total, the coils is nearly~810 m-long. It is shorter than 812~m corresponding to the real magnet length because of sharp edges of the rounded coil parts. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.49\linewidth]{figures/skew_quad_bcs/magnetic_field_mapping/Quadrupole_Magnetic_Colour_plot.png}
-    \caption{Resultant magnetic field strength in the cross-section of skew quadrupole}
-    \label{fig:Quad_Mag_contour1}
+    \begin{tikzpicture} [scale=0.7]
+    \node[scale=0.7] at (0,0) {\includegraphics[width=.7\textwidth]{sections/skew_quad_q_det/figures/skew_quad_analysis/coil_top_view.png}};
+    \end{tikzpicture}
+    \caption{ANSYS meshed geometry of the skew quadrupole - top view.}
+    \label{fig:skew_quad_ansys_top_view}
 \end{figure}
+
+Parameters of the meshed geometry are summarised in Table~\ref{table: skew_quad_geometry_mesh}. They are mostly based on the discussion in Section~\ref{subsection:update_skew_quadrupole_geometry}. The insulation domain transverse to the strand is equal to $L_\text{ins}=0.07~\text{mm}$ that corresponds to the thickness of a real insulation layer without resin. The insulation conduction area $A_\text{ins, cond}$ remained unchanged in this set of analyses, i.e. $c_\text{area}=1.0$. The geometry was discretised on each side of the coil in such a manner to uniformly distribute the the insulation conduction area $A_\text{ins, cond}$ along the entire domain of the windings. $n_\text{divisions, insulation}$ corresponds to an average length of a coil rounding. 
+
+There are 72 nodes in each winding which represent the composite strand. The insulation layer of every winding was reduced to two elements. It means that the insulation layer between two neighbouring windings accounts for four elements out of which two are coupled with one another. Therefore, the insulation modelling sustains a basic condition of simulating non-linear phenomena that require using at minimum three nodes across a~material. The longitudinal mesh size is equal to 15~mm whereas the insulation mesh size -- 35~$\upmu \text{m}$. The entire discretised domain accounts for approximately half a million of nodes. Reducing the number of insulation elements aimed at lowering the total model size.
+
+\begin{table}[H]
+    \caption{Geometry and mesh characteristics.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        parameter & value & unit \\
+        \hline
+        $L_\text{coil, ANSYS}$ & 809.9 & [m] \\
+        $L_\text{ins}$ & 0.07 & [mm] \\
+        $A_\text{ins, cond}$ & $8.75 \cdot 10^{-6}$ & [$\text{m}^2$] \\
+        $c_\text{area}$ & 1.0 & [-] \\
+        $n_\text{divisions, insulation}$ & 2 & [-] \\
+        $n_\text{divisions, winding}$ & 64 & [-] \\
+        $n_\text{divisions, side e}$ & 26 & [-] \\
+        $n_\text{divisions, side d}$ & 6 & [-] \\
+        mesh size, insulation & 35 & [$\upmu \text{m}$] \\
+        average mesh size, strand & 15 & [mm] \\ 
+        nodes in coil & 478 000 & [-] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_geometry_mesh} 
+ \end{table}
+
+There are three quench analyses conducted with a varying thermal capacitance of resin that refers to the parameter $c_\text{volume}$. Adding 0D elements to the strand increases the total number of elements in the model from 480 thousand to 530 thousand. 
+
+\begin{table}[H]
+    \caption{Geometry and mesh characteristics.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ c | c | c }  
+        \hline
+        $c_\text{volume}$ & $V_\text{MASS71}$, [$\text{m}^3$] & elements in coil \\
+        \hline
+        0.0 & 0.0 & 476 528 \\
+        0.5 & $2.4 \cdot 10^{-9}$ & 531 574 \\
+        1.0 & $4.8 \cdot 10^{-9}$ & 531 574 \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_geometry_mesh} 
+ \end{table}
+
+\subsection{Analysis Settings}
+
+The co-simulation time step remained identical with respect to the previous chapters, as depicted in Table~\ref{table: skew_quad_quench_detect_input_params}. The ANSYS simulation time step was assumed to be constant and equal to the maximum value of a time step range used for the quench velocity-based approach in Chapter~\ref{chapter:quench_velocity_benchmarking}. The time step was increased to keep the simulation computing time in a reasonable limit of several days. The hot spot was placed in the centre of a winding directly neighbouring with the spot heater.
+
+\begin{table}[H]
+    \caption{Input parameters in the quench detection analysis of the skew quadrupole.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        parameter & value & unit \\
+        \hline
+        communication time step & 0.0025 & [s] \\
+        ANSYS simulation time step & 1 & [ms] \\ 
+        hot spot position in coil & 367.97 & [m] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_quench_detect_input_params} 
+ \end{table}
+
+\subsection{Results}
+
+The rise of resistive voltage until the quench detection for the measurements and three simulated models is presented in Fig.~\ref{fig: quench_detection_v_res}. It can be observed that the~initial slope of the~simulated models and the measured magnet at $t < 0.1~\text{s}$ remained similar. It means that the~initial quench velocity set in the model correspond its real value in the quenched winding at $I=86~\text{A}$. In the measurements, the first turn-to-turn propagation occurs at $t \approx 0.08~\text{s}$ which is much faster than in case of each simulation. However, one must remember that much less heat is deposited in the analyses than during the measurements. Therefore, the~initial transverse propagation also occurs more slowly. The application of resin in the models results in a slower turn-to-turn propagation as well. Such a phenomenon is expected due to a higher thermal capacitance of the strands with resin. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.9\linewidth, 
+          height = 7.0cm,
+          xlabel={$\text{Time},~\text{s}$},
+          ylabel={$V_\text{res},~\text{V}$},
+          xmin=0.0,
+          xmax=0.5,
+          xtick= {0,0.1,0.2,0.3,0.4,0.5},
+          ymin=0.0,
+          ymax=0.5,
+          legend pos = north west
+          ]
+          
+          \addplot[green] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
+          
+          \addplot[blue] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
+          
+          \addplot[red] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \addplot[black, dashed] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
+          
+          \addplot[black, dotted] table[x=time,y=QDS_v_threshold,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
+          
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+          $c_\text{volume}=1.0$,
+          measurements}
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Rise of resistive voltage.}
+    \label{fig: quench_detection_v_res}
+\end{figure}
+
+Once the first turn-to-turn propagation occurs, the simulated models start resembling the measurements because the energy deposited in the coil is predominant with respect to the energy coming from the spot heater. In order to compare the measurements with the performed analyses, each simulation result is translated to the left so that the~threshold voltage $V_\text{th}$ is reached at the same time. Table~\ref{table: skew_quad_v_res_q_det} presents the~time slots at which the~threshold voltage was obtained for every case and the translation times. The translation times are used in the next section to compare the voltage and resistance rise in the~models with available measurements. 
+
+\begin{table}[H]
+    \caption{List of time windows at which the analysis reached the $V_\text{th}$.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ cccc }  
+        \hline
+        parameter & $t(V_\text{th})$ & $t_\text{translation}$ & unit \\
+        \hline
+        measurements & 0.13 & - & [s] \\
+        $c_\text{volume}=0$ & 0.30 & -0.17 & [s] \\
+        $c_\text{volume}=0.5$ & 0.36 & -0.23 & [s] \\
+        $c_\text{volume}=1.0$ & 0.40 & -0.27 & [s] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_v_res_q_det} 
+ \end{table}

@@ -1,0 +1,249 @@
+
+\subsection{Additional Input Parameters}
+
+The quench is detected 20~ms after the threshold voltage $V_\text{th}$ is reached (see Table~\ref{table:qds_characteristics}). At that moment, ANSYS solves a discharge of an RL-circuit with an initially applied current of $I=86~\text{A}$. The model takes into account the nonlinear inductance of  the magnet presented in Fig.~\ref{fig:differential_inductance}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          legend style={at={(1,0)},anchor=south east},
+          grid=both, 
+          grid style={dashed,gray!30},
+          width=0.7\linewidth, 
+          height = 5cm,
+          xlabel={$I,~\text{A}$},
+          ylabel={$L_\text{d},~\text{H}$},
+          xlabel style={below right},
+          ylabel style={above left},
+          xmin=0.0,
+          xmax=100.0,
+          ymin=0.0,
+          ymax=6.0
+          ]
+          \addplot table[x=current,y=inductance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/differential_inductance.csv}; 
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Differential inductance as a function of current for the skew quadrupole~\cite{marco_prioli_mails}.}
+    \label{fig:differential_inductance}
+\end{figure}
+
+The circuit represented in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme} is solved with additional electrical elements in ANSYS -- CIRCU124. Resistors and inductors modelled by CIRCU124 elements have voltage as a~single degree of freedom~\cite{ansys_element_manual}. The non-linear inductor is modelled by updating its inductance at each communication point between Python and ANSYS. Table~\ref{table: skew_quad_discharge_input_params} depicts additional simulation parameters for the discharge phase of the magnet. 
+
+\begin{table}[H]
+    \caption{Input parameters in the analysis of the skew quadrupole discharge.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ ccc }  
+        \hline
+        parameter & value & unit \\
+        \hline
+        communication time step before the entire coil quenches & 0.0025 & [s] \\
+        communication time step after the entire coil quenches & 0.2 & [s] \\ 
+        material properties update criterion & 10 & [A] \\ 
+        magnet discharge criterion & 8 & [A] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_discharge_input_params} 
+ \end{table}
+
+The quench velocity-based approach is only needed until the entire coil quenches. Therefore, after that moment, the communication time step is increased to $t=0.2~\text{s}$. The remaining communication time steps are required for updating the inductance of a magnet and extracting the value of current. Updating varying material properties, being a function of magnetic field, for 754 windings is a time-consuming process. Thus, it is only conducted if the current in the magnet drops by $I=10~\text{A}$ meaning that the magnetic field also decreases. It is assumed that the magnet is fully discharged if the transport current drops below $I=8~\text{A}$, i.e. if the current decreased by 90\% of its initial value.
+
+\subsection{Results}
+
+Fig.~\ref{fig: magnet_discharge_v_res} presents the evolution of resistive voltage $V_\text{res}$ in time. The higher volume ratio is considered in the model, the lower peak resistive voltage is obtained. Moreover, the peak voltage occurs faster with lower $c_\text{volume}$. In principle, the~peak voltage corresponds to a~moment when both longitudinal and turn-to-turn quench propagation result in a quench of the entire coil. In Fig.~\ref{fig: magnet_discharge_v_res}, one can also notice sharp changes of resistive voltage which occur in gradually increasing time periods. These changes are due to an update of material properties at each $I=10~\text{A}$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.8\linewidth, 
+          height = 6.5cm,
+          xlabel={$\text{Time},~\text{s}$},
+          ylabel={$V_\text{res},~\text{V}$},
+          xmin=0.0,
+          ymin=0.0,
+          ymax=30.0,
+          legend pos = north east
+          ]
+          
+          \addplot[green] table[x=time_delayed,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
+          
+          \addplot[blue] table[x=time_delayed,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
+          
+          \addplot[red] table[x=time_delayed,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \addplot[black, dashed] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
+          
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+          $c_\text{volume}=1.0$,
+          measurements}
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Coil resistive voltage change in time.}
+    \label{fig: magnet_discharge_v_res}
+\end{figure}
+
+Every simulation results in an overestimation of the peak resistive voltage with respect to the measurements. It is directly connected to the change of coil resistance during the~discharge presented in Fig.~\ref{fig: magnet_discharge_resistance}. The higher resin volume is included in the model, the~lower coil resistance is obtained. It is an expected result because resin is an additional thermal capacitance meaning that the coil remains at a lower temperature. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.8\linewidth, 
+          height = 6.5cm,
+          xlabel={$\text{Time},~\text{s}$},
+          ylabel={$R_\text{coil},~\Upomega$},
+          xmin=0.0,
+          ymin=0.0,
+          ymax=1.0,
+          legend pos = south east
+          ]
+
+          \addplot[green] table[x=time_delayed,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
+          
+          \addplot[blue] table[x=time_delayed,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
+          
+          \addplot[red] table[x=time_delayed,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \addplot[black, dashed] table[x=time,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
+          
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+          $c_\text{volume}=1.0$,
+          measurements}
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Coil resistance evolution in time.}
+    \label{fig: magnet_discharge_resistance}
+\end{figure}
+
+The final temperature of the coil for every simulated case is shown in Fig.~\ref{fig: magnet_discharge_final_temperature}. The~temperature profile inside of a coil can be compared to a sinusoidal signal with a maximum amplitude of approximately $T=15~\text{K}$. The initially quenched winding is the only place with a distinct temperature difference. The initially quenched zone remained the place in the coil characterised by the highest temperature.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.8\linewidth, 
+          height = 7.0cm,
+          xlabel={$L_\text{coil},~\text{m}$},
+          ylabel={$T,~\text{K}$},
+          xmin=0.0,
+          xmax=812.0,
+          ymin=0.0,
+          ymax=50.0,
+          legend pos = south east
+          ]
+
+          \addplot[green] table[x=METERS,y=case1,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
+          
+          \addplot[blue] table[x=METERS,y=case2,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
+          
+          \addplot[black, dashed] table[x=METERS,y=T_init,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
+          
+        %   \addplot[red] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+          $T_\text{init}$
+        %   $c_\text{volume}=1.0$
+          }
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Final temperature of the coil after the discharge.}
+    \label{fig: magnet_discharge_final_temperature}
+\end{figure}
+
+The evolution of the hot spot temperature temperature in time is presented in Fig.~\ref{fig: magnet_discharge_hot_spot}. It can be concluded that the higher resin volume is taken into consideration, the lower hot spot temperature is obtained in the model. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.8\linewidth, 
+          height = 5.0cm,
+          xlabel={$\text{Time},~\text{s}$},
+          ylabel={$T_\text{hot spot},~\text{K}$},
+          xmin=0.0,
+          ymin=0.0,
+          ymax=60.0,
+          legend pos = south east
+          ]
+
+          \addplot[green] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
+          
+          \addplot[blue] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
+          
+        %   \addplot[red] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+        %   $c_\text{volume}=1.0$
+          }
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Hot spot temperature evolution in time.}
+    \label{fig: magnet_discharge_hot_spot}
+\end{figure}
+
+The current discharge curves are presented in Fig.~\ref{fig: magnet_discharge_current}. The discharge occurs faster in all simulated cases with respect to the measurements. It is a result of a higher coil resistance compared to the measurements. Thus, the time constant (actually varying) in (\ref{eqn:variable_time_constant}) is higher and the current drop is quicker. 
+
+There is one additional analysis added to the plot in which the coil resistance is omitted. The communication time step, at which the inductance is updated, equals $t=0.0025~\text{s}$. The~ANSYS time step in this case is also lower and equal to $t=0.1~\text{ms}$. The higher precision is due to the fact that such a simulation (with already more accurate input parameters) is much faster with respect to the analysis of an entire coil domain. This analysis with no coil resistance represents a case when the magnet discharge is only dependent on the dump resistor of the energy extraction system.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+          no markers,
+          width=0.8\linewidth, 
+          height = 7.5cm,
+          xlabel={$\text{Time},~\text{s}$},
+          ylabel={$I,~\text{A}$},
+          xmin=0.0,
+          ymin=0.0,
+          legend pos = north east
+          ]
+
+          \addplot[green] table[x=time_delayed,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
+          
+          \addplot[blue] table[x=time_delayed,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
+          
+          \addplot[red] table[x=time_delayed,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          
+          \addplot[black] table[x=t_translated,y=I_coil,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case0.csv};
+                    
+          \addplot[black, dashed] table[x=time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
+
+          \legend{
+          $c_\text{volume}=0.0$,
+          $c_\text{volume}=0.5$,
+          $c_\text{volume}=1.0$,
+          $R_\text{coil} = 0.0$,
+          measurements}
+          
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Current discharge curve of the skew quadrupole.}
+    \label{fig: magnet_discharge_current}
+\end{figure}
+
+
+
