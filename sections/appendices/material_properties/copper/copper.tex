@@ -1,11 +1,11 @@
 
-\subsection{RRR Definition}
+\subsection{RRR}
 \label{appendix:subsection_rrr_definition}
 Residual resistivity ratio, RRR is a parameter comparing copper resistivity at two different temperatures when no magnetic field is applied. It is calculated as: 
 \begin{equation}
-RRR = \frac{\rho(T_\text{high}, B=0~\text{T})}{\rho(T_\text{low}, B=0~\text{T})},
+\text{RRR} = \frac{\rho(T_\text{high}, B=0~\text{T})}{\rho(T_\text{low}, B=0~\text{T})},
 \end{equation}
-where in NIST $T_\text{high}=273~\text{K}$ whereas $T_\text{low}=4~\text{K}$.
+where $T_\text{high}=273~\text{K}$ and $T_\text{low}=4~\text{K}$.
 
 \subsection{Resistivity}
 Copper resistivity depends on temperature and RRR:
@@ -77,7 +77,7 @@ with $B$ -- magnetic field strength, $a$ -- fit parameters described in Table \r
      \label{table:nist_resistivity_parameters2} 
  \end{table}
 
-As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper rises with rise of temperature. It rises with increase of magnetic fields strength as well as with decrease of RRR.
+As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper rises with rise of temperature. It rises with increase of magnetic field strength as well as with decrease of RRR.
 
 \begin{figure}[H]
 \centering
@@ -112,6 +112,7 @@ As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper ri
 
 %  thermal conductivity
 \subsection{Thermal Conductivity}
+\label{subsection:copper_thermal_conductivity}
 Copper thermal conductivity depends on temperature and RRR:
 \begin{equation}
     k_\text{N}(T, \text{RRR}) = \frac{1}{\text{W}_\text{0} + \text{W}_\text{i} + \text{W}_\text{i0}}, 
@@ -241,7 +242,7 @@ In order to convert specific into volumetric heat capacity, the polynomial funct
   width=0.85\linewidth, 
   height = 6cm,
   xlabel={$T,~\text{K}$},
-  ylabel={$C_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
+  ylabel={$c_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
   xlabel style={below right},
   ylabel style={above left},
   xmin=0.0,

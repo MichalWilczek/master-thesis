@@ -1,6 +1,8 @@
 
 % thermal conductivity
 \subsection{Thermal Conductivity}
+\label{subsection:thermal_conductivity_g10}
+
 G10 is an epoxy-impregnated fiberglass, thermally anisotropic. It means that its thermal conductivity along the fibers is higher than across them. In order to simplify computation in the scope of this thesis, the material is assumed to be isotropic. A conservative assumption is made which states that thermal conductivity of G10 in all directions is equal to the one which is normal to the direction of the fibers.
 G10 thermal conductivity as well as its specific heat capacity is approximated with the NIST polynomial interpolation as: 
 \begin{equation}
@@ -79,7 +81,7 @@ Specific heat capacity of G10 is based on equation described in (\ref{G10_polyno
      \label{table:nist_g10_cp_parameters} 
  \end{table}
 
-In order to convert specific into volumetric heat capacity, the polynomial function is divided by G10 density. The volumetric heat capacity of G10 is presented in Fig. \ref{fig:g10_cv_plot}.
+In order to convert specific into volumetric heat capacity, the polynomial function is divided by the density of G10. The volumetric heat capacity of G10 is presented in Fig. \ref{fig:g10_cv_plot}.
 
 \begin{figure}[H]
     \centering

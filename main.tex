@@ -2,7 +2,7 @@
 \documentclass[11pt,a4paper]{report} 
 \renewcommand{\baselinestretch}{1.15} 
 \usepackage[a4paper, total={6in, 8in}]{geometry}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[affil-it]{authblk}
 \usepackage[english]{babel}
@@ -52,16 +52,21 @@
 % TITLE PAGE
 \input{title_pages/titlepage_PL.tex}
 
-% TABLE OF CONTENTS
-\setcounter{page}{1}
 \clearpage\thispagestyle{empty}
-\tableofcontents
-\clearpage\thispagestyle{empty}
+\chapter*{Abstract}
+\thispagestyle{empty}
+\input{abstract.tex}
 
-% NOTATION
-% \section*{Notation}
-% \input{sections/notation/notation.tex}
-% \newpage
+% \clearpage\thispagestyle{empty}
+% \chapter*{Acknowledgment}
+% \thispagestyle{empty}
+% \input{acknowledgment.tex}
+
+% TABLE OF CONTENTS
+\clearpage
+\setcounter{page}{1}
+\tableofcontents
+\clearpage
 
 % INTRODUCTION
 \chapter{Introduction}
@@ -112,12 +117,12 @@
 \label{section: 1d_quench_propagation_geometry}
 \input{sections/1D_quench_modelling/geometry.tex}
 
-\section{1D Analysis Without Insulation}
+\section{1D Analysis of a Strand}
 \input{sections/1D_quench_modelling/analysis_no_insulation_intro.tex}
 \label{section: 1D_quench_propagation_no_insulation}
 \input{sections/1D_quench_modelling/analysis_no_insulation.tex}
 
-\section{1D Analysis with Insulation}
+\section{1D Analysis with Insulation and Epoxy Resin}
 \input{sections/1D_quench_modelling/analysis_with_insulation_intro.tex}
 \label{section: 1D_quench_propagation_with_insulation}
 \input{sections/1D_quench_modelling/analysis_with_insulation.tex}
@@ -128,7 +133,7 @@
  
 % QUENCH VELOCITY MODELLING
 \clearpage
-\chapter{Quench Velocity Modelling}
+\chapter{Quench Velocity-Based Approach}
 \label{chapter:quench_velocity_modelling}
 
 \section{Concept}
@@ -145,7 +150,7 @@
 
 % ALGORITHMS 
 \clearpage
-\chapter{Algorithms}
+\chapter{Models and Algorithms}
 \label{chapter:algorithms}
 \input{sections/algorithms/introduction.tex}
 
@@ -161,7 +166,7 @@
 \label{section:quench_detection_algorithm}
 \input{sections/algorithms/q_det_alg.tex}
 
-\section{Quenched and Non-Quenched Zone Assignment Algorithm}
+\section{Quench Front Position Assignment Algorithm}
 \label{section:node_searching_algorithm}
 \input{sections/algorithms/node_search_alg.tex}
 
@@ -177,48 +182,44 @@
 \section{Description of Execution Script}
 \input{sections/implementation_python/execution_script_description.tex}
 
-\section{Algorithms Implementation in Python}
+\section{Implementation of ANSYS Models and Algorithms in Python}
 \label{section:description_main_classes}
 \input{sections/implementation_python/class_description.tex}
 
 % QUENCH VELOCITY MODELLING BENCH-MARKING
 \clearpage
-\chapter{Benchmark of Quench Velocity Modelling}
+\chapter{Verification of Quench Velocity-Based Approach}
 \label{chapter:quench_velocity_benchmarking}
 
 \section{Motivation}
 \input{sections/q_vel_modelling_benchmarking/motivation.tex}
 
-\section{Magnet Design Key Parameters}
-\label{section:magnet_design_key_parameters}
-\input{sections/q_vel_modelling_benchmarking/magnet_design_parameters.tex}
-
-\section{Benchmarking Methodology}
+\section{Verification Methodology}
 \label{section:quench_velocity_benchmarking_benchmarking_methodology}
 \input{sections/q_vel_modelling_benchmarking/methodology.tex}
 
-\section{1D Analysis Without Insulation}
+\section{1D Analysis of a Strand}
 \label{section:quench_velocity_benchmarking_no_insulation}
 
 \subsection{Standard Analysis}
 \label{section:quench_velocity_benchmarking_no_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
 
-\subsection{Quench Velocity-Based Analysis}
+\subsection{Quench Velocity-Based Approach}
 \label{section:quench_velocity_benchmarking_no_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
 
 \subsection{Conclusion}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_conclusion.tex}
 
-\section{1D Analysis with Insulation}
+\section{1D Analysis with Insulation and Epoxy Resin}
 \label{section:quench_velocity_benchmarking_with_insulation}
 
 \subsection{Standard Analysis}
 \label{section:quench_velocity_benchmarking_with_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_heat_balance.tex}
 
-\subsection{Quench Velocity-Based Analysis}
+\subsection{Quench Velocity-Based Approach}
 \label{section:quench_velocity_benchmarking_with_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_quench_velocity.tex}
 
@@ -266,8 +267,9 @@
 \input{sections/skew_quad_q_det/general_remarks.tex}
 
 \clearpage
-\chapter{Discussion over Research Objectives}
+\chapter{Summary}
 \label{chapter:research_questions_discussions}
+\input{sections/research_objectives/discussion.tex}
 
 % APPENDICES
 \clearpage
@@ -275,57 +277,65 @@
 
 \chapter{Material Properties}
 \label{appendix_material_properties_description}
-% \input{sections/appendices/material_properties/introduction.tex}
+\input{sections/appendices/material_properties/introduction.tex}
 
 \section{Copper}
 \label{appendix:cu_material_properties}
-% \input{sections/appendices/material_properties/copper/copper.tex}
+\input{sections/appendices/material_properties/copper/copper.tex}
 
 \section{Niobium Titanium}
 \label{appendix:nbti_material_properties}
-% \input{sections/appendices/material_properties/niobium_titanium/niobium_titanium.tex}
+\input{sections/appendices/material_properties/niobium_titanium/niobium_titanium.tex}
 
 \section{G10 Material Properties}
 \label{appendix:g10_material_properties}
-% \input{sections/appendices/material_properties/g10/g10.tex}
+\input{sections/appendices/material_properties/g10/g10.tex}
 
 \clearpage
 \chapter{Finite Element Method in Heat Conduction Problems}
 \label{appendix:fem_heat_conduction}
-% \input{sections/appendices/numerical_methods/fem_in_heat_conduction.tex}
+\input{sections/appendices/numerical_methods/fem_in_heat_conduction.tex}
 
 \clearpage
-\chapter{Python Implementation}
-\section{Compilation of ANSYS with Python Environment}
-\label{appendix:python_ansys_compilation}
-% \input{sections/appendices/analysis_in_python/compilation_ansys_python.tex}
-
-\section{Execution Script in Python}
-\label{appendix:execution_script_python}
-% \input{sections/appendices/analysis_in_python/execution_script.tex}
-
-\section{Quench and Non-Quenched Zone Assignment Algorithm}
-\label{appendix:python_nodes_search_algorithm}
-% \input{sections/appendices/algorithms_in_python/nodes_search.tex}
-
-\section{Quench Detection Algorithm}
-\label{appendix:python_quench_detection_algorithm}
-% \input{sections/appendices/algorithms_in_python/quench_detection.tex}
-
-\clearpage
-\chapter{Analysis Implementation in ANSYS APDL}
+\chapter{Implementation in ANSYS APDL}
 \section{Creation of Slab Geometry}
 \label{appendix:apdl_slab_geometry}
-% \input{sections/appendices/apdl_scripts/slab_geometry_apdl.tex}
+\input{sections/appendices/apdl_scripts/slab_geometry_apdl.tex}
 
 \section{Solver and Post-Processing Script}
 \label{appendix:apdl_solver}
-% \input{sections/appendices/apdl_scripts/solve_apdl.tex}
+\input{sections/appendices/apdl_scripts/solve_apdl.tex}
+
+\clearpage
+\chapter{Python Implementation}
+\section{Compilation of ANSYS APDL with Python}
+\label{appendix:python_ansys_compilation}
+\input{sections/appendices/analysis_in_python/compilation_ansys_python.tex}
+
+\section{Execution Script in Python}
+\label{appendix:execution_script_python}
+\input{sections/appendices/analysis_in_python/execution_script.tex}
+
+\section{Quench Front Position Assignment Algorithm}
+\label{appendix:python_nodes_search_algorithm}
+\input{sections/appendices/algorithms_in_python/nodes_search.tex}
+
+\section{Quench Detection Algorithm}
+\label{appendix:python_quench_detection_algorithm}
+\input{sections/appendices/algorithms_in_python/quench_detection.tex}
 
 \end{appendices}
 
 \clearpage
+% \bibliographystyle{IEEEtran}
+% \bibliography{IEEEabrv,./bib/article}
+% \bibliographystyle{abbrv}
+% \bibliography{./bib/article}
+
+% \bibliographystyle{amsalpha}
+% \bibliography{./bib/article}
+
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,./bib/article}
+\bibliography{./bib/article}
 
 \end{document}

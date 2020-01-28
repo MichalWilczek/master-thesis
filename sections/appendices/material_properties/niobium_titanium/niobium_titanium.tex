@@ -9,6 +9,7 @@ Volumetric heat capacity of Nb-Ti is estimated by means of a piece-wise polynomi
 
 \begin{equation}
     T_\text{c}(B) = T_\text{c0}\cdot(1-\frac{B}{B_\text{c20}})^{0.59},
+    \label{eqn:critical_temperature_appendix}
 \end{equation}
 where $T_\text{c0}$ -- maximum critical temperature for $B=0~\text{T}$, $B_\text{c20}$ -- maximum upper critical magnetic field for $T=0~\text{K}$. Their numerical values for Nb-Ti are presented in Table~\ref{table: appendix_nb_ti_crit_temp_params}. In both parameters, the current density is equal to zero. 
 
@@ -34,7 +35,7 @@ where $T_\text{c0}$ -- maximum critical temperature for $B=0~\text{T}$, $B_\text
 
 The volumetric heat capacity is calculated in the following manner: 
 \begin{equation}
-    C_\text{v, Nb-Ti}(T, T_\text{c}) = \frac{\text{a}_0 + \text{a}_1\cdot T^{1} + \text{a}_2\cdot T^{2} + \text{a}_3\cdot T^{3}+ \text{a}_4\cdot T^{4}} {\rho_{Nb-Ti}},
+    c_\text{v, Nb-Ti}(T, T_\text{c}) = \frac{\text{a}_0 + \text{a}_1\cdot T^{1} + \text{a}_2\cdot T^{2} + \text{a}_3\cdot T^{3}+ \text{a}_4\cdot T^{4}} {\rho_{Nb-Ti}},
 \end{equation}
 where $a$ -- fit parameters presented in Table \ref{table:nbti_parameters}.
 
@@ -74,7 +75,7 @@ As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti h
       width=0.85\linewidth, 
       height = 6cm,
       xlabel={$T,~\text{K}$},
-      ylabel={$C_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
+      ylabel={$c_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
       xtick={8.5, 50, 100, 150, 200, 250, 300},
       xlabel style={below right},
       ylabel style={above left},
@@ -95,7 +96,7 @@ As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti h
     
     \end{axis}
     \spy [black, size=2.5cm] on (spypoint)
-       in node[fill=white] at (magnifyglass);
+      in node[fill=white] at (magnifyglass);
     \end{tikzpicture}
     \caption{Volumetric heat capacity of Niobium-Titanium as a function of temperature.}
     \label{fig:nbti_cv_plot}

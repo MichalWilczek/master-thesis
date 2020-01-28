@@ -1,8 +1,8 @@
 
-Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summarises different improvement rates. Unlike the case of a~bare strand, the~acceleration in computing time is clearly visible when a quench velocity-based analysis is applied. The mesh refinement along the strand also reduces the total number of nodes used for the insulation. The relation can be easily concluded from (\ref{eqn:tot_number_of_nodes}). In fact, the reduction of the insulation elements is one of the main reasons for accelerating the computing speed whose gain is higher than the loss of time due to the data exchange during the co-simulation process\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
+Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summarises different improvement rates when the quench velocity-based approach is applied with respect to the standard analysis. It is possible to increase the time step range and increase the mesh size with the quench velocity-based approach. Unlike the case of a~bare strand, the~acceleration in computing time is clearly visible. The mesh relaxation along the strand also reduces the total number of nodes used to model the zone outside of the composite strand. The evolution of the nodal size of the model can be easily deduced from (\ref{eqn:tot_number_of_nodes}). In fact, the reduction of the insulation elements is one of the main reasons for accelerating the computing speed whose gain is higher than the loss of time due to the data exchange during the co-simulation process\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
 
 \begin{table}[H]
-    \caption{Methodology comparison.} 
+    \caption{Benchmark summary of the analysis with insulation and epoxy resin.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -10,11 +10,11 @@ Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summari
     \begin{center}
         \begin{tabular}{ cccc }  
         \hline
-          & mesh size, mm & time step, $\upmu \text{s}$ & simulation time, s\\
+          & mesh size, mm & $t_\text{step range},~\text{ms}$ & computing time, s\\
         \hline
-        heat balance & 1 & [10, 100] & 52740 \\
-        quench velocity-based & 10 & [100, 1000] & 9480 \\
-        quench velocity-based & 20 & [100, 1000] & 5940 \\
+        standard analysis & 1 & [0.01, 0.1] & 52740 \\
+        quench velocity-based approach & 10 & [0.1, 1] & 9480 \\
+        quench velocity-based approach & 20 & [0.1, 1] & 5940 \\
         \hline 
         improvement rate & 10-20 times & 10 times & 5.5-8.9 times \\
         \end{tabular}
@@ -22,10 +22,10 @@ Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summari
      \label{table: 1d_qv_benchmarking_with_insulation_methods_comparison} 
  \end{table}
  
-As presented in Table~\ref{table: 1d_qv_benchmarking_with_insulation_res_and_hot_spot_error_conclusion}, the resistive voltage remains in the range of -5\% of a relative error with the mesh size equal to 10 mm. In case of the mesh size of 20~mm, the relative error is higher but also converges to a stable value of -4\%. However, the relative error corresponding to the hot spot temperature may increase during the simulation, as it was discussed in the previous section. It reaches the level of approximately -2\% after $t=0.5~\text{s}$ independently of an applied mesh size. 
+Table~\ref{table: 1d_qv_benchmarking_with_insulation_res_and_hot_spot_error_conclusion}, summarises the evolution of the relative error in time with respect to the resistive voltage and the hot-spot temperature. One can observe, that the relative error of the resistive voltage converges to -4\% for the largest mesh size of 20~mm. The smaller mesh relaxation leads to the lower relative error of the resistive voltage. The relative error corresponding to the hot-spot temperature increases with time independently of the mesh size. It reaches the level of approximately -2\% after $t=0.5~\text{s}$ independently of the mesh size. 
 
  \begin{table}[H]
-    \caption{Comparison of relative error for resistive voltage and hot spot temperature.} 
+    \caption{Comparison of relative error for resistive voltage and hot-spot temperature.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -33,9 +33,10 @@ As presented in Table~\ref{table: 1d_qv_benchmarking_with_insulation_res_and_hot
     \begin{center}
         \begin{tabular}{ c | cc | cc }  
         \hline
-        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{resistive voltage} & \multicolumn{2}{c}{hot spot temperature} \\ 
+        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{$V_\text{res}$} & \multicolumn{2}{c}{$T_\text{hot-spot}$} \\ 
            & $t=0.01~\text{s}$ & $t=0.5~\text{s}$ & $t=0.01~\text{s}$ & $t=0.5~\text{s}$ \\
         \hline
+        1 & -9.52\% & -2.42\% & -0.94\% & -1.81\% \\
         10 & -4.20\% & -2.72\% & -0.83\% & -1.79\% \\
         20 & -17.76\% & -3.98\% & -0.58\% & -1.98\% \\
         \hline 

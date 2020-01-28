@@ -1,31 +1,31 @@
 
-The quench velocity-based approach is a promising tool when a simulation of a large thermal domain is conducted. If this method is used, a certain error should be assumed with respect to an evolving resistive voltage and a hot spot temperature. In the benchmarking process presented in this chapter, the analysis settings for a standard solution were chosen to remain in an assumed absolute relative error of 1\% with respect to an average quench velocity. In the comparison of two methodologies, one can conclude that a quench velocity-based co-simulation results in an underestimation of the quench front position with respect to a standard solution. 
+The quench velocity-based approach is a promising tool when a simulation of a large numerical domain is conducted exceeding 100 000 degrees of freedom for a standard solution. If this method is used, a certain error should be assumed with respect to the resistive voltage and the hot-spot temperature (both evolve in time). In the benchmarking process presented in this chapter, the analysis settings for a standard solution are chosen to remain in an assumed relative error of 1\% with respect to an average quench velocity. In the comparison of two methodologies, one can conclude that the quench velocity-based approach results in an underestimation of the quench front position with respect to the standard simulation performed in ANSYS. 
 
-While simulating a multi-strand case with the quench velocity-based approach, one should remember that the results will be less precise with respect to a standard solution. A~relative error estimation for the case without an external insulation layer is presented in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_without_insulation}. The tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.3~\text{s}$.
+While simulating a multi-strand case with the quench velocity-based approach, one should remember that the results will be less precise with respect to a standard solution. An estimation of the~relative error is presented in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_without_insulation} for the case of a bare strand. The tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.3~\text{s}$. As the convergence of all errors is clearly visible in this example, it is assumed that they do not change in further time steps of the performed simulation. However, this estimation should be carried out case by case.
 
  \begin{table}[H]
-    \caption{Tolerance range in a quench velocity-based approach without insulation.} 
+    \caption{Tolerance range in the quench velocity-based approach for the case of a bare strand.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ cc | c | cc }  
+        \begin{tabular}{ c | c | cc }  
         
         \hline
-        \multicolumn{2}{c|}{mesh size} & \multirow{2}{*}{time step, \textmu s} & \multicolumn{2}{c}{relative error tolerance} \\
+        mesh size & \multirow{2}{*}{$t_\text{step range},~\upmu \text{s}$} & \multicolumn{2}{c}{tolerance, $E_\text{r}$} \\
         
-        strand, m & insulation, \textmu m &  & $V_\text{res}$ & $T_\text{hot spot}$ \\
+        strand, m &  & $V_\text{res}$ & $T_\text{hot-spot}$ \\
         \hline
-        10 & 10 & [100, 1000] & -15\% & $>-5\%$ \\
-        20 & 10 & [100, 1000] & -20\% & $>-5\%$ \\
+        10 & [100, 1000] & -15\% & $>-5\%$ \\
+        20 & [100, 1000] & -20\% & $>-5\%$ \\
         \hline 
         \end{tabular}
     \end{center}  
      \label{table: 1d_qv_benchmarking_tolerance_range_without_insulation} 
  \end{table}
  
-The results obtained from the benchmarking analysis with the insulation layer are shown in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_with_insulation}. Similarly to the case without the insulation layer, the tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.5~\text{s}$. However, the relative error of a~hot spot temperature did not converge to one specific value. Thus, it is assumed that the error increases by 2\% per second during the simulation. It is a non-optimistic assumption which does not take into consideration a linearisation of the material properties at higher temperatures when their derivatives with respect to the temperature are more constant leading to a higher probability of convergence. 
+The results obtained from the analysis of a strand with insulation and epoxy resin are shown in Table~\ref{table: 1d_qv_benchmarking_tolerance_range_with_insulation}. Similarly to the case of a bare strand, the tolerances are based on relative errors at $t=0.01~\text{s}$ of the corresponding parameters as well as the final relative errors to which the parameters converged to at $t=0.5~\text{s}$. However, the relative error of the~hot-spot temperature does not converge to one specific value. Thus, it is assumed that the error corresponding to the hot-spot temperature increases by -2\% per second during the simulation by assuming a linear divergence with respect to the standard solution. 
 
  \begin{table}[H]
     \caption{Tolerance range in a quench velocity-based approach with insulation.} 
@@ -37,17 +37,16 @@ The results obtained from the benchmarking analysis with the insulation layer ar
         \begin{tabular}{ cc | c | cc }  
         
         \hline
-        \multicolumn{2}{c|}{mesh size} & \multirow{2}{*}{time step, \textmu s} & \multicolumn{2}{c}{relative error tolerance} \\
+        \multicolumn{2}{c|}{mesh size} & \multirow{2}{*}{$t_\text{step range},~\upmu \text{s}$} & \multicolumn{2}{c}{tolerance, $E_\text{r}$} \\
         
-        strand, m & insulation, \textmu m &  & $V_\text{res}$ & $T_\text{hot spot}$ \\
+        strand, m & insulation, \textmu m &  & $V_\text{res}$ & $T_\text{hot-spot}$ \\
         \hline
-        10 & 10 & [100, 1000] & -5\% & -1.5\% + (-2\%/s) \\
-        20 & 10 & [100, 1000] & -20\% & -1.5\% + (-2\%/s) \\
+        10 & 8 & [100, 1000] & -5\% & -1.5\% + (-2\%/s) \\
+        20 & 8 & [100, 1000] & -20\% & -1.5\% + (-2\%/s) \\
         \hline 
         \end{tabular}
     \end{center}  
      \label{table: 1d_qv_benchmarking_tolerance_range_with_insulation} 
  \end{table}
 
-Unfortunately, the lack of convergence for a hot spot temperature may have an influence on a~resistive voltage being a function of temperature due to the resistivity of copper. Therefore, two relative errors may be a coupled problem in a longer simulation lasting several seconds. The analysis with the insulation layer is definitely more ambiguous compared to the one without it. However, in the presented analysis the insulation has a large influence on the results because it occupies 56\% of the total volume of the strand. In most of the cases corresponding to the superconducting accelerator magnets, this fraction is much lower.
-
+It is expected that the lack of convergence of the hot-spot temperature has an influence on the evolution of the~resistive voltage being a function of temperature due to the resistivity of copper. Therefore, two relative errors can be a coupled problem in a longer simulation lasting several seconds. It is recommended to include the correction of the relative error as a function of time in the case of the resistive voltage as well. However, since the visible divergence does not occur in this study, the given step is omitted in this thesis.

@@ -1,8 +1,8 @@
 
-Similarly to Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}, the electro-thermal element LINK68 is used along the strand. Since no Joule heating occurs in the insulation layer, it is represented by a thermal element, LINK33. Two time step ranges were chosen: $t=\{[10, 100], [100, 1000]\}~\upmu \text{s}$. The study of a~1.5~metre-long domain was conducted with a varying number of nodes, $n=\{75, 150, 1500\}$ and a time step range of $t=[100, 1000]~\upmu \text{s}$ deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. Therefore, the mesh density remained the same, being $n=\{50, 100, 1000\}$ nodes/m  with respect to the quench velocity-based analysis without an external insulation layer. The geometric assumptions as well as the initial conditions were the same as in Section \ref{section: 1D_quench_propagation_with_insulation} without a heat source. The additional parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. In~order to observe the convergence of relative errors, the total simulation time was extended to $t=0.5~\text{s}$
+Similarly to the analysis of a bare strand employing the quench velocity-based approach, the electro-thermal element LINK68 is used to model a strand. The insulation with epoxy resin is represented by the LINK33 element since no heat is generated in that region. In~order to observe the relevant evolution of a relative error of the resistive voltage and the hot-spot temperature, the total simulation time is extended to $t=0.5~\text{s}$. The study of a~1.5~metre-long cable is performed with a varying longitudinal mesh size, $m=\{1, 10, 20\}~\text{mm}$. The cable is longer than in the analysis a bare strand so that the quench front could propagate during the entire simulation time without reaching the end of the domain. The time step range in the quench velocity-based approach is $t_\text{step range}=[0.1, 1]~\text{ms}$, as deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. The geometric assumptions, the initial conditions, and the analysis settings are identical with the ones discussed in Section \ref{section: 1D_quench_propagation_with_insulation}. The parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. 
 
 \begin{table}[H]
-    \caption{Analysis input parameters in the quench velocity-based approach.} 
+    \caption{Input parameters in the quench velocity-based approach.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -12,30 +12,30 @@ Similarly to Section~\ref{section:quench_velocity_benchmarking_no_insulation_que
         \hline
         parameter & value & unit \\
         \hline
-        communication time step & 0.0025 & [s] \\
-        average quench velocity & 2.18 & [m/s] \\
-        total simulation time & 0.5 & [s] \\
+        $t_\text{com}$ & 2.5 & [ms] \\
+        $v_\text{quench, average}$ & 2.18 & [m/s] \\
+        $t_\text{total}$ & 0.5 & [s] \\
         \hline 
         \end{tabular}
     \end{center}  
     \label{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity} 
 \end{table}
 
-Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution over a strand domain when 50~nodes/m are applied with a quench velocity-based approach. The quench front remains behind the~benchmark solution analogously to the case without the insulation layer, as presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}.
+Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution along the strand with the mesh size of 20~mm between the standard analysis and the quench velocity-based approach. The quench front remains behind the~reference solution analogously to the case of a bare strand, as presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}.
 
 \begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
+          width=0.7\linewidth, 
           height = 5.0cm,
-          xlabel={$L_\text{strand},~\text{m}$},
+          xlabel={$\bar{x},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
           ymin=0.0,
           xmax=1.5,
-          legend pos=north east
+          legend pos=outer north east
           ]
           
         %   Initial temperature curve for the mesh used in quench velocity modelling 
@@ -52,8 +52,8 @@ Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compare
           \addplot[blue] table[x=position,y=t_0_5,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_50_nodes.csv};
           
           \legend{
-          $T_\text{init}$ profile,
-          heat balance,,,,
+          $T_\text{init}$,
+          standard,,,,
           quench velocity
           }
         \end{axis}
@@ -62,95 +62,95 @@ Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compare
         \node[scale = 1] at (3.3, 3) {$\vec{v}_\text{quench}$}; 
         
     \end{tikzpicture}
-    \caption{Temperature distribution of a heat balance-based benchmark solution and a quench velocity-based approach with 50~nodes/m along the strand and 20 nodes across the insulation layer for three time steps: $t=\{0.1, 0.3, 0.5\}$~s with a specified direction of quench velocity, $\vec{v}_\text{quench}$.}
+    \caption{Temperature distribution with a specified direction of quench velocity, $\vec{v}_\text{quench}$ of for the reference solution and the quench velocity-based approach with the longitudinal mesh size of 20~mm and the mesh size of 8~$\upmu \text{m}$ (20 nodes) across the insulation layer at three time steps: $t=\{0.1, 0.3, 0.5\}$~s.}
     \label{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation}
 \end{figure}
 
-As presented in Fig.~\ref{fig: q_vel_modelling_res_volt_benchmarking_with_insulation}, the resistive voltage rises monotonically for the quench velocity-based approach and follows the curve similarly to the case without the insulation layer. 
+As presented in Fig.~\ref{fig: q_vel_modelling_res_volt_benchmarking_with_insulation}, the resistive voltage rises monotonically in the quench velocity-based approach and follows the reference solution similarly to the example of a bare strand. 
 
 \begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
-          height = 4.5cm,
-          xlabel={Time, $\text{s}$},
-          ylabel={Resistive Voltage, $\text{V}$},
+          height = 4.0cm,
+          xlabel={$t$, $\text{s}$},
+          ylabel={$V_\text{res}$, $\text{V}$},
           xticklabel style={/pgf/number format/fixed},
           yticklabel style={/pgf/number format/fixed},
           xmin=0.0,
           xmax=0.5,
-          legend pos = north west
+          legend pos =outer north east
           ]
+          \addplot[red] table[x=time,y=heat_balance_benchmark,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_benchmarking.csv};
+          
           \addplot[blue, mark=*] table[x=time,y=50_nodes_quench_velocity,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_benchmarking.csv};
 
-          \addplot[red] table[x=time,y=heat_balance_benchmark,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_benchmarking.csv};
-
           \legend{
+          standard,
           quench velocity,
-          heat balance,
           }
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Resistive voltage comparison for standard numerical solution and quench velocity-based approach with 50~nodes/m.}
+    \caption{Comparison of the resistive voltage between the reference solution and the quench velocity-based approach with the longitudinal mesh size of 20~mm.}
     \label{fig: q_vel_modelling_res_volt_benchmarking_with_insulation}
 \end{figure}
 
-A double increase in number of nodes from 50 to 100 nodes/m results in a better convergence of a quench velocity-based resistive voltage with respect to the benchmark solution, as presented in Fig.~\ref{fig: q_vel_modelling_res_volt_rel_error_with_insulation}. In such a case, the relative error remains in the range of -10\% and converges to -2.5\% as the quench propagates. When a coarser mesh with 50 nodes is used, the relative error converges to the value of -5\%. It is also worth mentioning that the increase of mesh density to 1000~nodes/m, being the value corresponding to the reference standard solution, does not decrease the relative error with respect to the solution with 100~nodes/m. Similarly to the case without the insulation layer, one has to accept the difference between two approaches.
+A double decrease in the mesh size from 20 to 10~mm results in a better convergence of the resistive voltage in the quench velocity-based approach with respect to the reference solution, as presented in Fig.~\ref{fig: q_vel_modelling_res_volt_rel_error_with_insulation}. For the mesh size of 10~mm, the relative error remains in the range of -10\% and converges to -2.5\% as the quench propagates. With a coarser mesh of 20~mm, the relative error converges to the approximate value of -5\%. It is also worth mentioning that the decrease of the mesh size to 1~mm of does not decrease the relative error with respect to the solution with a larger mesh size. The mesh size of 1~mm corresponds to the case of a reference standard solution. Similarly to the example without the insulation layer, one has to accept the difference between two approaches.
 
 \begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
-          height = 6.0cm,
-          xlabel={Time, $\text{s}$},
-          ylabel={Relative error, \%},
+          height = 4.0cm,
+          xlabel={$t$, $\text{s}$},
+          ylabel={$E_\text{r}$, \%},
           xticklabel style={/pgf/number format/fixed},
           xmin=0.0,
           xmax=0.5,
-          legend pos=south east
+          legend pos=outer north east
           ]
           \addplot[blue, mark=*] table[x=time,y=50_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_rel_error.csv};
           \addplot[red, mark=*] table[x=time,y=100_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_rel_error.csv};
           \addplot[green, mark=*] table[x=time,y=1000_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_res_volt_rel_error.csv};
           
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{50 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{100 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1000 nodes}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{20 mm}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{10 mm}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1 mm}
 
         \end{axis}
     \end{tikzpicture}
-    \caption{Relative error of resistive voltage for 50 and 100~nodes/m used for quench velocity-based approach.}
+    \caption{Relative error of the resistive voltage for the varying mesh size along the strand in the quench velocity-based approach.}
     \label{fig: q_vel_modelling_res_volt_rel_error_with_insulation}
 \end{figure}
 
-Fig.~\ref{fig: q_vel_modelling_hot_spot_rel_error_with_insulation} shows the evolution of a relative error with respect to the hot spot. One can notice the stabilisation of an error after approximately $t=0.2~\text{s}$. However, the error starts diverging after that moment with an approximate speed of -2\%/s if a linear drop with time is assumed. The divergence occurs for every mesh density with a negligible difference between the mesh densities of 100 and 1000~nodes/m. At $t=0.5~\text{s}$, the result with 50~nodes/m is characterised by a relative error 0.5\% lower with respect to higher mesh densities. 
+Figure~\ref{fig: q_vel_modelling_hot_spot_rel_error_with_insulation} presents the evolution of the relative error with respect to the hot-spot temperature. One can notice the stabilisation of an error after approximately $t=0.2~\text{s}$. After that moment, the error starts diverging with an approximate rate of -2\%/s by assuming a linear change error drop with time. The divergence occurs for every mesh size. At $t=0.5~\text{s}$, the result with the mesh size of 20~mm is characterised by a relative error 0.5\% lower with respect to higher mesh densities. 
 
 \begin{figure}[H]
 \centering
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
-          height = 6.0cm,
-          xlabel={Time, $\text{s}$},
-          ylabel={Relative error, \%},
+          height = 4.0cm,
+          xlabel={$t$, $\text{s}$},
+          ylabel={$E_\text{r}$, \%},
           xticklabel style={/pgf/number format/fixed},
           xmin=0.0,
           xmax=0.5,
-          legend pos=north east
+          legend pos=outer north east
           ]
           \addplot[blue, mark=*] table[x=time,y=50_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
           \addplot[red, mark=*] table[x=time,y=100_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
           \addplot[green, mark=*] table[x=time,y=1000_nodes,col sep=comma] {sections/q_vel_modelling_benchmarking/figures/results_with_insulation/quench_velocity_hot_spot_rel_error.csv};
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{50 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{100 nodes}
-          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1000 nodes}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{20 mm}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{10 mm}
+          \addlegendimage{/pgfplots/refstyle=plot_resistive_voltage}\addlegendentry{1 mm}
 
         \end{axis}
     \end{tikzpicture}
-    \caption{Relative error of hot spot temperature for 50 and 100 nodes used for quench velocity-based approach.}
+    \caption{Relative error of the hot-spot temperature for the varying mesh size along the strand used for the quench velocity-based approach.}
     \label{fig: q_vel_modelling_hot_spot_rel_error_with_insulation}
 \end{figure}
 

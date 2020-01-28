@@ -1,146 +1,10 @@
 
-In this section, a part of the developed code directly related to the algorithms explained in Chapter~\ref{chapter:algorithms} is presented. In order to understand the entire programme and the relations between different classes, it is recommended to study the available scripts on GitLab under the link given in~\cite{my_python_code}. Even if some of the classes are presented in appendices, it is impossible to deduce the entire logic of the programme from this thesis. 
+In this section, a part of the developed code directly related to ANSYS models and algorithms explained in Chapter~\ref{chapter:algorithms} is presented. In order to understand the entire programme and the relations between different classes, it is recommended to study the available scripts on GitLab under the link given in~\cite{my_python_code}. Even if some of the classes are presented in appendices, a detailed explanation of the entire logic is beyond the scope of this thesis.
 
-The multidimensional mapping algorithm is implemented in \textbf{GeometryMulti1D}, as shown in Fig.~\ref{fig:geometry_oop}. It maps a multi-dimensional coil into a 1D coil and lists all important real nodes of the ANSYS geometry that are important for the simulation such as BC's, IC's, thermo-electric coupling, etc. \textbf{GeometryMulti1D} inherits from \textbf{Geometry} that includes methods applicable to problems of every dimensionality, not only the ones corresponding to the case 1D+1D(+1D for a multi-strand analysis). Therefore, a~possibility of the code extension to higher dimensionalities such as 2D or 3D is taken into consideration. The~module geometry is not included in the appendices due to its considerable size. 
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=7.0cm, scale=0.8]
-    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=4.0cm, scale=0.8]
-    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
-    % blocks
-    \node (Geometry) [abstract, rectangle split, rectangle split parts=2]
-        {
-            Geometry  \nodepart{second} \footnotesize \begin{compactitem}\item imports APDL files related to geometry and nodal temperature. \end{compactitem}
-        };
-    \node (GeometryMulti1D) [abstract, rectangle split, rectangle split parts=2, below of=Geometry, node distance=2.5cm]
-        {
-            GeometryMulti1D \nodepart{second} \footnotesize \begin{compactitem} \item maps 3D coil geometry into a 1D coil, \item lists nodes important for BC's, IC's, coupling, etc. \end{compactitem}
-        };
-    % lines and arrows
-    \draw[myarrow] (Geometry.south) -- (GeometryMulti1D.north);
-    \end{tikzpicture}
-    \caption{Class diagram of the module geometry.}
-    \label{fig:geometry_oop}
-\end{figure}
+\subsection{Models Implementation}
 
-The classes related to the quench velocity module are shown in Fig.~\ref{fig:quench_velocity_oop}. As mentioned in Table~\ref{table:python_analysis_options}, there are two quench velocity models: a constant quench velocity and the one being a function of a magnetic field and current. The latter is implemented in \textbf{QuenchFrontNumerical} and the former -- in \textbf{QuenchFrontConstant}. They both calculate a~continuous quench front position at a given time step. The class \textbf{QuenchFrontNumerical} inherits a~quench velocity map from \textbf{QuenchVelocityMap}. The blocks marked in red are external modules that communicate with the quench velocity module. \textbf{QuenchVelocityMap} uses linear interpolation functions from the common functions module. 
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=6.0cm, scale=0.8]
-    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=5.5cm, scale=0.8]
-    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
-    % blocks
-    \node (QuenchFront) [abstract, rectangle split, rectangle split parts=2, node distance=3cm]
-        {
-            QuenchFront \nodepart{second} \footnotesize \begin{compactitem} \item checks if quench front overlap. \end{compactitem}
-        };
-    \node (AuxNode01) [text width=4cm, below of=QuenchFront, node distance=1.7cm] {};
-    \node (QuenchFrontConstant) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=3.5cm]
-        {
-            QuenchFrontConstant \nodepart{second} \footnotesize \begin{compactitem} \item calculates quench front position. \end{compactitem}
-        };
-    \node (QuenchFrontNumerical) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=3.5cm]
-        {
-            QuenchFrontNumerical \nodepart{second} \footnotesize \begin{compactitem} \item calculates quench front position. \end{compactitem}
-        };
-    \node (Geometry) [cloud, rectangle split, rectangle split parts=2, above of=QuenchFront, node distance=2.2cm]
-        {
-            Geometry \nodepart{second} \footnotesize \begin{compactitem} \item gives 1D coil geometry and positions of real APDL nodes. \end{compactitem}
-        };    
-    \node (SearchNodes) [abstract, rectangle split, rectangle split parts=2, left of=QuenchFront, node distance=6.5cm, text width=5.0cm]
-        {
-            SearchNodes \nodepart{second} \footnotesize \begin{compactitem} \item converts quench fronts positions into nodes. \end{compactitem}
-        }; 
-    \node (QuenchVelocityMap) [abstract, rectangle split, rectangle split parts=2, above of=QuenchFrontNumerical, node distance=2.2cm, xshift=3cm, text width=5.0cm]
-        {
-            QuenchVelocityMap \nodepart{second} \footnotesize \begin{compactitem} \item uploads quench velocity map from text file. \end{compactitem}
-        }; 
-    \node (InterpolationFunctions) [cloud, rectangle split, rectangle split parts=2, above of=QuenchVelocityMap, node distance=2.2cm, text width=5.0cm]
-        {
-            CommonFunctions \nodepart{second} \footnotesize \begin{compactitem} \item creates linear interpolation as $v_\text{quench} = f(B, I)$. \end{compactitem}
-        }; 
-    % lines and arrows
-    \draw[myarrow] ([xshift=-1cm]QuenchFront.south east) -- ++(0,-0.25) -| ([xshift=-0.5cm]QuenchFrontNumerical.north);
-    \draw[myarrow] ([xshift=+1cm]QuenchFront.south west) -- ++(0,-0.25) -| (QuenchFrontConstant.north);
-    \draw[myarrow] (SearchNodes.east) -- (QuenchFront.west);
-    \draw[myarrow] (Geometry.south) -- (QuenchFront.north);
-    \draw[myarrow] (InterpolationFunctions.south) -- (QuenchVelocityMap.north);
-    \draw[myarrow] (QuenchVelocityMap.south) -- ++(0,-0.16) -| ([xshift=+0.5cm]QuenchFrontNumerical.north);
-    
-    \end{tikzpicture}
-    \caption{Class diagram of the module quench\_velocity.}
-    \label{fig:quench_velocity_oop}
-\end{figure}
-
-\textbf{QuenchFrontConstant} and \textbf{QuenchFrontNumerical} inherit from \textbf{QuenchFront} being the main class of the module. \textbf{QuenchFront} inherits from \textbf{SearchNodes} the quench and non-quenched zone assignment algorithm described in Section~\ref{section:node_searching_algorithm}. \textbf{SearchNodes} written in Python is presented in Appendix~\ref{appendix:python_nodes_search_algorithm}. Class \textbf{QuenchFront} also inherits the geometry module required for searching nodal quench positions.  
-
-Fig.~\ref{fig:postprocessor_oop}, presents an overview of a postprocessor module. It is the only workflow module depicted in this section because it includes an implementation of the quench detection algorithm. There are two main classes in the module used by the execution script: \textbf{PostProcessorHeatBalance} with a standard solution and \textbf{PostProcessorQuenchVelocity} with a quench velocity-based approach. They both estimate the resistive voltage $V_\text{res}$ in the~coil and check the quench state of a superconducting magnet. 
-
-\textbf{PostProcessorHeatBalance} and \textbf{PostProcessorQuenchVelocity} inherit from \textbf{PostProcessor} that stores a magnetic field map and a list of quenched fronts. Each quench front is a separate class object initiated from \textbf{QuenchFront}. \textbf{PostProcessor} inherits after \textbf{QuenchDetect} the quench detection algorithm. It is described in Section~\ref{section:quench_detection_algorithm}. In addition, \textbf{QuenchDetect} in Python is presented in Appendix~\ref{appendix:python_quench_detection_algorithm}. In order to initiate \textbf{QuenchDetect}, the input data from external class are required: \textbf{Geometry} and \textbf{MaterialProperties}. \textbf{PostProcessor} also inherits from the internal class \textbf{Plots} allowing for saving the results as figures and text files.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=7cm, scale=0.8]
-    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=5.35cm, scale=0.8]
-    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
-    
-    % blocks
-    \node (PostProcessor) [abstract, rectangle split, rectangle split parts=2, text width=5.5cm,node distance=3cm]
-        {
-            PostProcessor \nodepart{second} \footnotesize \begin{compactitem} \item stores list of quenched fronts, \item stores magnetic winding map. \end{compactitem}
-        };
-    \node (AuxNode01) [text width=4cm, below of=PostProcessor, node distance=2.0cm] {};
-    \node (PostProcessorHeatBalance) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=4cm]
-        {
-            PostProcessorHeatBalance \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state without quench detection algorithm. \end{compactitem}
-        };
-    \node (PostProcessorQuenchVelocity) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=4cm]
-        {
-            PostProcessorQuenchVelocity \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state in multiple windings, \item retrieves current from APDL files. \end{compactitem}
-        };
-    \node (QuenchFront) [cloud, rectangle split, rectangle split parts=2, right of=PostProcessor, node distance=7.1cm]
-        {
-            QuenchFront \nodepart{second} \footnotesize \begin{compactitem} \item gives QuenchFront objects appended to quench front list. \end{compactitem}
-        };   
-    \node (AuxNode02) [text width=4cm, above of=PostProcessor, node distance=1.8cm] {};
-    \node (Plots) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode02, node distance=4cm]
-        {
-            Plots \nodepart{second} \footnotesize \begin{compactitem} \item makes plots and writes down text files about resistive voltage and quench state. \end{compactitem}
-        };  
-    \node (QuenchDetect) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode02, node distance=4.0cm]
-        {
-            QuenchDetect \nodepart{second} \footnotesize \begin{compactitem} \item detects quench. \end{compactitem}
-        };
-    \node (AuxNode03) [text width=4cm, above of=QuenchDetect, node distance=1.8cm] {};
-    \node (Geometry) [cloud, rectangle split, rectangle split parts=2, left of=AuxNode03, node distance=3cm]
-        {
-            Geometry \nodepart{second} \footnotesize \begin{compactitem} \item gives 1D coil geometry and positions of real APDL nodes. \end{compactitem}
-        };    
-    \node (MaterialProperties) [cloud, rectangle split, rectangle split parts=2, right of=AuxNode03, node distance=3.2cm]
-        {
-            MaterialProperties \nodepart{second} \footnotesize \begin{compactitem} \item calculates critical temperature $T_\text{c}$. \end{compactitem}
-        };    
-
-    % lines and arrows
-    \draw[myarrow] ([xshift=+1cm]PostProcessor.south west) -- ++(0,-0.15) -| ([xshift=-0.5cm]PostProcessorHeatBalance.north);
-    \draw[myarrow] ([xshift=-1cm]PostProcessor.south east) -- ++(0,-0.15) -| (PostProcessorQuenchVelocity.north);
-    \draw[myarrow] (Plots.south) -- ++(0,-0.15) -| ([xshift=+1cm]PostProcessor.north west);
-    \draw[myarrow] (QuenchDetect.south) -- ++(0,-0.25) -| ([xshift=-1cm]PostProcessor.north east);
-    \draw[myarrow] (MaterialProperties.south) -- ++(0,-0.25) -| ([xshift=-2cm]QuenchDetect.north east);
-    \draw[myarrow] (Geometry.south) -- ++(0,-0.25) -| ([xshift=+2cm]QuenchDetect.north west);
-    \draw[myarrow] (QuenchFront.west) -- (PostProcessor.east);
-    
-    \end{tikzpicture}
-    \caption{Class diagram of the module postprocessor.}
-    \label{fig:postprocessor_oop}
-\end{figure}
-
-As shown in Fig.~\ref{fig:ansys_interface_oop}, the module ansys\_interface consists of two main classes: \textbf{AnsysMultiple1DSlab} and \textbf{AnsysMultiple1DHighOrderCorrector}. Each of them inserts initial APDL parameters for the analysis corresponding to the simulated case. They also load a~parametrised ANSYS APDL script responsible for the creation of a geometry. An~exemplary APDL script for \textbf{AnsysMultiple1DSlab} is presented in Appendix~\ref{appendix:apdl_slab_geometry}. \textbf{AnsysMultiple1DSlab} and \textbf{AnsysMultiple1DHighOrderCorrector} inherit the generation of material properties as well as the APDL functions corresponding to the boundary conditions from \textbf{AnsysMultiple1D}. Moreover, \textbf{AnsysMultiple1D} inserts an APDL script corresponding to the solution of a problem. It is presented in Appendix~\ref{appendix:apdl_solver}. All three classes require external data from the geometry module concerning the insulation geometric functions. In addition, \textbf{AnsysMultiple1D} inherits the translation of APDL commands into a~Python script from \textbf{Ansys}.
+As shown in Fig.~\ref{fig:ansys_interface_oop}, the ansys\_interface module consists of two main classes: \textbf{AnsysMultiple1DSlab} and \textbf{AnsysMultiple1DHighOrderCorrector}. Each of them inserts initial APDL parameters for the analysis corresponding to the simulated case. They also load a~parametrised ANSYS APDL script responsible for the creation of a geometry. An~exemplary APDL script for \textbf{AnsysMultiple1DSlab} is presented in Appendix~\ref{appendix:apdl_slab_geometry}. \textbf{AnsysMultiple1DSlab} and \textbf{AnsysMultiple1DHighOrderCorrector} inherit the generation of material properties as well as the APDL functions corresponding to the boundary conditions from \textbf{AnsysMultiple1D}. Moreover, \textbf{AnsysMultiple1D} inserts an APDL script corresponding to the solution of a problem. It is presented in Appendix~\ref{appendix:apdl_solver}. All three classes require external data from the geometry module concerning the insulation geometric functions. In addition, \textbf{AnsysMultiple1D} inherits the translation of APDL commands into a~Python script from \textbf{Ansys}.
 
 \begin{figure}[H]
     \centering
@@ -180,4 +44,149 @@ As shown in Fig.~\ref{fig:ansys_interface_oop}, the module ansys\_interface cons
     \end{tikzpicture}
     \caption{Class diagram of the module ansys\_interface.}
     \label{fig:ansys_interface_oop}
+\end{figure}
+
+\subsection{Multidimensional Mapping Algorithm}
+
+The multidimensional mapping algorithm is implemented in \textbf{GeometryMulti1D}, as shown in Fig.~\ref{fig:geometry_oop}. It maps a multi-dimensional coil into a 1D coil and lists all important real nodes of the ANSYS geometry that are important for the simulation such as BC's, IC's, thermo-electric coupling, etc. \textbf{GeometryMulti1D} inherits from \textbf{Geometry} that includes methods applicable to problems of every dimensionality, not only the ones corresponding to the case 1D+1D(+1D for a multi-strand analysis). Therefore, a~possibility of the code extension to higher dimensionalities such as 2D or 3D is taken into consideration. The~geometry module is not included in the appendices due to its considerable size. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=7.0cm, scale=0.8]
+    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=4.0cm, scale=0.8]
+    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
+    % blocks
+    \node (Geometry) [abstract, rectangle split, rectangle split parts=2]
+        {
+            Geometry  \nodepart{second} \footnotesize \begin{compactitem}\item imports APDL files related to geometry and nodal temperature. \end{compactitem}
+        };
+    \node (GeometryMulti1D) [abstract, rectangle split, rectangle split parts=2, below of=Geometry, node distance=2.5cm]
+        {
+            GeometryMulti1D \nodepart{second} \footnotesize \begin{compactitem} \item maps 3D coil geometry into a 1D coil, \item lists nodes important for BC's, IC's, coupling, etc. \end{compactitem}
+        };
+    % lines and arrows
+    \draw[myarrow] (Geometry.south) -- (GeometryMulti1D.north);
+    \end{tikzpicture}
+    \caption{Class diagram of the module geometry.}
+    \label{fig:geometry_oop}
+\end{figure}
+
+\subsection{Quench Velocity Assignment and Quench Front Position Assignment Algorithms}
+
+The classes related to the quench\_velocity module are shown in Fig.~\ref{fig:quench_velocity_oop}. As mentioned in Table~\ref{table:python_analysis_options}, there are two quench velocity models: a constant quench velocity and the one being a function of a magnetic field and current. The latter is implemented in \textbf{QuenchFrontNumerical} and the former -- in \textbf{QuenchFrontConstant}. They both calculate a~continuous quench front position at a given time step. The class \textbf{QuenchFrontNumerical} inherits a~quench velocity map from \textbf{QuenchVelocityMap} being a function of current and magnetic field. The blocks marked in red are external modules that communicate with the quench velocity module. \textbf{QuenchVelocityMap} uses linear interpolation functions from the common functions module. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=6.0cm, scale=0.8]
+    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=5.5cm, scale=0.8]
+    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
+    % blocks
+    \node (QuenchFront) [abstract, rectangle split, rectangle split parts=2, node distance=3cm]
+        {
+            QuenchFront \nodepart{second} \footnotesize \begin{compactitem} \item checks if quench front overlap. \end{compactitem}
+        };
+    \node (AuxNode01) [text width=4cm, below of=QuenchFront, node distance=1.7cm] {};
+    \node (QuenchFrontConstant) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=3.5cm]
+        {
+            QuenchFrontConstant \nodepart{second} \footnotesize \begin{compactitem} \item calculates quench front position. \end{compactitem}
+        };
+    \node (QuenchFrontNumerical) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=3.5cm]
+        {
+            QuenchFrontNumerical \nodepart{second} \footnotesize \begin{compactitem} \item calculates quench front position. \end{compactitem}
+        };
+    \node (Geometry) [cloud, rectangle split, rectangle split parts=2, above of=QuenchFront, node distance=2.2cm]
+        {
+            Geometry \nodepart{second} \footnotesize \begin{compactitem} \item gives 1D coil geometry and positions of real APDL nodes. \end{compactitem}
+        };    
+    \node (SearchNodes) [abstract, rectangle split, rectangle split parts=2, left of=QuenchFront, node distance=6.5cm, text width=5.0cm]
+        {
+            SearchNodes \nodepart{second} \footnotesize \begin{compactitem} \item converts quench front position into nodes. \end{compactitem}
+        }; 
+    \node (QuenchVelocityMap) [abstract, rectangle split, rectangle split parts=2, above of=QuenchFrontNumerical, node distance=2.2cm, xshift=3cm, text width=5.0cm]
+        {
+            QuenchVelocityMap \nodepart{second} \footnotesize \begin{compactitem} \item uploads quench velocity map from text file. \end{compactitem}
+        }; 
+    \node (InterpolationFunctions) [cloud, rectangle split, rectangle split parts=2, above of=QuenchVelocityMap, node distance=2.2cm, text width=5.0cm]
+        {
+            CommonFunctions \nodepart{second} \footnotesize \begin{compactitem} \item creates linear interpolation as $v_\text{quench} = f(B, I)$. \end{compactitem}
+        }; 
+    % lines and arrows
+    \draw[myarrow] ([xshift=-1cm]QuenchFront.south east) -- ++(0,-0.25) -| ([xshift=-0.5cm]QuenchFrontNumerical.north);
+    \draw[myarrow] ([xshift=+1cm]QuenchFront.south west) -- ++(0,-0.25) -| (QuenchFrontConstant.north);
+    \draw[myarrow] (SearchNodes.east) -- (QuenchFront.west);
+    \draw[myarrow] (Geometry.south) -- (QuenchFront.north);
+    \draw[myarrow] (InterpolationFunctions.south) -- (QuenchVelocityMap.north);
+    \draw[myarrow] (QuenchVelocityMap.south) -- ++(0,-0.16) -| ([xshift=+0.5cm]QuenchFrontNumerical.north);
+    
+    \end{tikzpicture}
+    \caption{Class diagram of the module quench\_velocity.}
+    \label{fig:quench_velocity_oop}
+\end{figure}
+
+\textbf{QuenchFrontConstant} and \textbf{QuenchFrontNumerical} inherit from \textbf{QuenchFront} being the main class of the quench\_velocity module. \textbf{QuenchFront} inherits from \textbf{SearchNodes} the quench front position assignment algorithm described in Section~\ref{section:node_searching_algorithm}. \textbf{SearchNodes} written in Python is presented in Appendix~\ref{appendix:python_nodes_search_algorithm}. Class \textbf{QuenchFront} also inherits from the geometry module required for searching nodal quench positions.  
+
+\subsection{Quench Detection Algorithm}
+
+Figure~\ref{fig:postprocessor_oop}, presents an overview of a postprocessor module. It is the only workflow module depicted in this section because it includes an implementation of the quench detection algorithm. There are two main classes in the module used by the execution script: \textbf{PostProcessorHeatBalance} with a standard solution and \textbf{PostProcessorQuenchVelocity} with a quench velocity-based approach. They both estimate the resistive voltage $V_\text{res}$ in the~coil and check the quench state of a superconducting magnet. 
+
+\textbf{PostProcessorHeatBalance} and \textbf{PostProcessorQuenchVelocity} inherit from \textbf{PostProcessor} that stores a magnetic field map and a list of quenched fronts. Each quench front is a separate class object of \textbf{QuenchFront} storing its current quench front position. \textbf{PostProcessor} inherits after \textbf{QuenchDetect} the quench detection algorithm. It is described in Section~\ref{section:quench_detection_algorithm}. In addition, \textbf{QuenchDetect} in Python is presented in Appendix~\ref{appendix:python_quench_detection_algorithm}. In order to initiate \textbf{QuenchDetect}, the input data from external class are required: \textbf{Geometry} and \textbf{MaterialProperties}. \textbf{PostProcessor} also inherits from the internal class \textbf{Plots} allowing for saving the results as figures and text files.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!20, text centered, text=black, text width=7cm, scale=0.8]
+    \tikzstyle{cloud} = [rectangle, draw=black, rounded corners, fill=red!20, text centered, text=black, text width=5.35cm, scale=0.8]
+    \tikzstyle{myarrow}=[->, >=open triangle 90, -latex']
+    
+    % blocks
+    \node (PostProcessor) [abstract, rectangle split, rectangle split parts=2, text width=5.5cm,node distance=3cm]
+        {
+            PostProcessor \nodepart{second} \footnotesize \begin{compactitem} \item stores list of quenched fronts, \item stores magnetic winding map. \end{compactitem}
+        };
+    \node (AuxNode01) [text width=4cm, below of=PostProcessor, node distance=2.0cm] {};
+    \node (PostProcessorHeatBalance) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=4cm]
+        {
+            PostProcessorHeatBalance \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state in a single winding. \end{compactitem}
+        };
+    \node (PostProcessorQuenchVelocity) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=4cm]
+        {
+            PostProcessorQuenchVelocity \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state in multiple windings, \item retrieves current from APDL files. \end{compactitem}
+        };
+    \node (QuenchFront) [cloud, rectangle split, rectangle split parts=2, right of=PostProcessor, node distance=7.1cm]
+        {
+            QuenchFront \nodepart{second} \footnotesize \begin{compactitem} \item gives QuenchFront objects appended to quench front list. \end{compactitem}
+        };   
+    \node (AuxNode02) [text width=4cm, above of=PostProcessor, node distance=1.8cm] {};
+    \node (Plots) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode02, node distance=4cm]
+        {
+            Plots \nodepart{second} \footnotesize \begin{compactitem} \item makes plots and writes down text files about resistive voltage and quench state. \end{compactitem}
+        };  
+    \node (QuenchDetect) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode02, node distance=4.0cm]
+        {
+            QuenchDetect \nodepart{second} \footnotesize \begin{compactitem} \item detects quench. \end{compactitem}
+        };
+    \node (AuxNode03) [text width=4cm, above of=QuenchDetect, node distance=1.8cm] {};
+    \node (Geometry) [cloud, rectangle split, rectangle split parts=2, left of=AuxNode03, node distance=3cm]
+        {
+            Geometry \nodepart{second} \footnotesize \begin{compactitem} \item gives 1D coil geometry and position of real APDL nodes. \end{compactitem}
+        };    
+    \node (MaterialProperties) [cloud, rectangle split, rectangle split parts=2, right of=AuxNode03, node distance=3.2cm]
+        {
+            MaterialProperties \nodepart{second} \footnotesize \begin{compactitem} \item calculates critical temperature $T_\text{c}$. \end{compactitem}
+        };    
+
+    % lines and arrows
+    \draw[myarrow] ([xshift=+1cm]PostProcessor.south west) -- ++(0,-0.15) -| ([xshift=-0.5cm]PostProcessorHeatBalance.north);
+    \draw[myarrow] ([xshift=-1cm]PostProcessor.south east) -- ++(0,-0.15) -| (PostProcessorQuenchVelocity.north);
+    \draw[myarrow] (Plots.south) -- ++(0,-0.15) -| ([xshift=+1cm]PostProcessor.north west);
+    \draw[myarrow] (QuenchDetect.south) -- ++(0,-0.25) -| ([xshift=-1cm]PostProcessor.north east);
+    \draw[myarrow] (MaterialProperties.south) -- ++(0,-0.25) -| ([xshift=-2cm]QuenchDetect.north east);
+    \draw[myarrow] (Geometry.south) -- ++(0,-0.25) -| ([xshift=+2cm]QuenchDetect.north west);
+    \draw[myarrow] (QuenchFront.west) -- (PostProcessor.east);
+    
+    \end{tikzpicture}
+    \caption{Class diagram of the module postprocessor.}
+    \label{fig:postprocessor_oop}
 \end{figure}

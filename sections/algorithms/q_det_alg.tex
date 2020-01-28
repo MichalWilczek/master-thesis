@@ -1,5 +1,5 @@
 
-When a multi-strand thermal quench problem is analysed, a quenched zone belonging to one winding heats up the neighbouring ones across the insulation layer. As shown in Fig.~\ref{fig: quench_propagation_heat_flux} the heat flux $\vec{\phi_\text{q}}$ is directed towards the non-quenched neighbouring windings placed outside of a~red circle.
+When a multi-strand thermal quench problem is analysed, a quenched zone belonging to one winding heats up the neighbouring ones across the insulation layer. As shown in Fig.~\ref{fig: quench_propagation_heat_flux} the heat flux $\vec{\phi_\text{q}}$ is directed towards the non-quenched neighbouring windings placed outside of a~red, dashed circumference. Therefore, in order to account for the transverse quench propagation, it is required to create an algorithm that detects the temperature above the~critical temperature, $T_\text{c}$ in windings where the~quench has not occurred, yet. In detail, the~algorithm detects quenches and initiates a new quench front propagation when the~temperature outside of the~quenched zone exceeds the~critical temperature of a superconductor. In other words, it is responsible for a turn-to-turn propagation across the~insulation layer between different windings.
 
 \begin{figure}[H]
     \centering
@@ -68,8 +68,6 @@ When a multi-strand thermal quench problem is analysed, a quenched zone belongin
     \label{fig: quench_propagation_heat_flux}
 \end{figure}
 
-Therefore, it is required to create an algorithm that detects the temperature above the~critical temperature, $T_\text{c}$ in windings where the~quench has not occurred, yet. In detail, the~algorithm detects quenches and initiates a new quench front propagation when the~temperature outside of the~quenched zone exceeds the~critical temperature of a superconductor. In other words, it is responsible for a turn-to-turn propagation across the~insulation layer between different windings.
-
 Provided that searching starts at node $N$, winding number is $W$, magnetic field strength of the winding $W$ is $B_W$, node temperature is $T_N$ and critical temperature of related winding is $T_{\text{c},}$, the problem is solved as described in Algorithm \ref{alg:quench_detection}.
 
 \begin{algorithm}[H]
@@ -78,8 +76,8 @@ Provided that searching starts at node $N$, winding number is $W$, magnetic fiel
     \begin{algorithmic}[1]
     \STATE \textbf{for} $N$ not quenched \textbf{do}
     \STATE \hspace{0.5cm} check the winding $W$ which node $N$ belongs to
-    \STATE \hspace{0.5cm} assign magnetic field $B_W$ of given winding $W$
-    \STATE \hspace{0.5cm} calculate $T_{\text{c},W}$ for given magnetic field $B_W$
+    \STATE \hspace{0.5cm} assign magnetic field $B_W$ of the winding $W$
+    \STATE \hspace{0.5cm} calculate $T_{\text{c},W}$ for the magnetic field $B_W$
     \STATE \hspace{0.5cm} \textbf{if} $T(N) > T_{\text{c},}$
     \STATE \hspace{1.0cm} assign node $N$ to a list of newly quenched nodes
     \end{algorithmic}

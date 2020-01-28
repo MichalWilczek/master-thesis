@@ -1,5 +1,5 @@
 
-Most of the data about the skew quadrupole is presented in Section~\ref{section: 1d_quench_propagation_geometry}. Fig.~\ref{fig:skew_quad_transversal_cross_section} shows the transversal cross-section of one coil of the skew quadrupole. The coil is enclosed within an area of 24.5x27.3~mm covered with a 1 mm-thick ground insulation layer apart from the~insulation between each winding described in Section~\ref{section: 1d_quench_propagation_geometry}. The~ground insulation on the~internal side of a~coil is thinner and equal to 0.15~mm.
+Most of the data about the skew quadrupole is presented in Section~\ref{section: 1d_quench_propagation_geometry}. Figure~\ref{fig:skew_quad_transversal_cross_section} shows the transversal cross-section of one coil of the skew quadrupole. The coil is enclosed within an area of 24.5x27.3~mm covered with a 1 mm-thick ground insulation layer. The ground insulation is made of BT-S2, being a mixture of resin and S2-glass provided by the Arisava company~\cite{arisawa_company}. The~thickness of the~ground insulation on the~internal side of a~coil is lower and equal to 0.15~mm.
 
 \begin{figure}[H]
     \centering
@@ -16,7 +16,7 @@ Most of the data about the skew quadrupole is presented in Section~\ref{section:
     \label{fig:skew_quad_transversal_cross_section}
 \end{figure}
 
-The remaining dimensions of the coil are shown in its top view in Fig.~\ref{fig:skew_quad_top_view}. In total, the~coil is approximately 500~mm-long and 200~mm-wide.
+The remaining dimensions of the coil are shown in its top view in Fig.~\ref{fig:skew_quad_top_view}.
 
 \begin{figure}[H]
     \centering
@@ -36,7 +36,7 @@ The remaining dimensions of the coil are shown in its top view in Fig.~\ref{fig:
         \draw[black] (-3.4,-2.25) -- (-3,-2); 
         
     \end{tikzpicture}
-    \caption{Top view of a skew quadrupole wrapped with the grounding insulation~\cite{samuele_mariotto_mails}.}
+    \caption{Top view of a skew quadrupole wrapped with the ground insulation~\cite{samuele_mariotto_mails}.}
     \label{fig:skew_quad_top_view}
 \end{figure}
 
@@ -69,7 +69,7 @@ As shown in Fig.~\ref{fig:winding_arrangement_cross_section}, each coil has 29 t
     \label{fig:winding_arrangement_cross_section}
 \end{figure}
 
-The winding scheme is shown in Fig.~\ref{fig:winding_scheme_cross_section}. The winding~1 is placed at the bottom left of the 2D cross-section. The last winding number 754 is placed further in the \textit{x}-direction. The~\nth{2} half of the coil is a~mirror reflection of the presented winding scheme.
+The winding scheme is shown in Fig.~\ref{fig:winding_scheme_cross_section}. The winding~1 is placed at the bottom left of the 2D cross-section. The last winding number 754 is placed further in the \textit{x}-direction. The~\nth{2} half of the coil is a~mirror reflection of the presented winding scheme.~\cite{marco_prioli_mails}
 
 \begin{figure}[H]
 \centering
@@ -105,10 +105,10 @@ The winding scheme is shown in Fig.~\ref{fig:winding_scheme_cross_section}. The 
     \label{fig:winding_scheme_cross_section}
 \end{figure}
 
-Unlike in the analyses with a single strand presented in previous chapters, when a multi-strand thermal simulation of a magnet is considered, it is important to specify its winding scheme because the windings interact with each other thermally across the insulation layer. The general parameters of the skew quadrupole are summarised in Table~\ref{table:skew_quad_params_table}. Four coils of the magnet are connected in series and powered by a single power converter. The coil length, being a quarter of the total strand length of the entire magnet, is more than 800~m. It is a very large number for thermal quench simulations, as mentioned in Section~\ref{section: 1D_quench_propagation_conclusions}. The~operating current of the skew quadrupole is $I=182~\text{A}$.
+Unlike in the analyses with a single strand presented in previous chapters, when a multi-strand thermal simulation of a magnet is considered, it is important to specify its winding scheme because the windings interact with each other thermally across the insulation layer. The general parameters of the skew quadrupole are summarised in Table~\ref{table:skew_quad_params_table}. Four coils of the magnet are connected in series and powered by a single power converter. The coil length, being a quarter of the total strand length of the entire magnet, is more than 812~m. It is a very large number for thermal quench simulations, as mentioned in Section~\ref{section: 1D_quench_propagation_conclusions}. The~operating current of the skew quadrupole is $I=174~\text{A}$.
 
 \begin{table}[H]
-    \caption{Geometrical parameters of the skew quadrupole \cite{marco_prioli_mails, hl_lhc_tech_design_report_v01}.}
+    \caption{Geometrical parameters of the skew quadrupole \cite{hl_lhc_tech_design_report_v01, marco_prioli_mails}.}
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
@@ -119,8 +119,8 @@ Unlike in the analyses with a single strand presented in previous chapters, when
     parameter & value & unit \\
     \hline
     number of circuits & 1 & [-] \\
-    coil length & 812 & [m] \\
-    operating current & 182 & [A] \\
+    $L_\text{coil}$ & 812 & [m] \\
+    $I_\text{operating}$ & 174 & [A] \\
     \hline 
     \end{tabular}
     \end{center}  

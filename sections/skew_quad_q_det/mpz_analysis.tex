@@ -1,19 +1,18 @@
 
 \subsection{Motivation}
 
-In the simulations of the skew quadrupole, the direct energy deposition from the spot heater to the coil described in Section~\ref{section:quench_measurements} is not analysed. The reasons for that are as follows: 
+The heat transfer from the spot heater to the coil described in Section~\ref{section:quench_measurements} is not modelled in this thesis. The reasons for that are as follows: 
 
 \begin{enumerate}
-    \item The spot heater is placed outside of the grounding insulation. The distance between the spot heater and the winding being equal to more than a millimetre requires an~accurate simulation of the insulation layer. 
-    \item The material of the grounding insulation is BT-S2 from the Arisava company~\cite{arisawa_company}. It is a mixture of resin and S2 glass. Modelling this composite as G10 would lead to additional model approximations. 
-    \item The heat transfer from the spot heater to the coil is affected by additional parameters including a helium bath and the gluing process of the heater to the insulation. 
+    \item The spot heater is placed outside of the ground insulation. The distance between the spot heater and the winding equal to more than a millimetre requires an~accurate simulation of the heat transfer in that zone. 
+    \item The ground insulation, made of a different material, as G10 adds an additional approximation to the model. 
+    \item The heat transfer from the spot heater to the coil is affected by additional parameters including thermal properties of helium bath and methods of gluing the heater to the external side of the ground insulation.
+    \item The main goal of the skew quadrupole quench simulation is to predict the evolution of design quantities for the operation of a magnet once the minimum propagation zone is transitioned. 
 \end{enumerate}
-
-The main goal of the skew quadrupole quench simulation is to predict the evolution of design quantities for the operation of a magnet once the minimum propagating zone is transitioned. As discussed in Section~\ref{section:magnet_design_key_parameters} the key design parameters for a magnet are: $(i)$~resistive voltage and $(ii)$ hot spot temperature.
 
 \subsection{Simulation}
 
-In order to find a minimum propagating zone, a 1D strand with the insulation layer was simulated with a standard ANSYS approach. The geometric parameters of the model were identical with the ones described in Table~\ref{table: quench_velocity_map_input_parameters_geometry}. Table~\ref{table: mpz_analysis_input_parameters} shows the modified parameters with respect to the previous section aiming at preparing a quench velocity map. The~minimum propagating zone study is only performed for an operating current of $I=86~\text{A}$. It corresponds to current at which the quench is initiated. The energy from the spot heater is directly transmitted to the bottom winding in the layer 13 of the coil, as illustrated in Fig.~\ref{fig:spot_heater_placement}. Therefore, the magnetic field, that the winding was subjected to in the operating conditions, was analysed in this section. The maximum temperature $T_\text{max}$ is chosen to be close to the critical temperature of the strand approximately equal to $T_\text{c} \approx 9~\text{K}$.
+In order to find the minimum propagating zone, a 1D standard ANSYS analysis is conducted with insulation and no resin. The geometric parameters of the model are identical with the ones described in Table~\ref{table: quench_velocity_map_input_parameters_geometry}. The remaining parameters are summarised in Table~\ref{table: mpz_analysis_input_parameters}. The~analysis is only performed for an operating current of $I=86~\text{A}$ at which the quench is initiated. The initially quenched winding is presented in Fig.~\ref{fig:spot_heater_placement}. The magnetic field in the simulation corresponds to the interpolated value of the initially quenched winding in Fig.~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys}. The maximum temperature $T_\text{max}$ is chosen to be close to the critical temperature of the strand approximately equal to $T_\text{c} \approx 9~\text{K}$.
 
 \begin{table}[H]
     \caption{Input parameters for boundary and initial conditions.} 
@@ -32,22 +31,22 @@ In order to find a minimum propagating zone, a 1D strand with the insulation lay
         $T_\text{max}$ & 10.0 & [K] \\
         $\alpha$ & 0.223 & [m] \\   
         $t_\text{total}$ & 0.1 & [s] \\
-        time step range & $[10, 100]$ & $[\upmu \text{s}]$ \\
+        $t_\text{step range}$ & $[10, 100]$ & $[\upmu \text{s}]$ \\
         \hline 
         \end{tabular}
     \end{center}  
      \label{table: mpz_analysis_input_parameters} 
  \end{table}
  
-With an accuracy of less than 5~mm, it was deduced that the minmimum propagating zone is equal to $L_\text{quench, init}=20~\text{mm}$. The temperature profile of the final result is shown in Fig.~\ref{fig: init_gauss_temp_distr_mpz}. 
+With an accuracy of less than 5~mm, it is deduced that the minmimum propagating zone is equal to $L_\text{quench, init}=20~\text{mm}$. The temperature profile of the final result is shown in Fig.~\ref{fig: init_gauss_temp_distr_mpz}. As depicted in Table~\ref{table: mpz_analysis_results}, the initial energy deposition in the strand (without taking into account the insulation layer) is less than one Joule. It is a relatively small value with respect to the total energy deposited by the capacitor accounting for approximately $E_\text{C}=2.5~\text{J}$ (see Table~\ref{table:rc_circuit_characteristics}).
  
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.6\linewidth, 
-          height = 4.5cm,
+          width=0.7\linewidth, 
+          height = 4.0cm,
           xlabel={$L_\text{winding},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
@@ -62,8 +61,6 @@ With an accuracy of less than 5~mm, it was deduced that the minmimum propagating
     \label{fig: init_gauss_temp_distr_mpz}
 \end{figure}
 
-As depicted in Table~\ref{table: mpz_analysis_results}, the initial energy deposition in the strand (without taking into account the insulation layer) is less than a Joule. It is a relatively small value with respect to the total energy deposited from the capacitor accounting for approximately $E_\text{C}=2.5~\text{J}$ (see Table~\ref{table:rc_circuit_characteristics}).
-
 \begin{table}[H]
     \caption{Results for MPZ analysis.} 
     \vspace{-1.em} 
@@ -75,7 +72,7 @@ As depicted in Table~\ref{table: mpz_analysis_results}, the initial energy depos
         \hline
         parameter & value & unit \\
         \hline
-        $E_\text{init, strand}$ & 15 & [mJ] \\
+        $E_\text{init, winding}$ & 15 & [mJ] \\
         $L_\text{quench, init}$ & 0.02 & [m] \\
         \hline 
         \end{tabular}

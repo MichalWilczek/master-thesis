@@ -1,8 +1,7 @@
-
 \subsection{Geometry}
 \label{subsection:algorithms_geometry}
 
-Creating a CAD geometry where a~single strand domain is wound $n$ times would be a~complicated task. Therefore, every winding is considered to be a~separate domain, as shown in Fig. \ref{fig:winding_geom_scheme}. The winding ends marked in green are coupled with the neighbouring ones thermally and electrically, i.e. the coupled nodes are characterised by the same temperature and voltage. With such an approach, one can easily create multi-strand magnet geometries. Moreover, by specifying which windings are coupled together, with the same numerical domain, one can also analyse magnets with a different winding scheme.
+Creating a 3D magnet geometry in a~CAD tool in which a~single cable is wound $n$ times is a~complicated task because the model must take into account a relative position of one winding with respect to another. Therefore, every winding is considered to be a~separate domain in prepared ANSYS models with winding jumps, as shown in Fig. \ref{fig:winding_geom_scheme}. The green lines depict the electro-thermal coupling of windings according to their winding order. With such an approach, one can easily create multi-strand magnet geometries. Moreover, by specifying which windings are coupled together, with the same numerical domain, one can also analyse magnets with a different winding scheme.
 
 \begin{figure}[H]
 \centering
@@ -21,16 +20,16 @@ Creating a CAD geometry where a~single strand domain is wound $n$ times would be
     \draw[black, ->] (-3.5,1) -- (-3.5,1.5);
     \draw[black, ->] (-3.5,1) -- (-3,1);
     
-    \node[scale = 0.8] at (-3.75,0.8) {$\vec{x}$};
-    \node[scale = 0.8] at (-2.9,1.2) {$\vec{y}$};
-    \node[scale = 0.8] at (-3.7,1.65) {$\vec{z}$};
+    \node[scale = 0.8] at (-3.75,0.8) {$x$};
+    \node[scale = 0.8] at (-2.9,1.2) {$y$};
+    \node[scale = 0.8] at (-3.7,1.65) {$z$};
 
 \end{tikzpicture}
 \caption{Domain representation with multiple windings.}
 \label{fig:winding_geom_scheme}
 \end{figure}
 
-Every winding can have an external homogenised insulation layer represented as a~transverse one-dimensional element, as shown in Fig.~\ref{fig: insulation_coupling}. If multiple windings are created, the~end nodes of each insulation layer is thermally coupled with the neighbouring windings. The~model assumes no diagonal heat propagation across the insulation layer, i.e. the~windings are not diagonally coupled. The insulation elements marked in blue are represented by the LINK33 element whereas the composite strand in yellow -- LINK68. LINK68 is a~uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule effect. Similarly to the element LINK33, it is used for steady-state and transient numerical problems. In standard ANSYS simulations, the Joule effect is implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 in quench velocity-based approach allows for omitting this step since the solver computes the heat source by an~internal routine based on material property state. The element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
+Every winding can have an external homogenised insulation layer represented as a~transverse one-dimensional element, as shown in Fig.~\ref{fig: insulation_coupling}. If multiple windings are created, the~end nodes of each insulation layer are thermally coupled with the neighbouring insulation elements. The~model assumes no diagonal heat propagation across the insulation layer, i.e. the~windings are not diagonally coupled. The insulation elements marked in blue are represented by the LINK33 element whereas the composite strand in yellow -- LINK68. LINK68 is a~uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule heating. LINK68 is used for steady-state and transient simulations. In standard ANSYS simulations, the Joule heating is implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 in the quench velocity-based approach allows for omitting this step since the solver computes the heat source by an~internal routine based on the material property state. Thus, the element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
 
 \begin{figure}[H]
     \centering
@@ -102,7 +101,7 @@ Every winding can have an external homogenised insulation layer represented as a
 
 \subsection{Mesh Generation}
 
-The~mesh generation scheme for a~magnet geometry is illustrated in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The~mesh should be distributed over so called "nodal planes" which are always perpendicular to the~normal vector $\vec{n}$ of a directional spline. The directional spline is a curve that represents a final shape of a designed coil. One nodal plane with nine windings is presented in Fig.~\ref{fig: insulation_coupling}. In order to generate mesh, a~longitudinal number of divisions has to be specified. When the insulation is considered, the number of divisions across the insulation must be defined as well. Each insulation element is characterised by the same volume. 
+The~mesh generation scheme for a~magnet geometry is illustrated in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The~mesh should be distributed over so called "nodal planes" which are always perpendicular to the~normal vector $\vec{n}$ of a directional spline. The directional spline is a curve that represents a final shape of the coil. One nodal plane with nine windings is presented in Fig.~\ref{fig: insulation_coupling}. In order to generate mesh, a~longitudinal number of divisions has to be specified. When the insulation is considered, the number of divisions across the insulation must be defined as well. Each insulation element is characterised by the same volume. 
 
 \begin{figure}[H]
     \centering
@@ -137,44 +136,3 @@ The~mesh generation scheme for a~magnet geometry is illustrated in Fig.~\ref{fig
     \caption{Multidimensional mesh generation.}
     \label{fig: mesh_generation_in_multidimensional_case}
 \end{figure}
-
-
-% In Chapter~\ref{chapter: 1d_quench_propagation_modelling}, a uniform temperature was assumed in the cross-section of a strand which allowed for modelling the coil with 1D~elements. If such an assumption is not made, the~composite strand is modelled in 2D or 3D. In such a case, in the~mapping algorithm, the mesh is generated by specifying 2D nodal planes  uniformly distributed in a longitudinal direction of the coil, as presented in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The planes are always perpendicular to the normal vector $\vec{n}$ of a directional spline. 
-
-% As illustrated in Fig.~\ref{fig:ansys_python_mapping scheme_nodes}, 2D nodal planes~$P_\text{n}$ are packed into a set of imaginary nodes~$N_\text{n}$ in the external routine calculating the propagation of quench. Each imaginary node~$N$ represents one plane~$P$. The position of the imaginary node~$N$ in space is an average position of all the nodes belonging to the plane~$P$. The creation of imaginary nodes serves for facilitating the assignment of quenched zones in time by an external routine. This process is performed in order to estimate the quench propagation only in the longitudinal direction.
-
-% \begin{figure}[H]
-% \centering
-% \begin{tikzpicture}[scale = 0.8]
-
-%     \foreach \t in {0,1,...,3}
-%     \filldraw[black] (0,{\t}) circle (5pt);
-%     \foreach \t in {0,1,...,3}
-%     \filldraw[black] (1.5,{\t}) circle (5pt);
-%     \foreach \t in {0,1,...,3}
-%     \filldraw[black] (3.5,{\t}) circle (5pt);
-%     \draw[red] (-0.35,-0.35) rectangle (0.35,3.35);
-%     \draw[red] (1.15,-0.35) rectangle (1.85,3.35);
-%     \draw[red] (3.15,-0.35) rectangle (3.85,3.35);
-%     \draw[thick,->] (2,1.5) -- (3.05,1.5);
-    
-%     \node[scale = 0.8] at (2.5, 1.8) {(...)};
-%     \node[red, scale = 0.8] at (0, -0.7) {$\text{P}_1$};
-%     \node[red, scale = 0.8] at (1.5, -0.7) {$\text{P}_2$};
-%     \node[red, scale = 0.8] at (3.5, -0.7) {$\text{P}_\text{n}$};
-    
-%     \draw[ultra thick,->, cyan] (4,1.5) -- (5,1.5);
-%     \filldraw[red] (5.5,1.5) circle (5pt);
-%     \filldraw[red] (6.5,1.5) circle (5pt);
-%     \draw[thick,->] (6.8,1.5) -- (7.3,1.5);
-%     \filldraw[red] (7.65,1.5) circle (5pt);
-    
-%     \node[scale = 0.8] at (7.05, 1.8) {(...)};
-%     \node[red, scale = 0.8] at (5.5, 1) {$\text{N}_1$};
-%     \node[red, scale = 0.8] at (6.5, 1) {$\text{N}_2$};
-%     \node[red, scale = 0.8] at (7.65, 1) {$\text{N}_\text{n}$};
-
-% \end{tikzpicture}
-% \caption{Schematic of node assignment to imaginary nodes.}
-%     \label{fig:ansys_python_mapping scheme_nodes}
-% \end{figure}

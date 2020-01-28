@@ -1,26 +1,22 @@
 
-In this thesis, there were two analyses conducted for a 1D quench propagation: 
+In this chapter, there are two studies conducted for a quench propagation in a 1D strand: 
 
 \begin{enumerate}
-    \item 1D strand analysis without insulation layer,
-    \item 1D strand analysis with an external insulation layer.
+    \item Analysis of a bare composite strand.
+    \item Analysis of the composite strand with insulation and epoxy resin.
 \end{enumerate}
 
 For both cases, the mesh density study is conducted. The following assumptions are made in the simulations: 
 
 \begin{enumerate}
     \item There is no helium cooling.
-    \item Temperature in the winding's cross-sectional area is uniform.
+    \item Temperature in the cross-section of a composite strand is uniform.
     \item Turn-to-turn propagation does not occur between different windings of a coil.
-    \item When the insulation layer is considered, the longitudinal heat transfer inside the insulation is neglected.
+    \item When the insulation and epoxy resin are considered, the longitudinal heat transfer outside of the bare strand is neglected.
 \end{enumerate}
 
-The \nth{2} and the \nth{3} assumptions allow one to consider this problem as a 1D longitudinal heat propagation. When the insulation layer is analysed, because of the \nth{4} assumption, the analysis becomes a 1D+1D heat propagation problem. It is further explained in Section \ref{section: 1D_quench_propagation_with_insulation}.
-
-In presented thermal problems, the heat balance partial differential equation is solved as
+The assumptions two and three allow one to consider the quench simulation as a 1D longitudinal heat propagation. When the strand is analysed with an external insulation and epoxy resin, the analysis becomes a 1D+1D heat conduction problem because of the assumption four. It is further explained in Section \ref{section: 1D_quench_propagation_with_insulation}. In presented thermal problems, the heat balance partial differential equation is solved as
 \begin{equation}
-    \gamma c_p \frac{\partial T}{\partial t} = \frac{\partial}{\partial \vec{r}}[k \frac{\partial T}{\partial \vec{r}}] + q_v,
+    \gamma c_p \frac{\partial T}{\partial t} = \frac{\partial}{\partial \vec{r}}[k \frac{\partial T}{\partial \vec{r}}] + q_0,
 \end{equation}
-where $T$ -- temperature varying in time and space defined by a position vector $\vec{r}$, $\gamma$ -- mass density of a material, $c_p$ -- specific heat of a material, $k$ -- thermal conductivity of a material, $q_v$~-- external heat source. The~external heat source, $q_v$ stands for the Joule effect.
-
-One has to remember that the domain is thermally anisotropic when the superconducting strand is analysed with an external insulation layer. In the strand, the specific heat capacity, the thermal conductivity as well as the heat source are a function of both temperature and magnetic field. In the insulation domain, the heat source does not apply and material properties only vary with change of temperature.
+where $T$ -- temperature varying in time and space defined by a position vector $\vec{r}$, $\gamma$ -- mass density of a material, $c_p$ -- specific heat of a material, $k$ -- thermal conductivity of a material, $q_v$~-- external heat source (Joule heating). One has to remember that the domain is thermally anisotropic when the superconducting strand is analysed with an external insulation layer and epoxy resin. Specific heat capacity, thermal conductivity, and heat source are a function of both temperature and magnetic field in the strand. Outside of the strand, materials are only a function of temperature. Moreover, the heat source is only applied in the strand.

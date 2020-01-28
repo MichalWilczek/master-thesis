@@ -1,7 +1,7 @@
 
 \subsection{Additional Input Parameters}
 
-The quench is detected 20~ms after the threshold voltage $V_\text{th}$ is reached (see Table~\ref{table:qds_characteristics}). At that moment, ANSYS solves a discharge of an RL-circuit with an initially applied current of $I=86~\text{A}$. The model takes into account the nonlinear inductance of  the magnet presented in Fig.~\ref{fig:differential_inductance}.
+After the threshold voltage $V_\text{th}$ and the time delay $t_\text{delay}$ are reached, the quench is detected, as discussed in Section~\ref{section:quench_measurements}. At that moment, ANSYS solves a discharge of an RL-circuit with an initially applied current of $I=86~\text{A}$. The model takes into account the nonlinear inductance of the skew quadrupole presented in Fig.~\ref{fig:differential_inductance}.
 
 \begin{figure}[H]
     \centering
@@ -12,7 +12,7 @@ The quench is detected 20~ms after the threshold voltage $V_\text{th}$ is reache
           grid=both, 
           grid style={dashed,gray!30},
           width=0.7\linewidth, 
-          height = 5cm,
+          height = 4.0cm,
           xlabel={$I,~\text{A}$},
           ylabel={$L_\text{d},~\text{H}$},
           xlabel style={below right},
@@ -29,7 +29,7 @@ The quench is detected 20~ms after the threshold voltage $V_\text{th}$ is reache
     \label{fig:differential_inductance}
 \end{figure}
 
-The circuit represented in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme} is solved with additional electrical elements in ANSYS -- CIRCU124. Resistors and inductors modelled by CIRCU124 elements have voltage as a~single degree of freedom~\cite{ansys_element_manual}. The non-linear inductor is modelled by updating its inductance at each communication point between Python and ANSYS. Table~\ref{table: skew_quad_discharge_input_params} depicts additional simulation parameters for the discharge phase of the magnet. 
+The circuit represented in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme} is solved with additional electrical elements in ANSYS referred to as CIRCU124. Voltage is a single degree of freedom of the resistors and inductors modelled by CIRCU124 elements~\cite{ansys_element_manual}. The non-linear inductance is updated at at each communication point $t_\text{com}$ between Python and ANSYS together with the quench position in time. Table~\ref{table: skew_quad_discharge_input_params} depicts additional simulation parameters for the discharge phase of the magnet. The quench velocity-based approach is only needed until the entire coil quenches. Therefore, after that moment, the communication time step is increased to $t=0.2~\text{s}$. The remaining communication time steps are required for updating the inductance of a magnet and extracting the value of current. Updating varying material properties, being a function of magnetic field, is time-consuming for 754 windings. Thus, it is only conducted if the current in the magnet drops by $I=10~\text{A}$ meaning that the magnetic field also decreases. It is assumed that the magnet is fully discharged if the transport current drops below $I=8~\text{A}$, i.e. if the current decreased by approximately 90\% of its initial value.
 
 \begin{table}[H]
     \caption{Input parameters in the analysis of the skew quadrupole discharge.} 
@@ -42,8 +42,8 @@ The circuit represented in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme} 
         \hline
         parameter & value & unit \\
         \hline
-        communication time step before the entire coil quenches & 0.0025 & [s] \\
-        communication time step after the entire coil quenches & 0.2 & [s] \\ 
+        $t_\text{com}$ before the entire coil quenches & 0.0025 & [s] \\
+        $t_\text{com}$ after the entire coil quenches & 0.2 & [s] \\ 
         material properties update criterion & 10 & [A] \\ 
         magnet discharge criterion & 8 & [A] \\
         \hline 
@@ -52,25 +52,23 @@ The circuit represented in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme} 
      \label{table: skew_quad_discharge_input_params} 
  \end{table}
 
-The quench velocity-based approach is only needed until the entire coil quenches. Therefore, after that moment, the communication time step is increased to $t=0.2~\text{s}$. The remaining communication time steps are required for updating the inductance of a magnet and extracting the value of current. Updating varying material properties, being a function of magnetic field, for 754 windings is a time-consuming process. Thus, it is only conducted if the current in the magnet drops by $I=10~\text{A}$ meaning that the magnetic field also decreases. It is assumed that the magnet is fully discharged if the transport current drops below $I=8~\text{A}$, i.e. if the current decreased by 90\% of its initial value.
-
 \subsection{Results}
 
-Fig.~\ref{fig: magnet_discharge_v_res} presents the evolution of resistive voltage $V_\text{res}$ in time. The higher volume ratio is considered in the model, the lower peak resistive voltage is obtained. Moreover, the peak voltage occurs faster with lower $c_\text{volume}$. In principle, the~peak voltage corresponds to a~moment when both longitudinal and turn-to-turn quench propagation result in a quench of the entire coil. In Fig.~\ref{fig: magnet_discharge_v_res}, one can also notice sharp changes of resistive voltage which occur in gradually increasing time periods. These changes are due to an update of material properties at each $I=10~\text{A}$.
+Fig.~\ref{fig: magnet_discharge_v_res} presents the evolution of the resistive voltage $V_\text{res}$ in time. The more resin is considered in the model, the lower peak resistive voltage is obtained. Moreover, the peak voltage occurs faster with lower $u_\text{resin}$. In principle, the~peak voltage corresponds to a~moment when both longitudinal and turn-to-turn quench propagation result in a quench of the entire coil. In Fig.~\ref{fig: magnet_discharge_v_res}, one can also notice sharp changes of resistive voltage which occur in gradually increasing time periods. These changes are due to an update of material properties every 10~A.
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
-          height = 6.5cm,
-          xlabel={$\text{Time},~\text{s}$},
+          width=0.7\linewidth, 
+          height = 4.0cm,
+          xlabel={$t,~\text{s}$},
           ylabel={$V_\text{res},~\text{V}$},
           xmin=0.0,
           ymin=0.0,
           ymax=30.0,
-          legend pos = north east
+          legend pos = outer north east
           ]
           
           \addplot[green] table[x=time_delayed,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
@@ -82,9 +80,9 @@ Fig.~\ref{fig: magnet_discharge_v_res} presents the evolution of resistive volta
           \addplot[black, dashed] table[x=time,y=V_res,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
           
           \legend{
-          $c_\text{volume}=0.0$,
-          $c_\text{volume}=0.5$,
-          $c_\text{volume}=1.0$,
+          $u_\text{resin}=0.0$,
+          $u_\text{resin}=0.5$,
+          $u_\text{resin}=1.0$,
           measurements}
           
         \end{axis}
@@ -93,21 +91,21 @@ Fig.~\ref{fig: magnet_discharge_v_res} presents the evolution of resistive volta
     \label{fig: magnet_discharge_v_res}
 \end{figure}
 
-Every simulation results in an overestimation of the peak resistive voltage with respect to the measurements. It is directly connected to the change of coil resistance during the~discharge presented in Fig.~\ref{fig: magnet_discharge_resistance}. The higher resin volume is included in the model, the~lower coil resistance is obtained. It is an expected result because resin is an additional thermal capacitance meaning that the coil remains at a lower temperature. 
+Every simulation results in an overestimation of the peak resistive voltage with respect to the measurements. It is directly associated with the change of coil resistance during the~discharge presented in Fig.~\ref{fig: magnet_discharge_resistance}. The more resin is included in the model, the~lower coil resistance is obtained. Resin is an additional heat capacity meaning that the coil requires more energy to warm up. 
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
-          height = 6.5cm,
-          xlabel={$\text{Time},~\text{s}$},
+          width=0.7\linewidth, 
+          height = 4.0cm,
+          xlabel={$t,~\text{s}$},
           ylabel={$R_\text{coil},~\Upomega$},
           xmin=0.0,
           ymin=0.0,
           ymax=1.0,
-          legend pos = south east
+          legend pos = outer north east
           ]
 
           \addplot[green] table[x=time_delayed,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
@@ -119,9 +117,9 @@ Every simulation results in an overestimation of the peak resistive voltage with
           \addplot[black, dashed] table[x=time,y=Resistance,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
           
           \legend{
-          $c_\text{volume}=0.0$,
-          $c_\text{volume}=0.5$,
-          $c_\text{volume}=1.0$,
+          $u_\text{resin}=0.0$,
+          $u_\text{resin}=0.5$,
+          $u_\text{resin}=1.0$,
           measurements}
           
         \end{axis}
@@ -130,37 +128,37 @@ Every simulation results in an overestimation of the peak resistive voltage with
     \label{fig: magnet_discharge_resistance}
 \end{figure}
 
-The final temperature of the coil for every simulated case is shown in Fig.~\ref{fig: magnet_discharge_final_temperature}. The~temperature profile inside of a coil can be compared to a sinusoidal signal with a maximum amplitude of approximately $T=15~\text{K}$. The initially quenched winding is the only place with a distinct temperature difference. The initially quenched zone remained the place in the coil characterised by the highest temperature.
+The final temperature of the coil for every simulated case is shown in Fig.~\ref{fig: magnet_discharge_final_temperature}. In every model, the temperature oscillates in the range of approximately $T=20~\text{K}$ along the coil. The initially quenched winding is characterised by a higher temperature than the rest of the coil. The hot-spot remains in the zone where the heat impulse was initially deposited during the measurements.
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
-          height = 7.0cm,
-          xlabel={$L_\text{coil},~\text{m}$},
+          width=0.7\linewidth, 
+          height = 4.0cm,
+          xlabel={$\bar{x},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
           xmax=812.0,
           ymin=0.0,
           ymax=50.0,
-          legend pos = south east
+          legend pos = outer north east
           ]
 
           \addplot[green] table[x=METERS,y=case1,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
           
           \addplot[blue] table[x=METERS,y=case2,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
           
+          \addplot[red] table[x=METERS,y=case3,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
+          
           \addplot[black, dashed] table[x=METERS,y=T_init,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/final_magnet_temperature.csv}; 
           
-        %   \addplot[red] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
-          
           \legend{
-          $c_\text{volume}=0.0$,
-          $c_\text{volume}=0.5$,
+          $u_\text{resin}=0.0$,
+          $u_\text{resin}=0.5$,
+          $u_\text{resin}=1.0$,
           $T_\text{init}$
-        %   $c_\text{volume}=1.0$
           }
           
         \end{axis}
@@ -169,57 +167,57 @@ The final temperature of the coil for every simulated case is shown in Fig.~\ref
     \label{fig: magnet_discharge_final_temperature}
 \end{figure}
 
-The evolution of the hot spot temperature temperature in time is presented in Fig.~\ref{fig: magnet_discharge_hot_spot}. It can be concluded that the higher resin volume is taken into consideration, the lower hot spot temperature is obtained in the model. 
+The evolution of the hot-spot temperature in time is presented in Fig.~\ref{fig: magnet_discharge_hot_spot}. In each model one can observe that the hot-spot temperature remains relatively constant until $t \approx 0.4~\text{s}$. This period corresponds to the transverse heat propagation across the insulation when the turn-to-turn propagation does not occur, yet. In the region of $t \in (0.4, 2.0)~\text{s}$, the quench rapidly propagates longitudinally and transversely during which a large amount of energy is deposited in the coil while discharging the circuit. At $t \approx 2.0~\text{s}$ the entire coil is quenched in all three considered cases. The evolution of the hot-spot temperature quickly slows down  after that moment because: $(i)$ the transport current decreases with time, $(ii)$ the resistivity of copper decreases with the drop of magnetic field associated with the reduced current, $(iii)$ the heat capacity of all materials increases with rise of temperature. One can also observe that the hot-spot temperature decreases with a higher volume of resin in the coil. 
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
-          height = 5.0cm,
-          xlabel={$\text{Time},~\text{s}$},
-          ylabel={$T_\text{hot spot},~\text{K}$},
+          width=0.7\linewidth, 
+          height = 4.0cm,
+          xlabel={$t,~\text{s}$},
+          ylabel={$T_\text{hot-spot},~\text{K}$},
           xmin=0.0,
           ymin=0.0,
           ymax=60.0,
-          legend pos = south east
+          legend pos = outer north east
           ]
 
           \addplot[green] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
           
           \addplot[blue] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case2.csv}; 
           
-        %   \addplot[red] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
+          \addplot[red] table[x=time,y=Hot_spot,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case3.csv}; 
           
           \legend{
-          $c_\text{volume}=0.0$,
-          $c_\text{volume}=0.5$,
-        %   $c_\text{volume}=1.0$
+          $u_\text{resin}=0.0$,
+          $u_\text{resin}=0.5$,
+          $u_\text{resin}=1.0$
           }
           
         \end{axis}
     \end{tikzpicture}
-    \caption{Hot spot temperature evolution in time.}
+    \caption{Hot-spot temperature evolution in time.}
     \label{fig: magnet_discharge_hot_spot}
 \end{figure}
 
-The current discharge curves are presented in Fig.~\ref{fig: magnet_discharge_current}. The discharge occurs faster in all simulated cases with respect to the measurements. It is a result of a higher coil resistance compared to the measurements. Thus, the time constant (actually varying) in (\ref{eqn:variable_time_constant}) is higher and the current drop is quicker. 
+As presented in Fig.~\ref{fig: magnet_discharge_current}, the current discharge occurs faster in all simulated cases with respect to the measurements. It is a result of a higher coil resistance in the simulations compared to the measurements. Thus, the time constant in (\ref{eqn:variable_time_constant}) is higher and the current drops more quickly. In principle, the more resin is considered in the model, the more slowly the discharge occurs. 
 
-There is one additional analysis added to the plot in which the coil resistance is omitted. The communication time step, at which the inductance is updated, equals $t=0.0025~\text{s}$. The~ANSYS time step in this case is also lower and equal to $t=0.1~\text{ms}$. The higher precision is due to the fact that such a simulation (with already more accurate input parameters) is much faster with respect to the analysis of an entire coil domain. This analysis with no coil resistance represents a case when the magnet discharge is only dependent on the dump resistor of the energy extraction system.
+There is one additional analysis added to the plot in which the coil resistance is not included in the simulation, i.e. the magnet discharge is only dependent on the dump resistor of the energy extraction system. The analysis is less computationally demanding with respect to the previous simulations because it only solves an electrical circuit without any thermal dependence. The communication time window $t_\text{com}$, at which the inductance is updated, is equal to $t=0.0025~\text{s}$ during the entire simulation time. The~ANSYS time step is also lower and equal to $t=0.1~\text{ms}$. The difference in the drop of current between the measurements and this case indicates the influence of the coil resistance on the speed of the magnet discharge.
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
           no markers,
-          width=0.8\linewidth, 
-          height = 7.5cm,
-          xlabel={$\text{Time},~\text{s}$},
+          width=0.7\linewidth, 
+          height = 6.0cm,
+          xlabel={$t,~\text{s}$},
           ylabel={$I,~\text{A}$},
           xmin=0.0,
           ymin=0.0,
-          legend pos = north east
+          legend pos = outer north east
           ]
 
           \addplot[green] table[x=time_delayed,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/results_case1.csv}; 
@@ -233,9 +231,9 @@ There is one additional analysis added to the plot in which the coil resistance 
           \addplot[black, dashed] table[x=time,y=Current,col sep=comma] {sections/skew_quad_q_det/figures/skew_quad_analysis/measurements.csv}; 
 
           \legend{
-          $c_\text{volume}=0.0$,
-          $c_\text{volume}=0.5$,
-          $c_\text{volume}=1.0$,
+          $u_\text{resin}=0.0$,
+          $u_\text{resin}=0.5$,
+          $u_\text{resin}=1.0$,
           $R_\text{coil} = 0.0$,
           measurements}
           
@@ -245,5 +243,87 @@ There is one additional analysis added to the plot in which the coil resistance 
     \label{fig: magnet_discharge_current}
 \end{figure}
 
+\subsection{Computation Time of Skew Quadrupole Analysis}
 
+As depicted in Table~\ref{table:skew_quad_computation_time_summary}, the total computation time\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.} is different for every simulated case. In case of $u_\text{resin}=0.5$, the computation time is not presented because the analysis was conducted on a different calculation unit. Therefore, the clear comparison of the computation time is not possible. The creation of ANSYS geometry lasts 12 hours in every analysis because each winding is created separately together with its insulation elements. The optimisation of the geometry preparation is not proposed in this thesis. The material properties are updated nine times during the analysis which, in total, costs one additional hour. The ANSYS computation time is relatively constant in all cases with the speed rate of 10.8 hours for one second of the simulation. The co-simulation time depends strongly on the number of co-simulation signals. In principle, the time of the signal exchange is proportional to the number of quenched zones to assign in the coil. Right before the coil fully quenches, there are approximately 700 quenched zones to consider. Moreover, the co-simulation time includes the period of saving the analysis after each co-simulation time window and the ANSYS restarting process.
+
+\begin{table}[H]
+    \caption{Computation time summary.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ | c | c | c | c | c | }  
+        \hline
+        parameter & $u_\text{resin}=0.0$ & $u_\text{resin}=0.5$ & $u_\text{resin}=1.0$ & unit\\
+        \hline
+        geometry creation time & 12 & 12 & 12 & [h] \\
+        material update time & 1 & 1 & 1 & [h] \\
+        ANSYS computation time & 54 & - & 63 & [h] \\
+        co-simulation time & 52 & - & 80 & [h] \\
+        number of co-simulation signals & 494 & 637 & 722 & [-] \\
+        \hline 
+        total computation time & 119 & - & 156 & [h] \\
+        \hline 
+        $t_\text{simulation}$ & 5.0 & 5.55 & 5.8 & [s] \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table:skew_quad_computation_time_summary} 
+\end{table}
+
+It should be clarified that the ANSYS computation time will last longer with a decreased simulation time step $t_\text{step}$. The recommended time step for the quench velocity-based approach is $t_\text{step range} \in [0.1, 1]~\text{ms}$ being a lower range with respect to the applied time step. If a simulation without the quench velocity-based approach was considered, one would have to take into account a prolonged time for the creation of geometry being a function of a total mesh size of the model. Moreover, the ANSYS computation time would be even longer in this case because of a considerable rise in the number of degrees of freedom. 
+
+A possibility of improving the computation time in both the quench velocity-based approach and the standard simulation could rely on using the CERN High-Performance Computing (HPC) cluster. Nevertheless, the cluster application in solving quench propagation problems remains outside of the scope of this thesis.
+
+
+\subsection{Correction of Results}
+
+In the last step of the quench analysis, it is required to take into account the relative error associated with the quench velocity-based approach, as discussed in Chapter~\ref{chapter:quench_velocity_benchmarking}. An~estimation of corrected results of the peak resistive voltage and the hot-spot temperature are presented in Tables~\ref{table: skew_quad_general_remarks_res_voltage} and~\ref{table: skew_quad_general_remarks_hot_spot} respectively. For both parameters, it is assumed that the longitudinal mesh size is equal to 20~mm meaning that the error margin is higher with respect to the model of the skew quadrupole with an average mesh size of 15~mm. In the corrected value of the resistive voltage, one assumes a constant relative error independent of time. In case of the hot-spot temperature, the evolution of the error in time is included in the correction method. It is assumed that all simulations last approximately 6 seconds. As discussed in the previous section, all design parameters reach the highest value when no resin is included in the model of the skew quadrupole. Multiplying the resistive voltage by the correction factor increases the discrepancy between the model and the measurements. The relative error $E_\text{r, measurements}$ compares $V_\text{res, max}$ obtained from the measurements with corrected values of $V_\text{res, max, corrected}$ from the simulations. One can observe that the maximum resistive voltage is more than doubled when the resin is neglected. If the full resin volume is considered, the peak voltage is 56\% higher with respect to the measurements. Since, the hot-spot temperature is not measured during the tests, one can only rely on the simulations.
+
+\begin{table}[H]
+    \caption{Estimation of the real resistive voltage.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ | c | c | c | c | c | }  
+        \hline
+         & measurements & $u_\text{resin}=0.0$ & $u_\text{resin}=0.5$ & $u_\text{resin}=1.0$ \\
+        \hline
+        $V_\text{res, max},~\text{V}$ & 15.8 & 26.8 & 22.5 & 19.8 \\
+        $E_\text{r, initial}$ & - & -20\% & -20\% & -20\% \\
+        $V_\text{res, max, corrected},~\text{V}$ & - & 33.6 & 28.1 & 24.7 \\
+        \hline 
+        $E_\text{r, measurements}$ & - & 113\% & 78\% & 56\% \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_general_remarks_res_voltage} 
+\end{table}
+
+\begin{table}[H]
+    \caption{Estimation of the real hot-spot temperature.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+        \begin{tabular}{ | c | c | c | c | }  
+        \hline
+         & $u_\text{resin}=0.0$ & $u_\text{resin}=0.5$ & $u_\text{resin}=1.0$ \\
+        \hline
+        $T_\text{hot-spot},~\text{K}$ & 48.7 & 45.7 & 43.4 \\
+        $E_\text{r, initial}$ & -1.5\% & -1.5\% & -1.5\% \\
+        $E_\text{r, additional}$ & -2.0\%/s & -2.0\%/s & -2.0\%/s \\
+        $t_\text{simulation},~\text{s}$ & $\approx 6$ & $\approx 6$ & $\approx 6$ \\
+        $E_\text{r, total}$ & -13.5\% & -13.5\% & -13.5\% \\
+        $T_\text{hot-spot, corrected},~\text{K}$ & 56.3 & 52.9 & 50.1 \\
+        \hline 
+        \end{tabular}
+    \end{center}  
+     \label{table: skew_quad_general_remarks_hot_spot} 
+\end{table}
 

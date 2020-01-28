@@ -1,13 +1,13 @@
 
-The execution script performs consecutive steps of the analysis. It specifies material properties, creates a magnet geometry, applies boundary and initial conditions, sets a time step, communicates with ANSYS to solve the given FEM problem and processes obtained results from each time step. The script also adjusts material properties and nonlinear inductance, if required, as the analysis continues. There is a single execution script for the standard analysis and the quench velocity-based one. It is written in such a manner to correspond to all possible cases of the analysis presented in Fig.~\ref{table:python_analysis_options}. If a given case does not require some of the presented methods, they are omitted. 
+The execution script performs consecutive steps of the analysis. It specifies material properties, creates a magnet geometry, applies boundary and initial conditions, sets a time step, communicates with ANSYS to solve the given problem and processes obtained results. The script also adjusts material properties and nonlinear inductance, if required, as the analysis continues. There is a single execution script for the standard analysis and the quench velocity-based approach. The script is written in such a manner to correspond to all possible cases of the analysis presented in Fig.~\ref{table:python_analysis_options}. If a given case does not require some of the presented methods, they are omitted. 
 
-Provided that the initial time step is $t$, the total simulation time is $t_\text{total}$, the problem is solved as described in Algorithm~\ref{alg:execution_script}. The statements marked in red correspond to the preprocessor, as described in Fig.~\ref{fig:block_diagram_python_architecture}. The ones marked in blue refer to the solver, whereas the green ones -- to the postprocessor. The execution script written in Python, is presented in Appendix~\ref{appendix:execution_script_python}. In Algorithm~\ref{alg:execution_script}, the methods from 1 to 9 are executed only once. The~remaining steps are conducted until either the analysis reaches the assumed simulation time or the current in the magnet becomes a desirably low value during the discharge process. 
+Provided that the initial time step is $t$, the total simulation time is $t_\text{total}$, the problem is solved as described in Algorithm~\ref{alg:execution_script}. The statements corresponding to the preprocessor, solver and postprocessor in Fig.~\ref{fig:block_diagram_python_architecture} are marked in red, blue and green respectively. The execution script written in Python, is presented in Appendix~\ref{appendix:execution_script_python}. In Algorithm~\ref{alg:execution_script}, the methods from 1 to 9 are executed only once. The~remaining steps are conducted until either the analysis reaches the assumed simulation time or the current in the magnet becomes a desirably low value during the discharge process. 
 
 \begin{algorithm}[H]
   \caption{Description of the execution script implemented in Python.}
   \label{alg:execution_script}
   \begin{algorithmic}[1]
-    \STATE upload user's input parameters from the text file
+    \STATE read user's input parameters from the text file
     \color{red} \STATE  define the material properties
     \STATE create the geometry 
     \STATE connect the circuit to the geometry
@@ -19,7 +19,7 @@ Provided that the initial time step is $t$, the total simulation time is $t_\tex
     
     \color{black} \STATE \textbf{while} magnet is not discharged or $t < t_\text{total}$ \textbf{do}
         \color{blue} \STATE \hspace{0.5cm} set the current time step $t$
-        \STATE \hspace{0.5cm} solve the problem
+        \STATE \hspace{0.5cm} solve the temperature distribution and current for time step $t$
         \color{ForestGreen} \STATE \hspace{0.5cm} get the temperature profile and current from ANSYS APDL
         \STATE \hspace{0.5cm} estimate the resistive voltage from ANSYS APDL
         \STATE \hspace{0.5cm} \textbf{if} magnet is not fully quenched \textbf{do}

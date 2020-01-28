@@ -1,49 +1,47 @@
-The benchmark study is conducted for two cases separately: 
+
+Similarly to the simulations performed in Chapter~\ref{chapter: 1d_quench_propagation_modelling}, the benchmarking study between the standard ANSYS analyses and the quench velocity-based approach is conducted for two cases separately: 
 \begin{enumerate}
-    \item 1D strand analysis without insulation layer,
-    \item 1D strand analysis with an external insulation layer.
+    \item Analysis of a bare composite strand.
+    \item Analysis of the composite strand with insulation and epoxy resin.
 \end{enumerate}
 
-In order to conduct the analysis within the quench velocity-based approach, the value of quench velocity in time is required. The standard analysis serves for two purposes:
+In order to conduct the analysis with the quench velocity-based approach, the time evolution of the quench velocity is required. The standard ANSYS analysis serves two purposes:
 \begin{enumerate}
-    \item average quench velocity value to be used in the quench velocity-based model,
-    \item reference model for a relative error.
+    \item The average quench velocity is calculated based on the standard ANSYS simulation in order to implement it in the quench velocity-based approach.
+    \item The results from the quench velocity-based approach are  compared with the reference standard analysis in order to estimate a relative error with respect to the temperature along the strand and the resistive voltage.
 \end{enumerate}
 
-The benchmarking workflow, which compares the standard solution with a quench velocity-based method when no insulation is considered, is illustrated in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation}. As it is recommended in \cite[p.~40]{paudel_thesis}, the mesh should be discretised in the scale of a millimetre when an adiabatic quench thermal problem is considered. Therefore, the input mesh size of $x=1~\text{mm}$ was set as the input parameter with a relatively large time step range of $t= [100, 1000]~\upmu \text{s}$. The workflow is divided into three main parts: 
+Figure~\ref{fig:block_diagram_benchmarking_methodology_no_insulation} illustrates the benchmarking workflow of the verification methodology implemented to study the case of a bare composite strand. The default mesh size of $x=1~\text{mm}$ recommended in previous chapters is a starting point of the benchmarking process with a relatively large time step range of $t_\text{step range}= [0.1, 1]~\text{ms}$. The verification is divided into three loops: 
 \begin{enumerate}
-    \item find the time step range,
-    \item find the mesh size, 
-    \item test quench velocity-based method with varying input parameters.
+    \item Time step loop in which an optimised time step range for the reference solution is searched.
+    \item Mesh size loop that aims at reassuring the sufficient quality of the initial mesh size. 
+    \item Verification loop in which the quench velocity-based simulations with a relatively relaxed longitudinal mesh along the strand are compared with the reference standard ANSYS results.
 \end{enumerate}
 
-The first two parts of the workflow are an iteration loop with a condition statement of a relative error with respect to an average quench velocity. The relative error range is calculated as 
+The first two loops in the workflow have a condition statement of a relative error with respect to the average quench velocity. The relative error range is calculated as 
 \begin{equation}
     E_\text{r} = \frac{r_\text{i}-r_{i-1}}{r_\text{i}}~100\%,
+    \label{eqn:condition_statement_relative_error_v_quench}
 \end{equation}
-where $r_\text{i}$ -- reference analysis, $r_{i-1}$ -- analysis from the preceding iteration loop~$i$. In all the analyses, the condition statement imposes an absolute value of a relative error less or equal to 1\%. In this chapter, the quench velocity is calculated in a different manner with respect to Chapter \ref{chapter: 1d_quench_propagation_modelling} where the method was imposed by the STEAM-BBQ tool. The average quench velocity is calculated as
-\begin{equation}
-    v_\text{quench} = \frac{ \sum_{j=1}^{k-1} \frac{x_{j+1}-x_j}{\Delta t} }{k},
-\end{equation}
-where $x_j$ -- quench front position at time window~$j$, $\Delta t$ -- time increment between two time windows $j$ and $j+1$, $k$ -- number of time windows $j$. The time increment for the standard analyses was assumed to be equal to $\Delta t=10~\text{ms}$. In addition, all material properties are based on fits provided by NIST described in Appendix~\ref{appendix_material_properties_description}.
+where $r_\text{i}$ -- result from the reference analysis, $r_{i-1}$ -- result from the preceding analysis of the iteration loop~$i-1$.
 
 \begin{figure}[H]
     \centering
     \renewcommand{\baselinestretch}{0.75} 
     \begin{tikzpicture}[node distance = 1.5cm, auto]
-        \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=3cm, text badly centered, node distance=3.0cm, inner sep=0pt, scale=0.8]
+        \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=2cm, text badly centered, node distance=2.5cm, inner sep=0pt, scale=0.8]
         \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=7.0cm, text centered, rounded corners, minimum height=0.5cm, node distance=1.15cm, scale=0.8]
         \tikzstyle{line} = [draw, -latex']
         \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=7cm, minimum height=2em, scale=0.8]
     
-    \node [block] (initialisation) {Let initial simulation parameters be: \\ iteration $i=1$ \\ time stepping parameter $n=1$ \\ mesh size $x=1~\text{mm}$ \\ time step range $t \in [100, 1000] / 10^n ~\upmu \text{s}$};
+    \node [block] (initialisation) {Let initial simulation parameters be: \\ iteration $i=1$ \\ time stepping multiplier $n=1$ \\ mesh size $x=1~\text{mm}$ \\ $t_\text{step range} \in [0.1, 1] / 10^n ~\text{ms}$};
     \node [block, below of=initialisation, node distance = 1.75cm] (solution 1) {Conduct analysis number $i$};
     \node [block, below of=solution 1] (increment 1) {$i=i+1$ \\ $n=n+1$};
     \node [block, below of=increment 1] (solution 2) {Conduct analysis number $i$};
     \node [block, below of=solution 2] (reference 1) {Set analysis number $i$ as a reference result};
     \node [decision, below of=reference 1] (decide 1) {check if $|E_\text{r}| \leq 1\%$ \\ for analysis $i-1$};
-    \node [cloud, right of=decide 1] (explanation 1) {Time stepping loop};
-    \node [block, below of=decide 1, node distance=2.75cm] (result 1) {Use analysis $i-1$ as a reference analysis~$j$};
+    \node [cloud, right of=decide 1] (explanation 1) {Time step loop};
+    \node [block, below of=decide 1, node distance=2.3cm] (result 1) {Use analysis $i-1$ as a reference analysis~$j$};
 
     \path [line] (initialisation) -- (solution 1);
     \path [line] (solution 1) -- (increment 1);
@@ -58,9 +56,9 @@ where $x_j$ -- quench front position at time window~$j$, $\Delta t$ -- time incr
     \node [block, below of=solution 3] (reference 2) {Set analysis number $j$ as a reference result};
     \node [decision, below of=reference 2] (decide 2) {check if $|E_\text{r}| \leq 1\%$ \\ for analysis $j-1$};
     \node [cloud, right of=decide 2] (explanation 2) {Mesh size loop};
-    \node [block, below of=decide 2, node distance=2.95cm] (quench velocity) {Use average $v_\text{quench}$ based on solution $j-1$};
+    \node [block, below of=decide 2, node distance=2.5cm] (quench velocity) {Use average $v_\text{quench}$ based on solution $j-1$};
     \node [block, below of=quench velocity] (quench velocity model) {Conduct quench velocity-based analyses};
-    \node [cloud, right of=quench velocity model] (explanation 3) {Benchmarking loop};
+    \node [cloud, right of=quench velocity model] (explanation 3) {Verification loop};
     
     \path [line] (decide 1) -- node [near start, scale=0.8] {yes} (result 1);
     \path [line] (result 1) -- (increment 2);
@@ -73,26 +71,33 @@ where $x_j$ -- quench front position at time window~$j$, $\Delta t$ -- time incr
     \path [line, dashed] (explanation 2) -- (decide 2);
     \path [line, dashed] (explanation 3) -- (quench velocity model);
     \end{tikzpicture}
-    \caption{Block diagram description of a benchmarking method without the insulation layer.}
+    \caption{Block diagram of the verification methodology corresponding to the case of a bare strand.}
     \label{fig:block_diagram_benchmarking_methodology_no_insulation}
 \end{figure}
 
-The next step of the benchmarking is the comparison conducted with an external insulation layer. The method workflow is presented in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}. In this case, the longitudinal mesh size as well as a time step range are taken from a reference model without the insulation layer. In the standard analysis, one searches for a mesh size across the insulation layer which allows for obtaining the solution within the precision of a relative error of 1\% with respect to the average quench velocity. When the condition statement of a relative error is fulfilled, the average quench velocity is taken from a reference model and set as an input parameter in the quench velocity-based approach. 
+The condition statement described in (\ref{eqn:condition_statement_relative_error_v_quench}) imposes an absolute value of a relative error less or equal to 1\%. In this chapter, the quench velocity is formulated in a different manner with respect to Chapter \ref{chapter: 1d_quench_propagation_modelling} where the reference results are obtained with STEAM-BBQ~\cite{BBQ_manual}. The average quench velocity is calculated in this case as
+\begin{equation}
+    v_\text{quench} = \frac{ \sum_{j=1}^{k-1} \frac{x_{j+1}-x_j}{\Delta t} }{k},
+    \label{eqn:new_quench_velocity}
+\end{equation}
+where $x_j$ -- quench front position at time window~$j$ with the initial time window at $t=0$, $\Delta t$ -- time increment between two time windows $j$ and $j+1$, $k$ -- number of time windows $j$. The time increment for the standard analyses is equal to $\Delta t=10~\text{ms}$. In addition, all material properties are based on fits provided by NIST described in Appendix~\ref{appendix_material_properties_description}.
+
+The verification methodology for the analysis of the composite strand with insulation and epoxy resin is illustrated in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}. The presented workflow contains an iteration loop in which the mesh size across the insulation is searched to satisfy the condition~(\ref{eqn:condition_statement_relative_error_v_quench}) based on the quench velocity calculated as in~(\ref{eqn:new_quench_velocity}). When the condition statement of the relative error is fulfilled, the average quench velocity is taken from the reference standard model and set as an input parameter in the benchmarking loop. The occurrence of only two iteration loops in the diagram is due to the fact that the mesh size and the time step range are inherited from the analysis of a bare strand. 
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[node distance = 1.5cm, auto]
         \renewcommand{\baselinestretch}{0.75} 
-         \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=3cm, text badly centered, node distance=3.0cm, inner sep=0pt, scale=0.8]
+         \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=2.0cm, text badly centered, node distance=2.5cm, inner sep=0pt, scale=0.8]
         \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=7.0cm, text centered, rounded corners, minimum height=0.5cm, node distance=1.15cm, scale=0.8]
         \tikzstyle{line} = [draw, -latex']
         \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=7cm, minimum height=2em, scale=0.8]
     
-    \node [block] (initialisation) {Let initial simulation parameters be: \\ iteration $i=1$ \\ number of nodes across the insulation $a=3$};
-    \node [block, below of=initialisation, node distance = 1.75cm] (solution 1) {Conduct analysis number $i$};
+    \node [block] (initialisation) {Let initial simulation parameters be: \\ iteration $i=1$ \\ number of elements across the insulation $n_\text{divisions, ins}=3$};
+    \node [block, below of=initialisation, node distance = 1.5cm] (solution 1) {Conduct analysis number $i$};
     \node [block, right of=solution 1, text width=5.5cm, node distance=7cm] (initialisation2) {Reference model input from the case without the insulation layer: \\ mesh size~$x$, time step range~$t$};
 
-    \node [block, below of=solution 1] (increment 1) {$i=i+1$ \\ $a=a+b$, where b is chosen by a user};
+    \node [block, below of=solution 1] (increment 1) {$i=i+1$ \\ $n_\text{divisions, ins} \mathrel{+}= \Delta n_\text{divisions, ins}$, where $\Delta n_\text{divisions, ins}$ is chosen by a user};
     \node [block, below of=increment 1] (solution 2) {Conduct analysis number $i$};
     \node [block, below of=solution 2] (reference 1) {Set analysis number $i$ as a reference result};
     \node [decision, below of=reference 1] (decide 1) {check if $|E_\text{r}| \leq 1\%$ \\ for analysis $i-1$};
@@ -107,14 +112,22 @@ The next step of the benchmarking is the comparison conducted with an external i
     \path [line] (decide 1) -| node [near start, scale=0.8] {no} (-5,-5) |- (increment 1);
     \path [line, dashed] (explanation 1) -- (decide 1);
 
-    \node [block, below of=decide 1, node distance=2.95cm] (quench velocity) {Use average $v_\text{quench}$ based on solution $i-1$};
+    \node [block, below of=decide 1, node distance=2.5cm] (quench velocity) {Use average $v_\text{quench}$ based on solution $i-1$};
     \node [block, below of=quench velocity] (quench velocity model) {Conduct quench velocity-based analyses};
-    \node [cloud, right of=quench velocity model] (explanation 3) {Benchmarking loop};
+    \node [cloud, right of=quench velocity model] (explanation 3) {Verification loop};
 
     \path [line] (decide 1) -- node [near start, scale=0.8] {yes} (quench velocity);
     \path [line] (quench velocity) -- (quench velocity model);
     \path [line, dashed] (explanation 3) -- (quench velocity model);
     \end{tikzpicture}
-    \caption{Block diagram description of a benchmarking method with the insulation layer.}
+    \caption{Block diagram of the verification methodology corresponding to the case of a strand with insulation and epoxy resin.}
     \label{fig:block_diagram_benchmarking_methodology_with_insulation}
 \end{figure}
+
+The study in the verification loop remains identical for the case of a bare strand and the one with insulation and epoxy resin. There are three comparisons made between the standard analysis and the quench velocity-based approach: 
+\begin{enumerate}
+    \item Difference in the nodal temperature along the strand (only compared for the nodes existing in the most relaxed mesh).
+    \item Evolution of the resistive voltage in time. 
+    \item Evolution of the hot-spot temperature in time.
+\end{enumerate}
+The relative error with respect to the reference standard solution is estimated for the last two parameters. Moreover, the possibility of increasing the time step range $t_\text{step range}$ is studied in the benchmarking loop of a bare strand.
