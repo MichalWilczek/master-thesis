@@ -1,5 +1,5 @@
 
-During the measurements, the spot heater was attached to the external ground insulation of one of the four coils of the magnet. The heater contact area of 4~$\text{mm}^2$ was centered at the layer 13 on the aperture side of the magnet, as presented in Fig.~\ref{fig:spot_heater_placement}.
+During the measurements, the spot heater was attached to the external ground insulation of one of the four coils of the magnet. The heater contact area of 4~$\text{mm}^2$ was centered at the \nth{13} layer on the aperture side of the magnet, as presented in Fig.~\ref{fig:spot_heater_placement}.
 
 \begin{figure}[H]
 \centering
@@ -30,7 +30,7 @@ During the measurements, the spot heater was attached to the external ground ins
     \label{fig:spot_heater_placement}
 \end{figure}
 
-The coil is quenched due to the heat generated in the spot-heater. The heat is a~result of a~current discharge in the~\nth{1} order RC-circuit as shown in Fig.~\ref{fig:spot_heater_capacitor_discharge}. Its capacitance was equal to $C=14~\text{mF}$.
+The coil is quenched by the heat generated in the spot-heater. The heat is a~result of a~current discharge in the~\nth{1} order RC-circuit as shown in Fig.~\ref{fig:spot_heater_capacitor_discharge}. The results from the measurements include the capacitance of $C=14~\text{mF}$ and the voltage accross the capacitor over time.
 
 \begin{figure}[H]
 	\centering
@@ -57,7 +57,7 @@ where $\tau$ -- time constant, $C$ -- capacitance. The electric energy of the ca
     P(t)_\text{spot heater} = -P(t)_\text{capacitor} = -\frac{1}{\text{dt}} (E_\text{C}) = -\frac{1}{\text{dt}} (\frac{1}{2} \text{C}V_\text{C}^2),
     \label{eqn:power_dissipation}
 \end{equation}
-where $V_\text{C}$ -- voltage across the capacitor, $E_\text{C}$ -- energy stored in the capacitor, $P(t)$ -- power being a function of time. Figure~\ref{fig:capacitor_discharge} presents the measured drop of a~capacitive voltage when the capacitor was discharging. The same Figure also presents the~deduced power dissipation at the~spot heater based on~(\ref{eqn:power_dissipation}). The sampling frequency of the measurements was equal to $f=5000~\text{Hz}$. Based on the power curve in Fig.~\ref{fig:capacitor_discharge}, one can notice that most of energy was transmitted to the coil during the first $t=5~\text{ms}$ and the capacitor was fully discharged at $t=10~\text{ms}$. The bath temperature of the coil during the measurements was $T_0=4.3~\text{K}$.
+where $V_\text{C}$ -- voltage across the capacitor, $E_\text{C}$ -- energy stored in the capacitor, $P(t)$ -- power being a function of time. Figure~\ref{fig:capacitor_discharge} presents the measured drop of a~capacitive voltage while the capacitor was discharging. Figure~\ref{fig:capacitor_discharge} also presents the~deduced power dissipation at the~spot heater based on~(\ref{eqn:power_dissipation}). The sampling frequency of the measurements was equal to $f=5000~\text{Hz}$. Based on the power curve in Fig.~\ref{fig:capacitor_discharge}, most of energy was transmitted to the coil during the first $t=5~\text{ms}$ and the capacitor was fully discharged at $t=10~\text{ms}$. The coil's bath temperature was $T_0=4.3~\text{K}$ during the measurements.
 
 \begin{figure}[H]
 \centering
@@ -99,7 +99,7 @@ where $V_\text{C}$ -- voltage across the capacitor, $E_\text{C}$ -- energy store
 \label{fig:capacitor_discharge}
 \end{figure}
 
-With the shape of the voltage drop, the time constant and spot heater resistance were deduced, as shown in Table~\ref{table:rc_circuit_characteristics}. Moreover, the entire capacitive energy deposited in the~magnet was approximately equal to $E_\text{C}=2.5~\text{J}$.
+With the voltage drop shape, the time constant and spot heater resistance were deduced, as shown in Table~\ref{table:rc_circuit_characteristics}. Moreover, the entire capacitive energy deposited in the~magnet was approximately equal to $E_\text{C}=2.5~\text{J}$.
 
  \begin{table}[H]
     \caption{RC heating circuit characteristics.} 
@@ -121,7 +121,7 @@ With the shape of the voltage drop, the time constant and spot heater resistance
      \label{table:rc_circuit_characteristics} 
  \end{table}
 
-The electrical circuit schematic of the skew quadrupole is presented in Fig.~\ref{fig:skew_quad_electrical_scheme}. Each coil is characterised by the same self-inductance $L_\text{coil}$. Since all coils are connected in series, it is possible to include their mutual inductance in the self-inductance. During the measurements, the heat was not transmitted to other coils of the skew quadrupole, i.e. only one coil out of four quenched. $R_\text{coil}$ in Fig.~\ref{fig:skew_quad_electrical_scheme} represents the internal resistance of the coil where the spot heater was placed. When the skew quadrupole is in the superconducting state, $R_\text{coil}=0$. After the quench is provoked by depositing heat through the spot heater, $R_\text{coil}$ represented by a varying resistance starts increasing. In order to detect a quench, the voltages $V_1$ and $V_2$ are compared. If their difference exceeds a threshold value, $V_\text{th}$ during a certain period of time, the quench is detected. The time after which the quench is detected after exceeding the threshold $V_\text{th}$ is described as the validation time, $t_\text{validation}$. When the quench is detected, the switch $\text{s}_\text{power}$ closes and cuts off the power converter whereas the switch $\text{s}_\text{dump}$ opens leading to the discharge of the energy stored in the circuit in the dump resistor $R_\text{dump}$. The schematic in Fig.~\ref{fig:skew_quad_electrical_scheme} neither includes the protection devices of the energy extraction system nor the ones of the power converter as they do not affect the quench protection study in this thesis.
+The electrical circuit schematic of the skew quadrupole is presented in Fig.~\ref{fig:skew_quad_electrical_scheme}. Each coil is characterised by the same self-inductance $L_\text{coil}$. Since all coils are connected in series, it is possible to include their mutual inductance in the self-inductance. The heat was not transmitted to other coils of the skew quadrupole during the measurements, i.e. only one coil out of four quenched. $R_\text{coil}$ in Fig.~\ref{fig:skew_quad_electrical_scheme} represents the internal resistance of the coil where the spot heater was placed. When the skew quadrupole is in the superconducting state, $R_\text{coil}=0$. After the quench is provoked by depositing heat through the spot heater, $R_\text{coil}$ represented by a varying resistance starts to increase. In order to detect a quench, the voltages $V_1$ and $V_2$ are compared. If their difference exceeds a threshold value, $V_\text{th}=0.2~\text{V}$ during a certain period of time, the quench is detected. The time, after which the quench is detected after exceeding the threshold $V_\text{th}$, is referred to as the validation time, and equals $t_\text{validation}=0.20~\text{ms}$. When the quench is detected, the switch $\text{s}_\text{power}$ closes and cuts off the power converter whereas the switch $\text{s}_\text{dump}$ opens leading to the discharge of the energy stored in the circuit in the dump resistor $R_\text{dump}$. The schematic in Fig.~\ref{fig:skew_quad_electrical_scheme} neither includes the protection devices of the energy extraction system nor those of the power converter as they do not affect the quench protection study in this thesis.
 
 \begin{figure}[H]
 	\centering
@@ -158,32 +158,11 @@ The electrical circuit schematic of the skew quadrupole is presented in Fig.~\re
 	\label{fig:skew_quad_electrical_scheme}
 \end{figure}
 
-The quench detection system parameters are presented in Table~\ref{table:qds_characteristics}. The voltage threshold $V_\text{th}$ should be exceeded during the validation time $t_\text{validation}=20~\text{ms}$ in order to disconnect the power converter.
-
-\begin{table}[H]
-    \caption{Characteristics of the quench detection system.} 
-    \vspace{-1.em} 
-    \fontsize{10}{10}
-    \selectfont 
-    \renewcommand{\arraystretch}{1.5}
-    \begin{center}
-        \begin{tabular}{ ccc } 
-        \hline
-        parameter & value & unit \\
-        \hline
-        $V_\text{th}$ & 0.2 & [V] \\
-        $t_\text{validation}$ & 20 & [ms] \\
-        \hline 
-        \end{tabular}
-    \end{center}  
-     \label{table:qds_characteristics} 
-\end{table}
-
 After the quench is detected, the circuit is represented, as shown in Fig.~\ref{fig:skew_quad_discharge_electrical_scheme}. The total magnet inductance $L_\text{magnet}$ is calculated as~\cite{marco_prioli_mails}
 \begin{equation}
     L_\text{magnet} = 4 L_\text{coil} + 8 M_\text{a} + 4 M_\text{b},
 \end{equation}
-where $M_\text{a}$ -- mutual inductance between adjacent coils, $M_\text{b}$ -- mutual inductance between opposite coils. The initial discharge current $I_0$ is equal to the operating current of the magnet during the measurements.
+where $M_\text{a}$ -- mutual inductance between adjacent coils, $M_\text{b}$ -- mutual inductance between opposite coils. The initial discharge current $I_0$ is equal to the operating current of the magnet during the measurements. If the magnet is self-protected, $R_\text{dump}=0$. The dump resistance of the energy extraction system equals $R_\text{dump}=1.557$~\textOmega~\cite{marco_prioli_mails}. 
 
 \begin{figure}[H]
 	\centering
@@ -200,13 +179,7 @@ where $M_\text{a}$ -- mutual inductance between adjacent coils, $M_\text{b}$ -- 
 	\label{fig:skew_quad_discharge_electrical_scheme}
 \end{figure}
 
-If the magnet is self-protected, $R_\text{dump}=0$. The dump resistance of the energy extraction system equals $R_\text{dump}=1.557$~\textOmega~\cite{marco_prioli_mails}. One should remember that $\tau$ is not constant during the discharge due to the nonlinear inductance as a function of current and increasing $R_\text{coil}$ as the quench propagates. The~time constant of the circuit is calculated as 
-\begin{equation}
-    \tau = \frac{L_\text{magnet}}{R_\text{coil}+R_\text{dump}}.
-    \label{eqn:variable_time_constant}
-\end{equation}
-
-The quench measurements were conducted for $I=86~\text{A}$ which is a lower value than the designed nominal operating current of the skew quadrupole. As presented in Fig.~\ref{fig:skew_quad_discharge_before_quench_detection}, the quench resistive voltage reaches the threshold value for the quench detection system at $t=130~\text{ms}$. The quench is detected at $t=150~\text{ms}$.~\cite{marco_prioli_mails}
+The quench measurements were conducted for $I=86~\text{A}$, which is a lower value than the designed nominal operating current of the skew quadrupole. As presented in Fig.~\ref{fig:skew_quad_discharge_before_quench_detection}, the quench resistive voltage reaches the threshold value for the quench detection system at $t=130~\text{ms}$. The quench is detected at $t=150~\text{ms}$.~\cite{marco_prioli_mails}
 
 \begin{figure}[H]
 \centering
@@ -250,7 +223,7 @@ The quench measurements were conducted for $I=86~\text{A}$ which is a lower valu
 \label{fig:skew_quad_discharge_before_quench_detection}
 \end{figure}
 
-Figure~\ref{fig:skew_quad_discharge} presents the current profile as well as the change of resistive voltage across the~magnet during the discharge of the skew quadrupole. The resistive voltage $V_\text{res}$ is a function of coil resistance $R_\text{coil}$ and the value of current in the circuit. Until $t=1.5~\text{s}$, the rise of voltage up to approximately 16~V is observed due to the increase of coil resistance mainly because of a turn-to-turn propagation. After this time, the voltage drops down because the~current decreases rapidly in the circuit. The smooth shape of the current curve indicates that the quench back did not occur during the discharge which can be explained by a~relatively long discharge time. The quench measurements ended at $t=9~\text{s}$.
+Figure~\ref{fig:skew_quad_discharge} presents the current profile as well as the change of resistive voltage across the~magnet during the discharge of the skew quadrupole. The resistive voltage $V_\text{res}$ is a function of coil resistance $R_\text{coil}$ and the value of current in the circuit. Until $t=1.5~\text{s}$, a rise of voltage up to approximately 16~V is observed due to the increase of coil resistance, mainly because of a turn-to-turn propagation. After this time, the voltage drops down because the~current decreases rapidly in the circuit. The smooth shape of the current curve indicates that the quench back did not occur during the discharge which can be explained by a~relatively long discharge time. The quench measurements ended at $t=9~\text{s}$.
 
 \begin{figure}[H]
 \centering

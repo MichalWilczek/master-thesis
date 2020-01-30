@@ -19,16 +19,16 @@ As shown in Fig.~\ref{fig:ansys_interface_oop}, the ansys\_interface module cons
         };
     \node (AnsysMultiple1D) [abstract, rectangle split, rectangle split parts=2, below of=Ansys, node distance=2.8cm]
         {
-            AnsysMultiple1D \nodepart{second} \footnotesize \begin{compactitem} \item inputs material properties, \item applies BC's, \item inputs APDL solver file. \end{compactitem}
+            AnsysMultiple1D \nodepart{second} \footnotesize \begin{compactitem} \item inputs material properties; \item applies BC's; \item inputs APDL solver file. \end{compactitem}
         };
     \node (AuxNode01) [text width=4cm, below of=AnsysMultiple1D, node distance=2.2cm] {};
     \node (AnsysMultiple1DSlab) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=4.0cm, text width=7.0cm]
         {
-            AnsysMultiple1DSlab \nodepart{second} \footnotesize \begin{compactitem} \item inputs initial APDL parameters, \item inputs APDL geometry file. \end{compactitem}
+            AnsysMultiple1DSlab \nodepart{second} \footnotesize \begin{compactitem} \item inputs initial APDL parameters; \item inputs APDL geometry file. \end{compactitem}
         };
     \node (AnsysMultiple1DHighOrderCorrector) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=4.0cm, text width=7.0cm]
         {
-            AnsysMultiple1DHighOrderCorrector \nodepart{second} \footnotesize \begin{compactitem} \item inputs initial APDL parameters, \item inputs APDL geometry file. \end{compactitem}
+            AnsysMultiple1DHighOrderCorrector \nodepart{second} \footnotesize \begin{compactitem} \item inputs initial APDL parameters; \item inputs APDL geometry file. \end{compactitem}
         };
     \node (Import1) [rectangle, draw, dashed, rounded corners, minimum height=4.2cm, text width=12.2cm] at (0, -3.2) { };
     \node (Geometry) [cloud, rectangle split, rectangle split parts=2, right of=Ansys, node distance=6.0cm]
@@ -63,7 +63,7 @@ The multidimensional mapping algorithm is implemented in \textbf{GeometryMulti1D
         };
     \node (GeometryMulti1D) [abstract, rectangle split, rectangle split parts=2, below of=Geometry, node distance=2.5cm]
         {
-            GeometryMulti1D \nodepart{second} \footnotesize \begin{compactitem} \item maps 3D coil geometry into a 1D coil, \item lists nodes important for BC's, IC's, coupling, etc. \end{compactitem}
+            GeometryMulti1D \nodepart{second} \footnotesize \begin{compactitem} \item maps 3D coil geometry into a 1D coil; \item lists nodes important for BC's, IC's, coupling, etc. \end{compactitem}
         };
     % lines and arrows
     \draw[myarrow] (Geometry.south) -- (GeometryMulti1D.north);
@@ -74,7 +74,7 @@ The multidimensional mapping algorithm is implemented in \textbf{GeometryMulti1D
 
 \subsection{Quench Velocity Assignment and Quench Front Position Assignment Algorithms}
 
-The classes related to the quench\_velocity module are shown in Fig.~\ref{fig:quench_velocity_oop}. As mentioned in Table~\ref{table:python_analysis_options}, there are two quench velocity models: a constant quench velocity and the one being a function of a magnetic field and current. The latter is implemented in \textbf{QuenchFrontNumerical} and the former -- in \textbf{QuenchFrontConstant}. They both calculate a~continuous quench front position at a given time step. The class \textbf{QuenchFrontNumerical} inherits a~quench velocity map from \textbf{QuenchVelocityMap} being a function of current and magnetic field. The blocks marked in red are external modules that communicate with the quench velocity module. \textbf{QuenchVelocityMap} uses linear interpolation functions from the common functions module. 
+The classes related to the quench\_velocity module are shown in Fig.~\ref{fig:quench_velocity_oop}. As mentioned in Table~\ref{table:python_analysis_options}, there are two quench velocity models: a constant quench velocity and the one being a function of a magnetic field strength and current. The latter is implemented in \textbf{QuenchFrontNumerical} and the former -- in \textbf{QuenchFrontConstant}. They both calculate a~continuous quench front position at a given time step. The class \textbf{QuenchFrontNumerical} inherits a~quench velocity map from \textbf{QuenchVelocityMap} being a function of current and magnetic field strength. The blocks marked in red are external modules that communicate with the quench velocity module. \textbf{QuenchVelocityMap} uses linear interpolation functions from the common functions module. 
 
 \begin{figure}[H]
     \centering
@@ -143,16 +143,16 @@ Figure~\ref{fig:postprocessor_oop}, presents an overview of a postprocessor modu
     % blocks
     \node (PostProcessor) [abstract, rectangle split, rectangle split parts=2, text width=5.5cm,node distance=3cm]
         {
-            PostProcessor \nodepart{second} \footnotesize \begin{compactitem} \item stores list of quenched fronts, \item stores magnetic winding map. \end{compactitem}
+            PostProcessor \nodepart{second} \footnotesize \begin{compactitem} \item stores list of quenched fronts; \item stores magnetic winding map. \end{compactitem}
         };
     \node (AuxNode01) [text width=4cm, below of=PostProcessor, node distance=2.0cm] {};
     \node (PostProcessorHeatBalance) [abstract, rectangle split, rectangle split parts=2, left of=AuxNode01, node distance=4cm]
         {
-            PostProcessorHeatBalance \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state in a single winding. \end{compactitem}
+            PostProcessorHeatBalance \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$; \item checks quench state in a single winding. \end{compactitem}
         };
     \node (PostProcessorQuenchVelocity) [abstract, rectangle split, rectangle split parts=2, right of=AuxNode01, node distance=4cm]
         {
-            PostProcessorQuenchVelocity \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$, \item checks quench state in multiple windings, \item retrieves current from APDL files. \end{compactitem}
+            PostProcessorQuenchVelocity \nodepart{second} \footnotesize \begin{compactitem} \item calculates $V_\text{res}$; \item checks quench state in multiple windings; \item retrieves current from APDL files. \end{compactitem}
         };
     \node (QuenchFront) [cloud, rectangle split, rectangle split parts=2, right of=PostProcessor, node distance=7.1cm]
         {

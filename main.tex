@@ -57,10 +57,10 @@
 \thispagestyle{empty}
 \input{abstract.tex}
 
-% \clearpage\thispagestyle{empty}
-% \chapter*{Acknowledgment}
-% \thispagestyle{empty}
-% \input{acknowledgment.tex}
+\clearpage\thispagestyle{empty}
+\chapter*{Acknowledgment}
+\thispagestyle{empty}
+\input{acknowledgment.tex}
 
 % TABLE OF CONTENTS
 \clearpage
@@ -179,6 +179,9 @@
 \label{section:code_overview}
 \input{sections/implementation_python/code_overview.tex}
 
+\section{Quench Analysis Workflow}
+\input{sections/implementation_python/quench_analysis_workflow.tex}
+
 \section{Description of Execution Script}
 \input{sections/implementation_python/execution_script_description.tex}
 
@@ -205,7 +208,7 @@
 \label{section:quench_velocity_benchmarking_no_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_heat_balance.tex}
 
-\subsection{Quench Velocity-Based Approach}
+\subsection{Analysis with Quench Velocity-Based Approach}
 \label{section:quench_velocity_benchmarking_no_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/no_insulation_quench_velocity.tex}
 
@@ -219,7 +222,7 @@
 \label{section:quench_velocity_benchmarking_with_insulation_heat_balance}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_heat_balance.tex}
 
-\subsection{Quench Velocity-Based Approach}
+\subsection{Analysis with Quench Velocity-Based Approach}
 \label{section:quench_velocity_benchmarking_with_insulation_quench_velocity}
 \input{sections/q_vel_modelling_benchmarking/with_insulation_quench_velocity.tex}
 
@@ -244,9 +247,6 @@
 \label{section:quench_measurements}
 \input{sections/skew_quad_q_det/measurements.tex}
 
-\section{Multi-strand Quench Analysis Workflow}
-\input{sections/skew_quad_q_det/quench_analysis_workflow.tex}
-
 \section{Magnetic Map of Skew Quadrupole}
 \label{section: magnetic_map_skew_quad}
 \input{sections/skew_quad_q_det/magnetic_map.tex}
@@ -254,7 +254,7 @@
 \section{Quench Velocity Map of Skew Quadrupole}
 \input{sections/skew_quad_q_det/v_quench_mapping.tex}
 
-\section{Minimum Propagating Zone Analysis}
+\section{Minimum Propagation Zone Analysis}
 \input{sections/skew_quad_q_det/mpz_analysis.tex}
 
 \section{Quench Detection Analysis}
@@ -327,14 +327,6 @@
 \end{appendices}
 
 \clearpage
-% \bibliographystyle{IEEEtran}
-% \bibliography{IEEEabrv,./bib/article}
-% \bibliographystyle{abbrv}
-% \bibliography{./bib/article}
-
-% \bibliographystyle{amsalpha}
-% \bibliography{./bib/article}
-
 \bibliographystyle{IEEEtran}
 \bibliography{./bib/article}
 

@@ -1,22 +1,22 @@
 
 \subsection{Quench Modelling in Superconducting Magnets}
 
-A quench is a multi-physics problem including among others thermal, electric, and magnetic phenomena. In each of these phenomena, one copes with non-linearities of material properties mainly due to a wide range of operating temperatures. The design key parameters require from a magnet its sustainability at varying temperatures. The simulation challenges covered in this thesis are as follows: 
+A quench is a multi-physics problem including, among others, thermal, electric, and magnetic phenomena. In each of these phenomena, one copes with nonlinearities of material properties mainly due to a wide range of operating temperatures. The key design parameters required from a magnet are its sustainability at varying temperatures. The simulation challenges covered in this thesis are as follows: 
 
 \begin{enumerate}
-    \item Non-linear heat capacity and thermal conductivity of magnet materials. The given material properties are a~function of temperature and, in some cases, the~magnetic field. 
-    \item Non-linear resistivity of copper being a function of the temperature and the magnetic field.
-    \item Non-linear inductance of a superconducting magnet due to the influence of an iron yoke. 
+    \item Nonlinear heat capacity and thermal conductivity of magnet materials. The given material properties are a~function of temperature and, in some cases, the~magnetic field strength. 
+    \item Nonlinear resistivity of copper being a function of the temperature and the magnetic field strength.
+    \item Nonlinear inductance of a superconducting magnet due to the influence of an iron yoke. 
 \end{enumerate}
 
-Apart from a multi-physics environment that requires a coupling of several simulations altogether, the complexity of a quench analysis is also due to the following reasons: 
+Apart from a multi-physics environment that requires a coupling of several simulations together, the complexity of a quench analysis is due to the following reasons: 
 \begin{enumerate}
     \item Thermal and electrical time constants in transient analyses may vary by several orders of magnitude (multi-rate problem).
     \item The simulation may consist of separate conceptual domains such as: circuit, magnet, etc. (multi-domain problem).
     \item Analysis of components with extremely different sizes may be considered varying from a 10~$\upmu$m-wide filament in a strand to a~10~m-long magnet as a whole (multi-scale problem).
 \end{enumerate}
 
-As presented in Fig.~\ref{fig:magnet_design_domains}, the magnet design is an iterative process in which four main studies ought to be conducted: electromagnetic, mechanical as well as the ones related to the circuit design and protection. The change of a design parameter in one element may entail the correction of a different one in another constituent. As an example, a~study for the quench protection includes the verification whether the magnet does not overheat during the discharge. If the analysis proves a wrong design, the information comes back to electromagnetic studies in which a new design of a coil has to be carried out.~\cite{quench_protection_system_applied_prioli}
+As presented in Fig.~\ref{fig:magnet_design_domains}, the magnet design is an iterative process in which four main studies ought to be conducted: electromagnetic, mechanical as well as those related to the circuit design and protection. The change of a design parameter in one element may entail the correction of a different one in another constituent. As an example, a~study for the quench protection includes the verification to ensure the magnet does not overheat during the discharge. If the analysis concludes an error in the design, the information returns to electromagnetic studies, in which a new design of the coil has to be carried out.~\cite{quench_protection_system_applied_prioli}
 
 \begin{figure}[H]
     \centering
@@ -27,7 +27,7 @@ As presented in Fig.~\ref{fig:magnet_design_domains}, the magnet design is an it
     \label{fig:magnet_design_domains}
 \end{figure}
 
-Figure~\ref{fig:model_complexity_vs_completeness} shows a thermal analysis workflow with respect to the problem complexity from a quench protection perspective. On one hand, the most accurate thermal map of a magnet is desired which allows for lowering the design safety coefficients. On the other hand, in order to obtain the most accurate solution, the number of degrees of freedom needs to be increased by applying a denser mesh or an additional dimension in the simulation. The~higher completeness of the model is, the longer design iteration loops become. The modelling approach in a quench protection study is a compromise between the model completeness and the computation time. In fact, at an early design stage, the iteration loop should be short. However, for the final design one typically accepts a more detailed simulation. 
+Figure~\ref{fig:model_complexity_vs_completeness} shows a thermal analysis workflow with respect to the problem complexity from a quench protection perspective. On one hand, the most accurate thermal map of a magnet is desired which allows for lowering the design safety coefficients. On the other hand, in order to obtain the most accurate solution, the number of degrees of freedom needs to be increased by applying a denser mesh or an additional dimension in the simulation. The~higher the model completeness is, the longer the design iteration loops become. The modelling approach in a quench protection study is a compromise between the model completeness and the computation time. In fact, at an early design stage, the iteration loop should be short. However, for the final design one typically accepts a more detailed simulation. 
 
 \begin{figure}[H]
   \centering
@@ -68,7 +68,7 @@ Figure~\ref{fig:model_complexity_vs_completeness} shows a thermal analysis workf
 
 \subsection{Overview of Numerical Methods}
 
-The availability of powerful computing machines as well as widespread commercial and open source tools allow for coping with engineering problems related to the magnet design numerically. Numerical models aim at solving ordinary and partial differential equations with prescribed initial and boundary conditions by transforming them into a discrete set of algebraic equations. The~solution of those algebraic equations leads to an approximate result with respect to the initial PDE's~\cite{eth_introduction_to_finite_element}. The given process is summarised in Fig.~\ref{fig:computational_solution_technique}. 
+The availability of powerful computing machines, as well as widespread commercial and open source tools, allow for coping with engineering problems related to the magnet design numerically. Numerical models aim at solving ordinary and partial differential equations with prescribed initial and boundary conditions, by transforming them into a discrete set of algebraic equations. The~solution of those algebraic equations leads to an approximate result with respect to the initial PDE's~\cite{eth_introduction_to_finite_element}. The given process is summarised in Fig.~\ref{fig:computational_solution_technique}. 
 
 \begin{figure}[H]
     \renewcommand{\baselinestretch}{0.7} 
@@ -97,13 +97,13 @@ The availability of powerful computing machines as well as widespread commercial
     \label{fig:computational_solution_technique}
 \end{figure}
 
-Numerical methods have several important advantages. First of all, they allow for finding an approximate solution of a real geometry rather than an exact result of a simplified shape, being the case of analytical analyses. The coil of a magnet is composed of multiple materials including a superconductor, a stabiliser, and various insulation layers. Taking into account the thermo-electric interactions between different materials in a relatively complex geometry makes the problem difficult or impossible to formulate analytically. Second of all, a numerical analysis serves for parameterising a given technical problem in engineering applications. Therefore, important magnet design factors, that influence operating conditions of a developed system, may be identified and improved. The numerical approach gives answers to so called "what if" questions within a fast iterative thinking process. There are various numerical methods that serve for a conversion of a PDE into a set of algebraic equations such as~\cite{eth_introduction_to_finite_element, heat_transfer_practical_approach_cengel}: 
-\begin{itemize}
-    \item finite difference method,
-    \item finite element method,
-    \item finite volume method,
-    \item spectral method.
-\end{itemize}
+Numerical methods have several important advantages. First of all, they allow for finding an approximate solution of a real geometry, rather than an exact result of a simplified shape, being the case of analytical analyses. The coil of a magnet is composed of multiple materials including a superconductor, a stabiliser, and various layers of insulation. Taking the thermo-electric interactions between different materials in a relatively complex geometry into account makes the problem difficult or impossible to formulate analytically. Second of all, a numerical analysis serves for parameterising a given technical problem in engineering applications. Therefore, important magnet design factors, that influence operating conditions of a developed system, may be identified and improved. The numerical approach gives answers to so called "what if" questions within a fast iterative thinking process. There are various numerical methods that serve for a conversion of a PDE into a set of algebraic equations such as~\cite{eth_introduction_to_finite_element, heat_transfer_practical_approach_cengel}: 
+\begin{enumerate}
+    \item Finite difference method
+    \item Finite element method
+    \item Finite volume method
+    \item Spectral method
+\end{enumerate}
 
-In this thesis, the finite element method (FEM) is employed. It is suitable for solving multi-physical problems, being a case of superconducting magnets in general. Many commercial numerical tools such as ANSYS or COMSOL use this method because of its capability to solve a large variety of physical problems. The finite element method related to the heat conduction problems is discussed in Appendix~\ref{appendix:fem_heat_conduction}.
+In this thesis, the finite element method (FEM) is employed. It is suitable for solving multi-physical problems, being the case of superconducting magnets in general. Many commercial numerical tools such as ANSYS or COMSOL use this method because of its capability to solve a large variety of physical problems. The finite element method related to the heat conduction problems, is discussed in Appendix~\ref{appendix:fem_heat_conduction}.
 

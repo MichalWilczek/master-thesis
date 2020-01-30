@@ -1,7 +1,7 @@
 
-The multidimensional mapping algorithm aims at translating a multidimensional geometry into an imaginary 1D strand. This procedure serves for $(i)$ assigning the~magnetic field to the~windings separately, $(ii)$ mapping the~geometry for the~quench detection algorithm. 
+The multidimensional mapping algorithm aims to translate a multidimensional geometry into an imaginary 1D strand. This procedure serves for $(i)$ assigning the~magnetic field strength to the~windings separately, $(ii)$ mapping the~geometry for the~quench detection algorithm. 
 
-As illustrated in Fig.~\ref{fig: 3d_coil_illustation_with_2d_b_field}, a multi-strand domain is subjected to a time- and space-dependent magnetic field. Thus, every winding is exposed to a different magnetic field which also varies with a current change. From the magnetic analysis standpoint, it is assumed that the coil is infinitely long, allowing for using a 2D magnetic map from the centre of a~magnet cross-section.
+As illustrated in Fig.~\ref{fig: 3d_coil_illustation_with_2d_b_field}, a multi-strand domain is subjected to a time- and space-dependent magnetic field. Thus, every winding is exposed to a different magnetic field which also varies with a current change. From the magnetic analysis standpoint, it is assumed that the coil is infinitely long, which allows for using a 2D magnetic map from the centre of a~magnet cross-section.
 
 \begin{figure}[H]
     \centering
@@ -29,16 +29,16 @@ As illustrated in Fig.~\ref{fig: 3d_coil_illustation_with_2d_b_field}, a multi-s
         \draw[black, ->] (-4.5,2) -- (-4.5,2.5);
         \draw[black, ->] (-4.5,2) -- (-4,2);
         
-        \node[scale = 0.8] at (-4,2.25) {$\vec{x}$};
-        \node[scale = 0.8] at (-4.7,2.6) {$\vec{y}$};
-        \node[scale = 0.8] at (-5,1.7) {$\vec{z}$};
+        \node[scale = 0.8] at (-4,2.25) {$x$};
+        \node[scale = 0.8] at (-4.7,2.6) {$y$};
+        \node[scale = 0.8] at (-5,1.7) {$z$};
         
     \end{tikzpicture}
-    \caption{Schematic of an assignment of a magnetic field to a multi-strand domain.}
+    \caption{Schematic of an assignment of a magnetic field strength to a multi-strand domain.}
     \label{fig: 3d_coil_illustation_with_2d_b_field}
 \end{figure}
 
-The magnetic field is assigned to every winding separately, as shown in Fig.~\ref{fig:ansys_python_mapping scheme}. Each of them is characterised by a different thermal and electrical material property. The multi-strand geometry is translated into a realistic one-dimensional cable with a length $L_\text{coil}$ equal to the total coil length. Each part of the coil corresponding to one winding, is subject to a~different magnetic field~$B_\text{n}$. Similarly to Fig.~\ref{fig: 1d_strand_geometry}, the one-dimensional coordinate system $\bar x$ in Fig.~\ref{fig:ansys_python_mapping scheme} represents the~longitudinal direction of the coil. 
+The magnetic field strength is assigned to every winding separately, as shown in Fig.~\ref{fig:ansys_python_mapping scheme}. Each of them is characterised by a different thermal and electrical material property. The multi-strand geometry is translated into a realistic one-dimensional cable with a length $L_\text{coil}$ equal to the total coil length. Each part of the coil corresponding to one winding, is subject to a~different magnetic field strength~$B_\text{n}$. Similarly to Fig.~\ref{fig: 1d_strand_geometry}, the one-dimensional coordinate system $\bar x$ in Fig.~\ref{fig:ansys_python_mapping scheme} represents the~longitudinal direction of the coil. 
 
 \begin{figure}[H]
 \centering
@@ -73,12 +73,12 @@ The magnetic field is assigned to every winding separately, as shown in Fig.~\re
 \draw[black, ->] (-3.5,1) -- (-3.5,1.5);
 \draw[black, ->] (-3.5,1) -- (-3,1);
 
-\node[scale = 0.8] at (-3.75,0.8) {$\vec{x}$};
-\node[scale = 0.8] at (-2.9,1.2) {$\vec{y}$};
-\node[scale = 0.8] at (-3.7,1.65) {$\vec{z}$};
+\node[scale = 0.8] at (-3.75,0.8) {$x$};
+\node[scale = 0.8] at (-2.9,1.2) {$y$};
+\node[scale = 0.8] at (-3.7,1.65) {$z$};
 
 \end{tikzpicture}
-\caption{Mapping scheme of a magnetic field onto an imaginary 1D coil.}
+\caption{Mapping scheme of a magnetic field strength onto an imaginary 1D coil.}
 \label{fig:ansys_python_mapping scheme}
 \end{figure}
 

@@ -1,5 +1,5 @@
 
-In order to distinguish the quenched zone from a non-quenched one, the superconducting cable is divided into two domains as presented in Fig. \ref{fig:ansys_material_assignment}. The non-quenched part is characterised by nearly zero-resistivity (not zero for the sake of numerical stability) whereas the quenched cable has non-linear resistivity properties of a strand composite as described in (\ref{eqn:strand_resistivity})~\cite{simon_mcintosh_private_communication}. The non-linear resistivity is reassigned as the quench propagates in the numerical model.
+In order to distinguish a quenched zone from a non-quenched one, the superconducting cable is divided into two domains as presented in Fig. \ref{fig:ansys_material_assignment}. The non-quenched part is characterised by nearly zero-resistivity (not zero for the sake of numerical stability) whereas the quenched cable has nonlinear resistivity of a strand composite as described in (\ref{eqn:strand_resistivity})~\cite{simon_mcintosh_private_communication}. The nonlinear resistivity is reassigned as the quench propagates in the numerical model.
 
 \begin{figure}[H]
 \centering
@@ -32,14 +32,14 @@ In order to distinguish the quenched zone from a non-quenched one, the supercond
     \label{fig:ansys_material_assignment}
 \end{figure}
 
-The reassignment of material properties is handled by an external routine which controls the quench propagation in time. In this case, a thermal model and quench velocity estimator are co-simulated. This problem can be resolved by means of: 
+The reassignment of material properties is handled by an external routine which controls the quench propagation in time. In this case, a thermal model (solved by the numerical model) and quench velocity estimator (calculated by the external routine) are co-simulated. This problem can be resolved by means of: 
 
-\begin{itemize}
-    \item one-directional exchange of signals,
+\begin{enumerate}
+    \item one-directional exchange of signals;
     \item bi-directional exchange of signals.
-\end{itemize}
+\end{enumerate}
 
-The one-directional exchange of signals is presented in Fig. \ref{fig:unidirectional_coupling_scheme}. In this case, the numerical solver is provided with a quench front position from the previous communication point $t_{j-1}$ and calculates the temperature distribution in the current communication point~$t_j$. The parameter denoted as $x_{j-1}$ represents the information about the value of the next communication point $t_j$ and the quench front position in the cable. The external routine assumes a constant quench velocity independent of current and magnetic field. Therefore, the routine does not have to be updated.
+The one-directional exchange of signals is presented in Fig. \ref{fig:unidirectional_coupling_scheme}. In this case, the numerical solver is provided with a quench front position from the previous communication point $t_{j-1}$ and calculates the temperature distribution in the current communication point~$t_j$. The parameter denoted as $x_{j-1}$ represents the information about the value of the next communication point $t_j$ and the quench front position in the cable. The external routine assumes a constant quench velocity independent of current and magnetic field strength. Therefore, the routine is not updated.
 
 \begin{figure}[H]
 \centering
@@ -75,7 +75,7 @@ The one-directional exchange of signals is presented in Fig. \ref{fig:unidirecti
 \end{figure}
 
 The bi-directional exchange of signals is presented in Fig. \ref{fig:bidirectional_coupling_scheme}.
-Additionally to the one-directional case, the external routine is updated with the value of current and magnetic field from the numerical solver denoted as $y_j$ at communication point $t_j$ to estimate the quench velocity at $t_{j-1}$.
+Additionally to the one-directional case, the external routine is updated with the value of current and magnetic field strength from the numerical solver denoted as $y_j$ at communication point $t_j$ to estimate the quench velocity at $t_{j-1}$.
 
 \begin{figure}[H]
 \centering
@@ -116,7 +116,7 @@ Additionally to the one-directional case, the external routine is updated with t
 
 In both cases, the initial quench length is assumed at the beginning of the co-simulation. Between the time steps of the external routine, the numerical solver handles the problem with an adaptive time step smaller than the communication points $t_j$.
 
-Provided that data exchange between an external routine and a numerical solver occurs at communication times $t_j$, the quench velocity assignment algorithm is solved as described in Algorithm~\ref{alg:weak_coupling}.
+Provided that the data exchange between an external routine and a numerical solver occurs at communication times $t_j$, the quench velocity assignment algorithm is solved as described in Algorithm~\ref{alg:weak_coupling}.
 
 \begin{algorithm}[H]
   \caption{Quench velocity assignment algorithm.}
@@ -131,29 +131,4 @@ Provided that data exchange between an external routine and a numerical solver o
   \end{algorithmic}
 \end{algorithm}
 
-To sum up, if at fixed current and magnetic field, the quench velocity assignment algorithm only requires a one-directional exchange of signals. If the quench simulation is conducted at varying values of current and/or magnetic field, the bi-directional exchange of signals must be implemented. 
-
-In this thesis, the quench velocity is estimated numerically. In the following chapters, the communication times $t_j$ between ANSYS and the external routine are described as $t_\text{com}$.
-
-% As described in Table~\ref{table:uni_bi_directional_table_explanation}, depending on what quench velocity model is used and which type of geometry is considered, one should choose a one-directional or a bi-directional exchange of signals. In a one-strand case, if the quench velocity model is based on measurements or a numerical model, the external routine only sends the information to the solver about the quench position in time. Therefore, it is a one-directional exchange of signals. If the quench velocity is estimated analytically, the method is either one- or bi-directional. It depends on whether the analytic formula to estimate quench velocity requires additional input data from the solver. In other words, a particular analytic formula may require the value of current or a material property at given temperature which is calculated by a numerical solver. This data would have to be exchanged with an external routine estimating the value of quench velocity. In such a case, a bi-directional exchange of signals is required. In a multi-strand analysis, different winding layers in a magnet interact with one another leading to the transversal heat propagation across the insulation layer. If the temperature outside of a quenched winding also quenches, the external routine has to add a new quench front. Therefore, when a multi-strand model is considered, all quench velocity models are bi-directional.
-
-% \begin{table}[H]
-%     \caption{Quench results for analysed time step ranges.} 
-%     \vspace{-1.em} 
-%     \fontsize{10}{10}
-%     \selectfont 
-%     \renewcommand{\arraystretch}{1.5}
-%     \begin{center}
-%         \begin{tabular}{ c | c | c }  
-%         \hline
-%          \multirow{2}{*}{$v_\text{quench}$ model} & \multicolumn{2}{c}{geometry type} \\ 
-%          & one-strand & multi-strand \\
-%          \hline
-%         measurements & one-directional & bi-directional \\
-%         analytical model & one/bi-directional & bi-directional \\
-%         numerical model & one-directional & bi-directional \\
-%         \hline 
-%         \end{tabular}
-%     \end{center}  
-%      \label{table:uni_bi_directional_table_explanation} 
-%  \end{table}
+To sum up, the quench velocity assignment algorithm only requires a one-directional exchange of signals at fixed current and magnetic field strength. If the quench simulation is conducted at varying values of current and/or magnetic field, the bi-directional exchange of signals must be implemented. In this thesis, the quench velocity is estimated numerically. In the following chapters, the communication times $t_j$ between ANSYS and the external routine are described as $t_\text{com}$.

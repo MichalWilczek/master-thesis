@@ -1,12 +1,12 @@
 
-In order to conduct the multi-strand analysis with the quench velocity-based approach, one should estimate the quench velocity for varying values of magnetic field and current that are reached in the magnet. In the previous section, it was concluded that the maximum magnetic field in the skew quadrupole equals $B=3~\text{T}$ and occurs at the initial value of current, $I=86~\text{A}$. Therefore, two following main parameters, that have a direct impact on the quench velocity are studied in this section: $(i)$ magnetic field, $(ii)$ transport current. In order to conduct the analyses, the standard ANSYS simulations are performed based on 1D models of a relatively short length.
+In order to conduct the multi-strand analysis with the quench velocity-based approach, one should estimate the quench velocity for varying values of magnetic field strength and current that are reached in the magnet. In the previous section, it was concluded that the maximum magnetic field strength in the skew quadrupole equals $B=3~\text{T}$ and occurs at the initial value of current, $I=86~\text{A}$. Therefore, two following main parameters, that have a direct impact on the quench velocity are studied in this section: $(i)$ magnetic field strength, $(ii)$ transport current. In order to conduct the analyses, the standard ANSYS simulations are performed based on 1D models of a relatively short length.
 
 \subsection{Update of Skew Quadrupole Geometry}
 \label{subsection:update_skew_quadrupole_geometry}
 
-After preliminary study of the quench propagation in the modelled coil, the modelling of an insulated strand is reformulated in this chapter. The new model aims at parametrising the influence or resin on the heat capacity of the coil. The actual volume of resin between the windings remains an open question from the design standpoint. In the fabrication process, the insulated strand is wound first and the resin is added separately to a pre-assembled coil. Therefore, including the resin volume in LINK33 elements is a too conservative assumption leading to a relatively slow turn-to-turn propagation. Therefore, the heat capacity of resin is optionally added with MASS71 elements.
+After preliminary study of the quench propagation in the modelled coil, the modelling of an insulated strand is reformulated in this chapter. The new model aims at parametrising the influence of resin on the heat capacity of the coil. The actual volume of resin between the windings remains an open question from the design standpoint. In the fabrication process, the insulated strand is wound first and the resin is added later to the pre-assembled coil. Therefore, including the resin volume in LINK33 elements is a too conservative assumption leading to a relatively slow turn-to-turn propagation. Therefore, the heat capacity of resin is optionally added with MASS71 elements.
 
-Figure~\ref{fig: 1d_strand_geometry_with_heat_capacity} presents a new 1D+1D model representing a three-dimensional strand. In the~right picture, the nodes marked in red are modelled with the LINK33 element and the strand marked in yellow -- with LINK68. The blue points represent MASS71 elements including an~additional heat capacity in the strand. MASS71 is a point element with temperature as a degree of freedom characterised by a negligible thermal resistance~\cite{ansys_element_manual}. LINK68 has the material properties of the composite strand whereas both LINK33 and MASS71 -- of G10. The main reason for a change is that, in reality, the windings are in a direct contact through their external insulation (marked in red in the left picture of Fig.~\ref{fig: 1d_strand_geometry_with_heat_capacity}) omitting the resin (marked in blue in the left picture of Fig.~\ref{fig: 1d_strand_geometry_with_heat_capacity}). 
+Figure~\ref{fig: 1d_strand_geometry_with_heat_capacity} presents a new 1D+1D model representing a three-dimensional strand. In the~right picture, the nodes marked in red are modelled with the LINK33 element and the strand marked in yellow -- with LINK68. The blue points represent MASS71 elements including an~additional heat capacity in the strand. MASS71 is a point element with temperature as a degree of freedom characterised by a negligible thermal resistance~\cite{ansys_element_manual}. LINK68 has the material properties of the composite strand whereas both LINK33 and MASS71 -- of G10. The main reason for a change is that, in reality, the external insulation layers are in direct contact (marked in red in the left picture of Fig.~\ref{fig: 1d_strand_geometry_with_heat_capacity}) omitting the resin (marked in blue in the left picture of Fig.~\ref{fig: 1d_strand_geometry_with_heat_capacity}). 
 
 \begin{figure}[H]
     \centering
@@ -128,16 +128,16 @@ where the parameters $d$ and $e$ are presented in Fig.~\ref{fig: winding_length_
     \label{fig: winding_length_in_skew_quad}
 \end{figure}
 
-One can observe that Equation~(\ref{eqn:new_equivalent_insulation_element_area}) is similar to (\ref{eqn:equivalent_insulation_element_area}) without taking into consideration $u_\text{ins}$. If $u_\text{ins} = 1$, the entire insulation volume is packed in the LINK33 elements. If $u_\text{ins} < 1$, the remainder of the insulation volume is added to the volume of point MASS71 elements. The reduction of $u_\text{ins}$ serves for limiting the contact area between the neighbouring wires and, thus, the heat transfer across the insulation. The volume of a point MASS71 element is calculated as 
+One can observe that Equation~(\ref{eqn:new_equivalent_insulation_element_area}) is similar to (\ref{eqn:equivalent_insulation_element_area}) but without considering $u_\text{ins}$. If $u_\text{ins} = 1$, the entire insulation volume is packed in the LINK33 elements. If $u_\text{ins} < 1$, the remainder of the insulation volume is added to the volume of point MASS71 elements. A reduction of $u_\text{ins}$ serves for limiting the contact area between the neighbouring wires and, thus, the heat transfer across the insulation. The volume of a point MASS71 element is calculated as 
 \begin{equation}
     V_\text{MASS71} = \frac{\left( a^2 - \frac{\pi d_\text{ins}^2}{4} \right) L_\text{winding}}{n_\text{nodes, winding}}~u_\text{resin} + L_\text{ins}~A_\text{ins, cond} ~ \left( 1-u_\text{ins} \right),
     \label{eqn:mass71_volume_element}
 \end{equation}
-where $u_\text{resin}$ -- resin packing coefficient. If $u_\text{resin} = 0$, no resin is taken into consideration, whereas if $u_\text{resin} = 1$, the entire resin volume is modelled.
+where $u_\text{resin}$ -- resin packing coefficient. If $u_\text{resin} = 0$, no resin is taken into account, whereas if $u_\text{resin} = 1$, the entire resin volume is modelled.
 
 \subsection{Quench Velocity Map}
 
-In this section, a set of 16 standard ANSYS simulations with varying magnetic field and current is conducted. As presented in Table~\ref{table: quench_velocity_map_input_parameters_geometry}, a half metre-long winding is studied. It is important to mention that the winding length $L_\text{winding}$ refers to a straight strand section from Fig.~\ref{fig: 1d_strand_geometry} defined as $L_\text{strand}$. The~model simulates a strand with full insulation without resin. Therefore, $u_\text{ins}=1$ and $u_\text{resin}=0$. The~number of nodes in the longitudinal direction equals $n_\text{nodes, winding}=500$ that corresponds to the mesh size of 1~mm. 20 nodes across the~insulation layer corresponds to the transverse mesh size of 3.5~$\upmu \text{m}$. The mesh size in all dimensions is based on the reference solution of a standard ANSYS simulation with insulation and epoxy resin deduced in Section~\ref{section:quench_velocity_benchmarking_with_insulation_heat_balance}. The mesh size of the insulation elements is smaller in this section because no resin is considered. Therefore, the model is even more accurate than the one discussed in Section~\ref{section:quench_velocity_benchmarking_with_insulation_heat_balance}.  
+In this section, a set of 16 standard ANSYS simulations with varying magnetic field strength and current is conducted. As presented in Table~\ref{table: quench_velocity_map_input_parameters_geometry}, a 50~cm-long winding is studied. It is important to mention that the winding length $L_\text{winding}$ refers to a straight strand section from Fig.~\ref{fig: 1d_strand_geometry} defined as $L_\text{strand}$. The~model simulates a strand with full insulation without resin. Therefore, $u_\text{ins}=1$ and $u_\text{resin}=0$. The~number of nodes in the longitudinal direction equals $n_\text{nodes, winding}=500$. That corresponds to a mesh size of 1~mm. 20 nodes across the~insulation layer corresponds to a transverse mesh size of 3.5~$\upmu \text{m}$. The mesh size in all dimensions is based on the reference solution of a standard ANSYS simulation with insulation and epoxy resin deduced in Section~\ref{section:quench_velocity_benchmarking_with_insulation_heat_balance}. The mesh size of the insulation elements is smaller in this section, because no resin is considered. Therefore, the model is even more accurate than the one discussed in Section~\ref{section:quench_velocity_benchmarking_with_insulation_heat_balance}.  
 
 \begin{table}[H]
     \caption{Geometry input parameters.} 
@@ -196,7 +196,7 @@ Table~\ref{table: quench_velocity_map_input_parameters} depicts input parameters
           no markers,
           width=0.7\linewidth, 
           height = 4.0cm,
-          xlabel={$L_\text{winding},~\text{m}$},
+          xlabel={$\bar{x},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
           ymin=0.0,
@@ -210,9 +210,9 @@ Table~\ref{table: quench_velocity_map_input_parameters} depicts input parameters
     \label{fig: init_gauss_temp_distr_quench_velocity}
 \end{figure}
 
-In the first instants of the quench analysis, the quench velocity is usually higher because the bell shape of the Gaussian profile in Fig~\ref{fig: init_gauss_temp_distr_quench_velocity} relaxes longitudinally. However, there is a moment in the simulations when the heat generation predominates the longitudinal heat propagation in the quenched zone. At that moment, the quench velocity stabilises and remains relatively constant. 
+In the first instants of the quench analysis, the quench velocity is usually higher. However, there is a moment in the simulations when the heat generation predominates the longitudinal heat propagation in the quenched zone. At that moment, the quench velocity stabilises and remains relatively constant. 
 
-The quench velocity is calculated as in~(\ref{eqn:new_quench_velocity}) with a time window equal to $\Delta t=10~\text{ms}$. If the difference in the quench velocity between two consecutive time windows varies less than 0.1~m/s, it is assumed that the quench propagation stabilises. As soon as this condition is met, the analysis finishes and the final value of the quench velocity is saved. Figure~\ref{fig: v_quench_map_current_b_field} presents the quench velocity map as a function of the magnetic field and current.
+The quench velocity is calculated as in~(\ref{eqn:new_quench_velocity}) with a time window equal to $\Delta t=10~\text{ms}$. If the difference in the quench velocity between two consecutive time windows varies less than 0.1~m/s, it is assumed that the quench propagation stabilises. As soon as this condition is met, the analysis finishes and the final value of the quench velocity is saved. Figure~\ref{fig: v_quench_map_current_b_field} presents the quench velocity map as a function of the magnetic field strength and current.
 
 \begin{figure}[H]
 \centering
@@ -239,6 +239,6 @@ The quench velocity is calculated as in~(\ref{eqn:new_quench_velocity}) with a t
           $I=26~\text{A}$}
         \end{axis}
     \end{tikzpicture}
-    \caption{Quench velocity map as a function of magnetic field and current.}
+    \caption{Quench velocity map as a function of magnetic field strength and current.}
     \label{fig: v_quench_map_current_b_field}
 \end{figure}

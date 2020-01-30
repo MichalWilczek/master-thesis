@@ -1,7 +1,7 @@
 
 \subsection{Material Properties and Geometry}
 
-Figure~\ref{fig:skew_quad_geometry_ansys} presents a cross-section of the skew quadrupole used for a magnetic analysis. The iron yoke, the coil, and the remaining parts of the model considered as air are marked in red, blue, and violet respectively. The~magnet cross-section has three axes of symmetry. Therefore, only one-eighth of the skew quadrupole is simulated.  
+Figure~\ref{fig:skew_quad_geometry_ansys} presents a cross-section of the skew quadrupole used for a magnetic analysis. The iron yoke, the coil, and the remaining parts of the model considered as air are marked in red, blue, and violet, respectively. The~magnet cross-section has three axes of symmetry. Therefore, only one-eighth of the skew quadrupole is simulated.  
 
 \begin{figure}[H]
     \centering
@@ -30,7 +30,7 @@ Figure~\ref{fig:skew_quad_geometry_ansys} presents a cross-section of the skew q
     \label{fig:skew_quad_geometry_ansys}
 \end{figure}
 
-The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. In the magnetic analysis of the~skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. The areas considered as air and the~coil are characterised by the magnetic relative permeability equal to one. The iron yoke is characterised by a~non-linear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
+The~coil cross-section is homogenised magnetically and electrically, i.e. there is no distinction between the insulation and the strand composite. In the magnetic analysis of the~skew quadrupole, it is assumed that the magnet is infinitely long. This assumption allows for considering this case as a plane 2D problem. The areas considered as air and the~coil are characterised by a magnetic relative permeability equal to one. The iron yoke is characterised by a~nonlinear B-H curve, as presented in Fig.~\ref{fig:b_h_curve}. 
 
 \begin{figure}[H]
     \centering
@@ -77,7 +77,7 @@ The meshed geometry is illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys
     \label{fig:skew_quad_magnetic_mesh_ansys}
 \end{figure}
 
-For the requirements of the given analysis, the degrees of freedom only related to the~magnetic vector potential $A_\text{z}$ are used. In order to take into consideration the symmetry condition, the~magnetic vector potential $A_\text{z}$ is set to zero on the left side of the geometry. It means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the other side of the symmetry axis, it is assumed by default in ANSYS APDL that the magnetic flux is perpendicular to the wall. As illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}, the mesh is refined inside of the coil. There are 40 elements placed on each side of a rectangular area. The element size in the remaining components of the model is depicted in Table~\ref{table:mesh_characteristics_magnetic_ansys}.
+For the requirements of the given analysis, the only degrees of freedom related to the~magnetic vector potential $A_\text{z}$ are used. In order to consider the symmetry condition, the~magnetic vector potential $A_\text{z}$ is set to zero on the left side of the geometry. This means that the directional magnetic field $B_\text{x}$ is equal to zero on the left side marked in red. On the other side of the symmetry axis, it is assumed by default in ANSYS APDL, that the magnetic flux is perpendicular to the wall. As illustrated in Fig~\ref{fig:skew_quad_magnetic_mesh_ansys}, the mesh is refined inside of the coil. There are 40 elements placed on each side of a rectangular area. The element size in the remaining components of the model is depicted in Table~\ref{table:mesh_characteristics_magnetic_ansys}.
 
 \begin{table}[H]
     \caption{Mesh size characteristics of the skew quadrupole.} 
@@ -100,7 +100,7 @@ For the requirements of the given analysis, the degrees of freedom only related 
      \label{table:mesh_characteristics_magnetic_ansys} 
 \end{table}
 
-The uniformly distributed current density is applied to the coil area calculated as
+A uniformly distributed current density is applied to the coil area calculated as
 \begin{equation}
     J_\text{coil} = \frac{n_\text{windings}~I}{A_\text{coil}},
 \end{equation}
@@ -108,7 +108,7 @@ where $n_\text{windings}$ -- number of windings, $I$ -- current in each winding,
 
 \subsection{Results and Magnetic Field Mapping in the Skew Quadrupole}
 
-Two values of current are chosen for the comparison of the magnetic field distribution inside the cross-section of the skew quadrupole, as shown in Fig.~\ref{fig:skew_quad_magnetic_results_geometry_ansys}. As expected, one can observe that the magnetic field increases with the rise of current. Moreover, the difference in the magnetic field distribution at different current levels is a result of the non-linear magnetic properties of the iron yoke.
+Two values of current are chosen for the comparison of the magnetic field strength distribution inside the cross-section of the skew quadrupole, as shown in Fig.~\ref{fig:skew_quad_magnetic_results_geometry_ansys}. As expected, one can observe that the magnetic field strength increases with the rise of current. Moreover, the difference in the magnetic field strength distribution at different current levels is a result of the nonlinear magnetic properties of the iron yoke.
 
 \begin{figure}[H]
     \centering
@@ -116,11 +116,11 @@ Two values of current are chosen for the comparison of the magnetic field distri
     \node at (0,0) {\includegraphics[width=.39\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/peak_field_yoke_coil_current_40.jpg}};
     \node at (7.5,0) {\includegraphics[width=.39\textwidth]{sections/skew_quad_q_det/figures/magnetic_map/peak_field_yoke_coil_current_86.jpg}};
     \end{tikzpicture}
-    \caption{Magnetic field distribution in the coil and the iron yoke for $I=40~\text{A}$ (left) and $I=86~\text{A}$ (right).}
+    \caption{Magnetic field strength distribution in the coil and the iron yoke for $I=40~\text{A}$ (left) and $I=86~\text{A}$ (right).}
     \label{fig:skew_quad_magnetic_results_geometry_ansys}
 \end{figure}
 
-Figure~\ref{fig:skew_quad_magnetic_results_coil_ansys} presents the magnetic field distribution only in the coil for two values of transport current. In order to use the results from the coil for the quench velocity-based approach, the vector sum of the magnetic flux density is extracted at corner nodes of the coil elements. The magnetic field is linearly interpolated in the $(x,y)$-space for the current levels between the actually simulated values. 
+Figure~\ref{fig:skew_quad_magnetic_results_coil_ansys} presents the magnetic field strength distribution in the coil for two values of transport current. In order to use the results from the coil for the quench velocity-based approach, the vector sum of the magnetic flux density is extracted at corner nodes of the coil elements. The magnetic field is linearly interpolated in the $(x,y)$-space for the current levels between the simulated values. 
 
 \begin{figure}[H]
     \centering
@@ -132,7 +132,7 @@ Figure~\ref{fig:skew_quad_magnetic_results_coil_ansys} presents the magnetic fie
     \label{fig:skew_quad_magnetic_results_coil_ansys}
 \end{figure}
 
-Figure~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys} illustrates the magnetic field map applied to 754 windings for the nominal current of $I=86~\text{A}$. The central position of each winding is used to interpolate the magnetic field from the ANSYS results presented in Fig.~\ref{fig:skew_quad_magnetic_results_coil_ansys}. As current changes in time during the discharge process, the magnetic field of each winding varies with its position in the $(x,y)$-space.
+Figure~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys} illustrates the magnetic field map applied to 754 windings for the nominal current of $I=86~\text{A}$. The central position of each winding is used to interpolate the magnetic field strength from the ANSYS results presented in Fig.~\ref{fig:skew_quad_magnetic_results_coil_ansys}. As current changes in time during the discharge process, the magnetic field strength of each winding varies with its position in the $(x,y)$-space.
 
 \begin{figure}[H]
     \centering
@@ -157,11 +157,11 @@ Figure~\ref{fig:skew_quad_magnetic_interpolation_coil_ansys} illustrates the mag
     
     \node[black, scale=0.8] at (-0.225,-4) {$x$, mm (layers direction)};
     \node[black, rotate=90, scale=0.8] at (-4.75,0) {$y$, mm (layers direction)};
-    \node[black, rotate=90, scale=0.8] at (5.3,0) {Magnetic field, T};
+    \node[black, rotate=90, scale=0.8] at (5.3,0) {Magnetic field strength, T};
 
     \end{tikzpicture}
-    \caption{Magnetic field distribution in the coil at $I=86~\text{A}$ applied separately to each winding.}
+    \caption{Magnetic field strength distribution in the coil at $I=86~\text{A}$ applied separately to each winding.}
     \label{fig:skew_quad_magnetic_interpolation_coil_ansys}
 \end{figure}
 
-It is important to emphasise that ANSYS APDL allows for creating the material properties only as a function of a single-dependent variable (in this case temperature). It is not possible to include the dependence of material properties on the magnetic field in a relatively simple manner in this tool. The only possible method to add an additional variable in the repository of the material properties is to replace the repository at a certain moment of a transient simulation. The update of material properties is conducted at the communication time windows $t_\text{com}$ at which Python communicates with ANSYS to update the quench position in the coil. Since the update of the material properties is a time-consuming process, it is not recommended to perform it at each communication time window $t_\text{com}$ when hundreds of windings are modelled.
+It is important to emphasise that ANSYS APDL allows for creating the material properties only as a function of a single-dependent variable (in this case temperature). It is not possible to include the dependence of material properties on the magnetic field strength in a relatively simple manner in this tool. The only possible method to add an additional variable to the repository of the material properties is to replace the repository at a certain moment of a transient simulation. The update of material properties is conducted at the communication time windows $t_\text{com}$ at which Python communicates with ANSYS to update the quench position in the coil. Since the update of the material properties is a time-consuming process, it is not recommended to perform it at each communication time window $t_\text{com}$ when hundreds of windings are modelled. It is rather recommended to update the material properties when the current drops by the assumed threshold value of current.

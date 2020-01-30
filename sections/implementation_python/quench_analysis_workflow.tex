@@ -1,0 +1,85 @@
+
+As illustrated in Fig.~\ref{fig:block_diagram_skew_quad_analysis_workflow}, there are four steps required to conduct the multi-strand analysis of a high-order corrector with the quench velocity-based approach. In the first step, a 2D magnetic field map as a function of current is created. The assignment of a magnetic map to the windings is presented in Section~\ref{section:multidimensional_mapping_algorithm}. The~average quench velocity also depends on the magnetic field strength and the current. In the second, it is required to conduct a set of standard analyses to define the quench velocity as a function of the magnetic field strength and the current. The third step of the workflow aims to find the minimum propagation zone of an insulated strand. This is required because the~spot heater is not included in the simulation. Therefore, one should set an initial temperature profile that leads to a natural quench initiation. When all three steps are completed, one can start simulating the discharge of a high-order corrector.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance = 1.5cm, auto]
+        \renewcommand{\baselinestretch}{0.75} 
+        \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=3cm, text badly centered, node distance=2.5cm, inner sep=0pt, scale=0.8]
+        \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=7.0cm, text centered, rounded corners, minimum height=0.5cm, node distance=1.25cm, scale=0.8]
+        \tikzstyle{line} = [draw, -latex']
+        \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=7cm, minimum height=2em, scale=0.8]
+        
+        \node [block] (magnetic_map) {Create a 2D magnetic map as a function of current.};
+        \node [block, below of=magnetic_map] (v_quench_map) {Create a quench velocity map as a function of current and magnetic field.};
+        \node [block, below of=v_quench_map] (mpz_analysis) {Find minimum propagation zone for the quench initiation.};
+        \node [block, below of=mpz_analysis] (skew_quad_analysis) {Conduct a multi-strand analysis of a high-order corrector.};
+    
+        \path [line] (magnetic_map) -- (v_quench_map);
+        \path [line] (v_quench_map) -- (mpz_analysis);
+        \path [line] (mpz_analysis) -- (skew_quad_analysis);
+
+    \end{tikzpicture}
+    \caption{Analysis workflow for study of a high-order corrector.}
+    \label{fig:block_diagram_skew_quad_analysis_workflow}
+\end{figure}
+
+The first step of the workflow aims to create a 2D magnetic map of the coil as a function of current. This is a separate simulation independent of the Python implementation. The Python code only imports the magnetic map from an external folder. The next three analysis steps from the workflow in Fig.~\ref{fig:block_diagram_skew_quad_analysis_workflow} are run in Python. The analysis options of those steps are presented in Table~\ref{table:workflow_analysis_options}. 
+
+\begin{table}[H]
+    \caption{Analysis options of specific simulations in the workflow.} 
+    \vspace{-1.em} 
+    \fontsize{10}{10}
+    \selectfont 
+    \renewcommand{\arraystretch}{1.5}
+    \begin{center}
+
+        \begin{tabular}{ | m{2.5cm} | m{3.4cm} | m{3.4cm} | m{3.4cm} |}  
+        
+        \hline
+        \centering \textbf{parameter} & 
+        \centering \textbf{quench velocity map} & 
+        \centering \textbf{minimum propagation zone} &
+        \centering \textbf{multi-strand analysis} \tabularnewline
+        \hline
+        \centering analysis type & 
+        \centering standard & 
+        \centering standard & 
+        \centering quench velocity-based \tabularnewline
+        \hline
+        \centering geometry & 
+        \centering extruded strand & 
+        \centering extruded strand & 
+        \centering high-order corrector \tabularnewline
+        \hline
+        \centering analysis with insulation & 
+        \centering yes/no & 
+        \centering yes/no & 
+        \centering yes \tabularnewline
+        \hline
+        \centering initial temperature profile & 
+        \centering Gaussian & 
+        \centering Gaussian & 
+        \centering Gaussian \tabularnewline
+        \hline
+        \centering quench velocity model & 
+        \centering N/A & 
+        \centering N/A & 
+        \centering function of current and magnetic field strength \tabularnewline
+        \hline
+        \centering circuit & 
+        \centering constant current & 
+        \centering constant current & 
+        \centering RL discharge with dump resistor \tabularnewline
+        \hline
+        \centering B-field & 
+        \centering constant & 
+        \centering constant & 
+        \centering function of current and position in ($x$, $y$)-plane \tabularnewline
+        \hline
+        \end{tabular}
+    \end{center}  
+     \label{table:workflow_analysis_options} 
+ \end{table}
+ 
+The quench velocity map and the minimum propagation study have identical settings. They both require the standard analysis with the geometry of an extruded strand. The analysis can be conducted with or without the insulation elements. Both simulations are also conducted at constant current and magnetic field strength, i.e. these parameters do not change for a single analysis. The multi-strand analysis requires the quench velocity-based approach with the geometry of a high-order corrector. The quench velocity model is uploaded as an external file based on the quench velocity map study. The magnetic field is uploaded from a folder containing a set of magnetic field maps for varying values of current. Moreover, the discharge of the magnet is simulated in an RL-circuit.

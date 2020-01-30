@@ -84,18 +84,14 @@ As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper ri
 \begin{tikzpicture}
 \begin{axis}[
   no markers,
-  legend style={at={(1,0)},anchor=south east},
-  grid style={dashed,gray!30},
-  width=0.85\linewidth, 
-  height = 6cm,
+  width=0.7\linewidth, 
+  height = 4.0cm,
   xlabel={$T,~\text{K}$},
-  ylabel={$\rho,~\Omega~\text{m}$},
-  xlabel style={below right},
-  ylabel style={above left},
+  ylabel={$\rho,~\Omega\text{m}$},
   xmin=0.0,
   ymin=0.0,
   xmax=100.0,
-  legend pos=north west
+  legend pos=outer north east
   ]
   \addplot table[x=Time,y=B_0_0_RRR_200,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_resistivity.csv}; 
   \addplot table[x=Time,y=B_3_0_RRR_200,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_resistivity.csv}; 
@@ -106,7 +102,7 @@ As presented in Fig. \ref{fig:cu_resistivity_plot}, the resistivity of copper ri
 
 \end{axis}
 \end{tikzpicture}
-\caption{Copper resistivity temperature dependence for two values of magnetic field.}
+\caption{Copper resistivity temperature dependence for two values of magnetic field strength.}
     \label{fig:cu_resistivity_plot}
 \end{figure}
 
@@ -168,19 +164,15 @@ As presented in Fig. \ref{fig:cu_k_plot}, the thermal conductivity of copper dec
 \begin{tikzpicture}
 \begin{axis}[
   no markers,
-  legend style={at={(1,0)},anchor=south east},
-  grid style={dashed,gray!30},
-  width=0.85\linewidth, 
-  height = 6cm,
+  width=0.7\linewidth, 
+  height = 4.0cm,
   xmode=log,
   xlabel={$T,~\text{K}$},
   ylabel={$k,~\frac{\text{W}}{\text{m K}}$},
-  xlabel style={below right},
-  ylabel style={above left},
   xmax=300.0,
   ymin=0.0,
   ymax=4200.0,
-  legend pos=north west
+  legend pos=outer north east
   ]
   \addplot[smooth, blue] table[x=temperature,y=B0,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_200.csv}; 
   \addplot[smooth, red] table[x=temperature,y=B3,col sep=comma] {sections/appendices/material_properties/copper/figures/cu_thermal_conductivity_rrr_200.csv};
@@ -196,7 +188,7 @@ As presented in Fig. \ref{fig:cu_k_plot}, the thermal conductivity of copper dec
 
 \end{axis}
 \end{tikzpicture}
-\caption{Thermal conductivity of copper as a function of temperature for two values of magnetic field and RRR.}
+\caption{Thermal conductivity of copper as a function of temperature for two values of magnetic field strength and RRR.}
     \label{fig:cu_k_plot}
 \end{figure}
 
@@ -237,14 +229,10 @@ In order to convert specific into volumetric heat capacity, the polynomial funct
 \begin{tikzpicture}
 \begin{axis}[
   no markers,
-  legend style={at={(1,0)},anchor=south east},
-  grid style={dashed,gray!30},
-  width=0.85\linewidth, 
-  height = 6cm,
+  width=0.7\linewidth, 
+  height = 4.0cm,
   xlabel={$T,~\text{K}$},
   ylabel={$c_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
-  xlabel style={below right},
-  ylabel style={above left},
   xmin=0.0,
   ymin=0.0,
   xmax=300.0,
@@ -257,3 +245,4 @@ In order to convert specific into volumetric heat capacity, the polynomial funct
     \caption{Volumetric heat capacity of copper as a function of temperature.}
     \label{fig:cu_cv_plot}
 \end{figure}
+

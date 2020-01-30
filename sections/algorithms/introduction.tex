@@ -1,18 +1,20 @@
 
-There are two important phenomena in thermal quench simulations: $(i)$~longitudinal quench propagation, $(ii)$~transverse heat flow through the insulation layer that causes a~quench in neighbouring windings. The adopted quench velocity-based approach only allows for estimating the longitudinal quench propagation corresponding to the \nth{1} case. Actually, in general, one could also rely on pre-calculated transverse quench propagation velocity. However, as the number of nodes across the insulation is relatively not large, this solution is not chosen. The heat flow across the insulation layer is handled by means of a standard heat balance equation. In order to conduct a multi-strand thermo-electric analysis with the insulation layer using a quench velocity-based approach, the ANSYS model is developed which allows for studying the following physics: 
+There are two important phenomena in thermal quench simulations: $(i)$~longitudinal quench propagation, $(ii)$~transverse heat flow through the insulation layer that causes a~quench in neighbouring windings. The adopted quench velocity-based approach only allows for estimating the longitudinal quench propagation corresponding to the \nth{1} case. Actually, in general, one could also rely on pre-calculated transverse quench propagation velocity. However, as the number of nodes across the insulation is relatively small, this solution is not chosen. The heat flow across the insulation layer is handled by means of a standard heat balance equation. In order to conduct a multi-strand thermo-electric analysis with the insulation layer using the quench velocity-based approach, the ANSYS models are developed which allow for studying the following physics: 
 
 \begin{enumerate}
-    \item Calculation of the longitudinal quench propagation with a quench front location based on a priori known quench velocity map.
-    \item Calculation of a transverse heat propagation across the~insulation.
+    \item Calculation of the longitudinal quench propagation with a quench front location based on a priori known quench velocity map
+    \item Calculation of a transverse heat propagation across the~insulation
+    \item Calculation of the current during the discharge in a magnet
+    \item Calculation of the magnetic field strength across the coil based on a plane geometry of a magnet
 \end{enumerate}
 
-In addition, the following algorithms are implemented in the external routine in order to meet the requirements of the quench velocity-based approach:
+The multi-strand thermo-electric model in ANSYS covers the first two points. In the third point, the electrical circuit is solved in which the multi-strand coil is represented by the resistance varying over time. The last point corresponds to a separate magnetic model prepared in ANSYS to simulate the magnetic strength distribution for a varying value of current. This model is required to include the dependence of the material properties on the magnetic field strength. In addition, the following algorithms are implemented in the external routine in order to meet the requirements of the quench velocity-based approach:
 
 \begin{enumerate}
     \item Quench velocity assignment algorithm. It calculates a time-dependent quench position based on a~quench velocity function.
     \item Multidimensional mapping algorithm. It maps multi-dimensional magnet geometries onto a one-dimensional cable.
-    \item Quench detection algorithm. It detects new quenches in a multi-strand domain if a~transverse heat propagation results in a quench of windings neighbouring with a quenched zone.
+    \item Quench detection algorithm. It detects new quenches in a multi-strand domain if a~transverse heat propagation results in a quench of windings outside of the already existing quenched zone.
     \item Quench front position assignment algorithm. It assigns nodes in a~discretised and time-dependent space.
 \end{enumerate}
 
-This chapter presents the implementation of models in ANSYS APDL. All algorithms are also discussed except for the quench velocity assignment algorithm depicted in Section~\ref{section:quench_velocity_cosimulation}.
+This chapter presents the implementation of the electro-thermal model in ANSYS. The description of the circuit and the magnetic field analyses will be further described based on the analysis of the skew quadrupole in Chapter~\ref{chapter:skew_quadrupole_quench_detection_analysis}. In addition, all algorithms are also discussed in this chapter except for the quench velocity assignment algorithm already depicted in Section~\ref{section:quench_velocity_cosimulation}.

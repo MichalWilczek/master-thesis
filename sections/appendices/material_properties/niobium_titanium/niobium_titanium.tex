@@ -13,7 +13,6 @@ Volumetric heat capacity of Nb-Ti is estimated by means of a piece-wise polynomi
 \end{equation}
 where $T_\text{c0}$ -- maximum critical temperature for $B=0~\text{T}$, $B_\text{c20}$ -- maximum upper critical magnetic field for $T=0~\text{K}$. Their numerical values for Nb-Ti are presented in Table~\ref{table: appendix_nb_ti_crit_temp_params}. In both parameters, the current density is equal to zero. 
 
-\newpage
 \begin{table}[H]
     \caption{Critical temperature parameters for Nb-Ti~\cite{empirical_scaling_formulas_for_critical_current}.} 
     \vspace{-1.em} 
@@ -70,19 +69,15 @@ As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti h
 	{circle, magnification=8, connect spies}]
     \begin{axis}[
       no markers,
-      legend style={at={(1,0)},anchor=south east},
-      grid style={dashed,gray!30},
-      width=0.85\linewidth, 
-      height = 6cm,
+      width=0.7\linewidth, 
+      height = 4cm,
       xlabel={$T,~\text{K}$},
       ylabel={$c_\text{v},~\frac{\text{J}}{\text{m}^3~\text{K}}$},
       xtick={8.5, 50, 100, 150, 200, 250, 300},
-      xlabel style={below right},
-      ylabel style={above left},
       xmin=0.0,
       ymin=0.0,
       xmax=300.0,
-      legend pos=north west
+      legend pos=outer north east
       ]
       \addplot[smooth, blue] table[x=temperature,y=B0,col sep=comma] {sections/appendices/material_properties/niobium_titanium/figures/nb_ti_cv.csv}; 
       \addplot[smooth, red] table[x=temperature,y=B3,col sep=comma] {sections/appendices/material_properties/niobium_titanium/figures/nb_ti_cv.csv}; 
@@ -95,9 +90,9 @@ As presented in Fig. \ref{fig:nbti_cv_plot}, there occurs a step jump in Nb-Ti h
       \textit{B}=3 T}
     
     \end{axis}
-    \spy [black, size=2.5cm] on (spypoint)
+    \spy [black, size=1.5cm] on (spypoint)
       in node[fill=white] at (magnifyglass);
     \end{tikzpicture}
-    \caption{Volumetric heat capacity of Niobium-Titanium as a function of temperature.}
+    \caption{Volumetric heat capacity of Ni-Ti as a function of temperature.}
     \label{fig:nbti_cv_plot}
 \end{figure}

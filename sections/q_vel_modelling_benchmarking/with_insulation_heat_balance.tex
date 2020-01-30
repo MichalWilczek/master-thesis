@@ -1,5 +1,5 @@
 
-As described in the block diagram in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}, this section focuses on finding the mesh size across the insulation layer. The longitudinal mesh size and the time step range are taken from the reference solution obtained in the study related to the bare strand. The geometric assumptions, the initial conditions, and the analysis settings are the same as in Section~\ref{section: 1D_quench_propagation_with_insulation}. In this analysis, the initial number of nodes accross the insulation is $n_\text{divisions, ins}=3$ which corresponds to the minimum number of nodes required to study the nonlinear material properties of the insulation. The iteration loop~$i$ for the insulation mesh size is performed four times with the increment of $\Delta n_\text{divisions, ins}$ in order to obtain the following number of insulation nodes $n_\text{divisions, ins}=\{3, 5, 10, 20, 30\}$ which corresponds to the mesh size of $m=\{56, 34, 17, 8, 6\}~\upmu \text{m}$, respectively. As shown in Fig.~\ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation}, with 20 nodes across the insulation the relative error of an average quench velocity remains within the tolerance of~1\% with respect to the analysis with 30 nodes. 
+As described in the block diagram in Fig.~\ref{fig:block_diagram_benchmarking_methodology_with_insulation}, this section focuses on finding the mesh size across the insulation layer. The longitudinal mesh size and the time step range are taken from the reference solution obtained in the study of the bare strand. The geometric assumptions, the initial conditions, and the analysis settings are the same as in Section~\ref{section: 1D_quench_propagation_with_insulation}. In this analysis, the initial number of nodes accross the insulation is $n_\text{divisions, ins}=3$ which corresponds to the minimum number of nodes required to study the nonlinear material properties of the insulation. The iteration loop~$i$ is performed four times for the insulation mesh size with the increment of $\Delta n_\text{divisions, ins}$ in order to obtain the following number of insulation nodes $n_\text{divisions, ins}=\{3, 5, 10, 20, 30\}$. The number of nodes accross the insulation layer corresponds to the mesh size of $m=\{56, 34, 17, 8, 6\}~\upmu \text{m}$, respectively. Figure~\ref{fig: q_vel_modelling_v_quench_rel_error_with_insulation} shows that with 20 nodes across the insulation, the relative error of an average quench velocity remains within the tolerance of~1\% with respect to the analysis with 30 nodes. 
 
 \begin{figure}[H]
 \centering
@@ -24,7 +24,7 @@ As described in the block diagram in Fig.~\ref{fig:block_diagram_benchmarking_me
     \label{fig: q_vel_modelling_v_quench_rel_error_with_insulation}
 \end{figure}
 
-The stabilisation of the solution can be also observed in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation} in which the evolution of the hot-spot temperature in time is presented as a function of a number of nodes across the insulation layer. With 20 nodes, the temperature clearly converges.
+The stabilisation of the solution can also be observed in Fig. \ref{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}. Here, the evolution of the hot-spot temperature in time is presented as a function of a number of nodes across the insulation layer. The temperature clearly converges with 20 nodes.
 
 \begin{figure}[H]
 \centering
@@ -54,7 +54,7 @@ The stabilisation of the solution can be also observed in Fig. \ref{fig: q_vel_m
     \label{fig: q_vel_modelling_v_quench_hot_spot_temp_with_insulation}
 \end{figure}
 
-The parameters used for the benchmarking purposes with the quench velocity-based approach are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_with_insulation}. The reference analysis is the one with the mesh size of 1~mm, the time step range of $t=[0.01, 0.1]~\text{ms}$, and 20 nodes across the insulation layer. 
+The parameters used for the benchmarking purposes with the quench velocity-based approach are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_with_insulation}. The reference analysis is that with a mesh size of 1~mm, a time step range of $t=[0.01, 0.1]~\text{ms}$, and 20 nodes across the insulation layer. 
 
 \begin{table}[H]
     \caption{Analysis input parameters.} 
@@ -77,7 +77,7 @@ The parameters used for the benchmarking purposes with the quench velocity-based
      \label{table: 1d_qv_benchmarking_reference_analysis_settings_with_insulation} 
  \end{table}
 
-In the 1D quench analysis of a 1 metre-long strand with insulation and epoxy resin, the computing time rises monotonically when the number of nodes across the insulation layer increases, as presented in Fig.~\ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}. The analysis with 20 nodes lasts over 2 hours\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}. Therefore, the further mesh refinement is not recommended.
+In the 1D quench analysis of a 1 metre-long strand with insulation and epoxy resin, the computing time rises monotonically when the number of nodes across the insulation layer increases. This is presented in Fig.~\ref{fig: q_vel_modelling_heat_balance_computing_time_with_insulation}. The analysis with 20 nodes lasts over 2 hours\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}. Therefore, the further mesh refinement is not recommended.
 
 \begin{figure}[H]
 \centering

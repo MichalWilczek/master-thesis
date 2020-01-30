@@ -1,7 +1,7 @@
 \subsection{Geometry}
 \label{subsection:algorithms_geometry}
 
-Creating a 3D magnet geometry in a~CAD tool in which a~single cable is wound $n$ times is a~complicated task because the model must take into account a relative position of one winding with respect to another. Therefore, every winding is considered to be a~separate domain in prepared ANSYS models with winding jumps, as shown in Fig. \ref{fig:winding_geom_scheme}. The green lines depict the electro-thermal coupling of windings according to their winding order. With such an approach, one can easily create multi-strand magnet geometries. Moreover, by specifying which windings are coupled together, with the same numerical domain, one can also analyse magnets with a different winding scheme.
+Creating a 3D magnet geometry within a~CAD tool in which a~single cable is wound $n$ times is a~complicated task, because the model must take into account a relative position of one winding with respect to another. Therefore, every winding is considered to be a~separate domain in prepared ANSYS models with winding jumps, as shown in Fig. \ref{fig:winding_geom_scheme}. The green lines depict the electro-thermal coupling of windings according to their winding order. With such an approach, one can easily create multi-strand magnet geometries. Moreover, by specifying which windings are coupled together, with the same numerical domain, one can also analyse magnets with a different winding scheme.
 
 \begin{figure}[H]
 \centering
@@ -29,7 +29,7 @@ Creating a 3D magnet geometry in a~CAD tool in which a~single cable is wound $n$
 \label{fig:winding_geom_scheme}
 \end{figure}
 
-Every winding can have an external homogenised insulation layer represented as a~transverse one-dimensional element, as shown in Fig.~\ref{fig: insulation_coupling}. If multiple windings are created, the~end nodes of each insulation layer are thermally coupled with the neighbouring insulation elements. The~model assumes no diagonal heat propagation across the insulation layer, i.e. the~windings are not diagonally coupled. The insulation elements marked in blue are represented by the LINK33 element whereas the composite strand in yellow -- LINK68. LINK68 is a~uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule heating. LINK68 is used for steady-state and transient simulations. In standard ANSYS simulations, the Joule heating is implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 in the quench velocity-based approach allows for omitting this step since the solver computes the heat source by an~internal routine based on the material property state. Thus, the element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
+Every winding can have an external homogenised insulation layer represented as a~transverse one-dimensional element, as shown in Fig.~\ref{fig: insulation_coupling}. If multiple windings are created, the~end nodes of each insulation layer are thermally coupled with the neighbouring insulation elements. The~model assumes no diagonal heat propagation across the insulation layer, i.e. the~windings are not diagonally coupled. The insulation elements marked in blue are represented by the LINK33 element whereas the composite strand in yellow -- LINK68. LINK68 is a~uniaxial 1D element which can be used in a 3D space. It has the ability to conduct heat and electrical current along its nodes with an internal heat source corresponding to the Joule heating. LINK68 is used for steady-state and transient simulations. In standard ANSYS simulations, the Joule heating is implemented by introducing a power source over the entire strand domain as a function of resistivity (being a function of temperature). The usage of LINK68 in the quench velocity-based approach allows to omit applying the external power source since the solver computes the heat source by an~internal routine based on the material property state. Thus, the element requires electrical resistivity of the composite strand~\cite{ansys_element_manual}.
 
 \begin{figure}[H]
     \centering
@@ -90,9 +90,9 @@ Every winding can have an external homogenised insulation layer represented as a
     \draw[scale=1] (-3.5+0.5,1+0.5) circle (0.1cm);
     \draw[black, ->, scale=1] (-3.5+0.5,1+0.5) -- (-3.5+0.5,1.5+0.5);
     \draw[black, ->, scale=1] (-3.5+0.5,1+0.5) -- (-3+0.5,1+0.5);
-    \node[scale = 0.8] at (-3.75+0.5,0.8+0.5) {$\vec{z}$};
-    \node[scale = 0.8] at (-2.9+0.5,1.2+0.5) {$\vec{x}$};
-    \node[scale = 0.8] at (-3.7+0.5,1.65+0.5) {$\vec{y}$};
+    \node[scale = 0.8] at (-3.75+0.5,0.8+0.5) {$z$};
+    \node[scale = 0.8] at (-2.9+0.5,1.2+0.5) {$x$};
+    \node[scale = 0.8] at (-3.7+0.5,1.65+0.5) {$y$};
         
     \end{tikzpicture}
     \caption{Cross-section of a 1D+1D+1D geometry with coupled insulation nodes marked in green.}
@@ -101,7 +101,7 @@ Every winding can have an external homogenised insulation layer represented as a
 
 \subsection{Mesh Generation}
 
-The~mesh generation scheme for a~magnet geometry is illustrated in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The~mesh should be distributed over so called "nodal planes" which are always perpendicular to the~normal vector $\vec{n}$ of a directional spline. The directional spline is a curve that represents a final shape of the coil. One nodal plane with nine windings is presented in Fig.~\ref{fig: insulation_coupling}. In order to generate mesh, a~longitudinal number of divisions has to be specified. When the insulation is considered, the number of divisions across the insulation must be defined as well. Each insulation element is characterised by the same volume. 
+The~mesh generation scheme for the~magnet geometry is illustrated in Fig.~\ref{fig: mesh_generation_in_multidimensional_case}. The~mesh should be distributed over so called "nodal planes", which are always perpendicular to the~normal vector $\vec{n}$ of a directional spline. The directional spline is a curve that represents a final shape of the coil. One nodal plane with nine windings is presented in Fig.~\ref{fig: insulation_coupling}. In order to generate mesh, a~longitudinal number of divisions has to be specified. When the insulation is considered, the number of divisions across the insulation must be defined as well. Each insulation element is characterised by the same volume. 
 
 \begin{figure}[H]
     \centering

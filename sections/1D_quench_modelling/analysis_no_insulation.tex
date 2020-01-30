@@ -7,7 +7,7 @@ Since copper and Nb-Ti are characterised by a~different volumetric heat capacity
     c_\text{v, strand} = f_\text{Cu} ~ c_\text{v, Cu}(T) + f_\text{Nb-Ti} ~ c_\text{v, Nb-Ti}(T,B),
     \label{eqn: cv_equiv}
 \end{equation}
-where $c_\text{v, Cu}$ -- volumetric heat capacity of copper as a function of temperature, $c_\text{v, Nb-Ti}$ -- volumetric heat capacity of Nb-Ti as a function of temperature and magnetic field, $f_\text{Cu}$ -- volumetric fraction of copper, $f_\text{Nb-Ti}$ -- volumetric fraction of Nb-Ti. The~volumetric heat capacity of the composite strand for a given value of $B$ and $r_\text{Cu/sc}$ is shown in Fig. \ref{fig:eq_wind_cp}.
+where $c_\text{v, Cu}$ -- volumetric heat capacity of copper as a function of temperature, $c_\text{v, Nb-Ti}$ -- volumetric heat capacity of Nb-Ti as a function of temperature and magnetic field strength, $f_\text{Cu}$ -- volumetric fraction of copper, $f_\text{Nb-Ti}$ -- volumetric fraction of Nb-Ti. The~volumetric heat capacity of the composite strand for a given value of $B$ and $r_\text{Cu/sc}$ is shown in Fig. \ref{fig:eq_wind_cp}.
 
 \begin{figure}[H]
 \centering
@@ -15,7 +15,7 @@ where $c_\text{v, Cu}$ -- volumetric heat capacity of copper as a function of te
         \begin{axis}[
           no markers,
           width=0.7\linewidth, 
-          height = 4.5cm,
+          height = 4.0cm,
           xlabel={$T,~\text{K}$},
           ylabel={$c_\text{v, strand},~\frac{\text{J}}{\text{m}^3 \cdot \text{K}}$},
           xmin=0.0,
@@ -84,7 +84,7 @@ The initially quenched zone is equal to $L_\text{quench, init}= 0.1~\text{m}$ wh
         \begin{axis}[
           no markers,
           width=0.7\linewidth, 
-          height = 4.5cm,
+          height = 4.0cm,
           xlabel={$L_\text{strand},~\text{m}$},
           ylabel={$T,~\text{K}$},
           xmin=0.0,
@@ -122,7 +122,7 @@ The solution in both ANSYS and COMSOL are obtained with a strict time stepping, 
 \subsection{Results}
 \label{subsubsection:1d_quench_propagation_analysis_results_no_insulation}
 
-The temperature distribution profiles are compared at three time steps $t=\{0.03, 0.06, 0.1\}$~s, as presented in Fig.~\ref{fig: 1d_no_insulation_temp_along_strand_comparison}. One can conclude that the initial heat pulse is sufficient to initiate quench. In fact, relatively high thermal conductivity and low heat capacity of the strand allow for a longitudinal quench propagation. At each time window, the hot-spot is placed at $x=0~\text{m}$. In general, COMSOL predicts faster quench propagation.
+The temperature distribution profiles are compared at three time steps $t=\{0.03, 0.06, 0.1\}$~s, as presented in Fig.~\ref{fig: 1d_no_insulation_temp_along_strand_comparison}. One can conclude that the initial heat pulse is sufficient to initiate the quench. In fact, relatively high thermal conductivity and low heat capacity of the strand allow for a longitudinal quench propagation. At each time window, the hot-spot is placed at $x=0~\text{m}$. In general, COMSOL predicts faster quench propagation.
 
 \begin{figure}[H]
 \centering
@@ -203,7 +203,7 @@ where $r_\text{ANSYS}$ -- a given result from ANSYS, $r_\text{COMSOL}$ -- a give
     \begin{tikzpicture}
         \begin{axis}[
           width=0.7\linewidth, 
-          height = 4.5cm,
+          height = 4.0cm,
           xlabel={$\bar{x},~\text{m}$},
           ylabel={$E_\text{r}$, \%},
           xmin=0.0,

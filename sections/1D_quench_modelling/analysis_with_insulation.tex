@@ -18,7 +18,7 @@ As presented in Fig. \ref{fig:diffusivity_strand_to_insulation_ratio}, the longi
         \begin{axis}[
           no markers,
           width=0.7\linewidth, 
-          height = 4.5cm,
+          height = 4.0cm,
           ymode=log,
           xmode=log,
           xlabel={$T,~\text{K}$},
@@ -112,7 +112,7 @@ where $V_\text{ins}$ -- total insulation volume with resin, $n_\text{divisions, 
 
 \subsection{Initial and Boundary Conditions, and Solver Settings}
 
-The strand geometry, the temperature initial conditions, and the analysis settings for both COMSOL and ANSYS remain the identical with respect to the simulation described in Section~\ref{section: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_analysis_init_temp_input_parameters}, respectively. The~analysis parameters are presented in Table \ref{table: 1d_quench_propagation_analysis_time_stepping_input_parameters}. The solver settings for both tools remain identical as well. The additional parameters corresponding to the insulation are described in Table~\ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. 
+The strand geometry, the initial temperature conditions, and the analysis settings for both COMSOL and ANSYS remain the identical with respect to the simulation described in Section~\ref{section: 1D_quench_propagation_no_insulation}, as presented in Fig. \ref{fig: init_gauss_temp_distr} and Table \ref{table: 1d_quench_propagation_analysis_init_temp_input_parameters}, respectively. The~analysis parameters are presented in Table \ref{table: 1d_quench_propagation_analysis_time_stepping_input_parameters}. The solver settings for both tools remain identical as well. The additional parameters corresponding to the insulation are described in Table~\ref{table: 1d_quench_propagation_geometry_parameters_with_insulation}. 
 
 \begin{table}[H]
     \caption{Insulation input parameters.} 
@@ -133,11 +133,11 @@ The strand geometry, the temperature initial conditions, and the analysis settin
      \label{table: 1d_quench_propagation_geometry_parameters_with_insulation} 
  \end{table}
 
-Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ -- four times larger with respect to the analysis performed in ANSYS.
+Every orthogonal insulation domain consists of six elements of the same length. It is important to mention that in COMSOL, six orthogonal elements do not represent a quarter, but a full cross-section. Therefore, the number of insulation elements in COMSOL is four times smaller and $A_\text{ins, cond}$ -- four times larger with respect to the analysis performed in ANSYS.
 
 \subsection{Results}
 
-Similarly to Section \ref{subsubsection:1d_quench_propagation_analysis_results_no_insulation}, the results are compared at three time steps, as presented in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}. One can observe a slower quench propagation with time when the insulation is considered. At each time window, the hot-spot is placed at $x=0~\text{m}$.
+Similarly to Section \ref{subsubsection:1d_quench_propagation_analysis_results_no_insulation}, the results are compared at three time steps, as presented in Fig. \ref{fig: 1d_with_insulation_temp_along_strand_comparison}. A slower quench propagation over time can be observed when the insulation is considered. At each time window, the hot-spot is placed at $x=0~\text{m}$.
 
 \begin{figure}[H]
 \centering
@@ -183,10 +183,10 @@ Similarly to Section \ref{subsubsection:1d_quench_propagation_analysis_results_n
 \end{figure}
 
 The quench velocity is calculated by comparing the position of the quench front at $t=0.06~\text{s}$ and $t=0.1~\text{s}$. The relative error is calculated as in (\ref{eqn:relative_error_comsol_ansys_benchmarking}) and is estimated for: 
-\begin{itemize}
-    \item quench velocity, as presented in Table \ref{table: 1d_with_insulation_v_quench_comparison},
-    \item temperature along the strand length at $t=0.1~\text{s}$, as presented in Fig. \ref{fig: ans_comsol_comparison_f_2_2_with_insulation}.
-\end{itemize}
+\begin{enumerate}
+    \item Quench velocity (see Table \ref{table: 1d_with_insulation_v_quench_comparison})
+    \item Temperature along the strand length at $t=0.1~\text{s}$ (see Fig. \ref{fig: ans_comsol_comparison_f_2_2_with_insulation})
+\end{enumerate}
 
 \begin{table}[H]
     \caption{Quench velocity comparison between COMSOL and ANSYS.} 

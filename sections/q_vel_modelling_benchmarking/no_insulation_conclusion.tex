@@ -1,4 +1,4 @@
-As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_comparison}, when the quench velocity-based approach is used, the mesh density is reduced by a factor ranging from 10 to 20. In addition, the time step range is increased by a factor of 10 while keeping the results within the precision of 0.01\% with respect to the evolution of the resistive voltage. However, the computation time of the quench velocity-based approach remains similar to the standard analysis. It is a result of applying the~co-simulation procedure with an external routine which costs time when the signal is exchanged with ANSYS. In the presented studies, the co-simulation lasts approximately 80~s. Subtracting this value from the total computation time gives a real value which ANSYS requires to solve the quench problem. 
+As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_comparison}, when the quench velocity-based approach is used, the mesh density is reduced by a factor ranging from 10 to 20. In addition, the time step range is increased by a factor of 10 while keeping the results within a precision of 0.01\% with respect to the evolution of the resistive voltage. However, the computation time of the quench velocity-based approach remains similar to the standard analysis. It is a result of applying the~co-simulation procedure with an external routine which costs time when the signal is exchanged with ANSYS. In the presented studies, the co-simulation lasts approximately 80~s. Subtracting this value from the total computation time gives a real value which ANSYS requires to solve the quench problem. 
 
 \begin{table}[H]
     \caption{Bare strand benchmark summary.} 
@@ -20,18 +20,18 @@ As presented in Table \ref{table: 1d_qv_benchmarking_no_insulation_methods_compa
      \label{table: 1d_qv_benchmarking_no_insulation_methods_comparison}
  \end{table}
  
-Table \ref{table: 1d_qv_benchmarking_no_insulation_res_and_hot_spot_error_conclusion} summarises the evolution of the resistive voltage and the hot-spot temperature in time. With the mesh size of 20~mm, the relative error converges to -5\% for the resistive voltage and to -0.5\% for the hot-spot temperature. The study indicates that the results converge to a stable error as the quench propagates during the simulation. Nevertheless, the results do not imply that the convergence occurs in more extreme cases when more energy is deposited in the strand, i.e. when the strand is subjected to higher current or stronger magnetic field. The case of a bare strand is a relatively simple example. In the simulation of the skew quadrupole, the insulation and epoxy resin ought to be taken into consideration as well. 
+Table \ref{table: 1d_qv_benchmarking_no_insulation_res_and_hot_spot_error_conclusion} summarises the evolution of the resistive voltage and the hot-spot temperature in time. With the mesh size of 20~mm, the relative error converges to -5\% for the resistive voltage and to -0.5\% for the hot-spot temperature. The study indicates that the results converge to a stable error as the quench propagates during the simulation. Nevertheless, the results do not imply that the convergence occurs in more extreme cases when more energy is deposited in the strand, i.e. when the strand is subjected to higher current or magnetic field strength. The case of a bare strand is a relatively simple example. In the simulation of the skew quadrupole, the insulation and epoxy resin ought to be taken into consideration as well. 
  
  \begin{table}[H]
-    \caption{Comparison of relative error for resistive voltage and hot-spot temperature.} 
+    \caption{Comparison of relative error: resistive voltage and hot-spot temperature.} 
     \vspace{-1.em} 
     \fontsize{10}{10}
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ c | cc | cc }  
+        \begin{tabular}{ | c | cc | cc | }  
         \hline
-        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{$V_\text{res}$} & \multicolumn{2}{c}{$T_\text{hot-spot}$} \\ 
+        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{$V_\text{res}$} & \multicolumn{2}{c|}{$T_\text{hot-spot}$} \\ 
            & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ & $t=0.01~\text{s}$ & $t=0.1~\text{s}$ \\
         \hline
         1 & -13.65\% & -2.39\% & -1.82\% & -0.48\% \\

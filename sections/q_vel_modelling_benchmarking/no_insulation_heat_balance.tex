@@ -1,11 +1,11 @@
 
-In this study, the standard ANSYS simulation of a bare strand is performed based on the LINK33 element. The geometric assumptions, the initial conditions, and the analysis settings related to ANSYS are the same as in Section~\ref{section: 1D_quench_propagation_no_insulation}. It is interesting to mention that the initial Gaussian temperature profile, which is set as the initial condition during the transient simulation (see Fig. \ref{fig: init_gauss_temp_distr}), has a varying initial energy deposition in the strand depending on the longitudinal mesh size. The initial energy in the discretised domain is calculated as
+In this study, the standard ANSYS simulation of a bare strand is performed based on the LINK33 element. The geometric assumptions, the initial conditions, and the analysis settings related to ANSYS are the same as in Section~\ref{section: 1D_quench_propagation_no_insulation}. One can observe, that the initial Gaussian temperature profile (see Fig. \ref{fig: init_gauss_temp_distr}) is more approximated, if the mesh along the strand is relaxed. Therefore, the initial energy deposition in the strand depends on the mesh size as well. The initial energy in the discretised domain is calculated as
 \begin{equation}
     E_\text{initial} = \sum_{i=1}^{n-1} V_{i,i+1}~c_\text{v, strand}\left(T = \frac{T_i+T_{i+1}}{2}\right)~\frac{T_i+T_{i+1}}{2},
 \end{equation}
 where $n$ -- number of nodes in the initially quenched zone, $V_{i,~i+1}$ -- volume of the domain between two neighbouring nodes, $c_\text{v, strand}$ -- volumetric heat capacity calculated for an average temperature, $T_i$ -- temperature of a node $i$, $T_{i+1}$ -- temperature of a neighbouring node $i+1$.
 
-The relation between the initially deposited energy in the strand and the number of nodes over a 1 metre-long domain is presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. The exact energy deposition starts converging for approximately 1000 nodes which corresponds to the mesh size of 1~mm. The lower number of nodes would slow down the quench front propagation.
+The relation between the initially deposited energy in the strand and the number of nodes over a 1 metre-long domain is presented in Fig. \ref{fig: q_vel_modelling_energy_deposition}. The exact energy deposition starts converging for approximately 1000 nodes which corresponds to the mesh size of 1~mm. A lower number of nodes would slow down the quench front propagation.
 
 \begin{figure}[H]
     \centering
@@ -38,6 +38,7 @@ As illustrated in the block diagram of the analysis workflow corresponding to th
         \begin{tabular}{ cccc }  
         \hline
         $t_\text{step range}$, ms & [0.001, 0.01] & [0.01, 0.1] & [0.1, 1] \\
+        \hline
         $v_\text{quench, average}$, m/s & 6.80 & 6.81 & 7.1 \\
         $E_\text{r}$ & - & 0.17\% & 4.26\% \\
         \hline 
@@ -67,7 +68,7 @@ As illustrated in the block diagram of the analysis workflow corresponding to th
     \label{fig: q_vel_modelling_v_quench_rel_error_no_insulation}
 \end{figure}
 
-In conclusion, the reference ANSYS solution used for the verification loop in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation} is the one with the mesh size of 1~mm and the time step range of $t_\text{step range}=[0.01, 0.1]~\text{ms}$. The parameters are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation}. 
+In conclusion, the reference used for the verification loop in Fig.~\ref{fig:block_diagram_benchmarking_methodology_no_insulation} is the ANSYS solution with a mesh size of 1~mm and a time step range of $t_\text{step range}=[0.01, 0.1]~\text{ms}$. The parameters are summarised in Table~\ref{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation}. 
 
 \begin{table}[H]
     \caption{Input parameters of the reference standard solution.} 
@@ -89,7 +90,7 @@ In conclusion, the reference ANSYS solution used for the verification loop in Fi
      \label{table: 1d_qv_benchmarking_reference_analysis_settings_no_insulation} 
  \end{table}
 
-The reference solution is an acceptable compromise between the accuracy and the computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in a 1D quench propagation, computing time rises monotonically with the mesh refinement while keeping the time step range equal to $t_\text{step range}=[0.01, 0.1]~\text{ms}$\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
+The reference solution is an acceptable compromise between accuracy and computing time. As presented in Fig. \ref{fig: q_vel_modelling_heat_balance_computing_time_no_insulation}, in a 1D quench propagation, computing time rises monotonically with the mesh refinement while keeping the time step range equal to $t_\text{step range}=[0.01, 0.1]~\text{ms}$\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
 
 \begin{figure}[H]
 \centering

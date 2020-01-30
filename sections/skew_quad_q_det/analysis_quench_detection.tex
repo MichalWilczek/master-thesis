@@ -1,9 +1,9 @@
 
-The quench simulation of the skew quadrupole is divided into two parts: $(i)$ analysis before the quench detection when the~current is constant, $(ii)$ analysis after the quench detection when the~current starts varying in time until the energy stored in the magnetic field is fully discharged. This section covers the simulation of the first case. 
+The quench simulation of the skew quadrupole is divided into two parts: $(i)$ analysis before the quench detection, when the~current is constant, $(ii)$ analysis after the quench detection, when the~current starts varying over time until the energy stored in the magnetic field is fully discharged. This section covers the simulation of the first case. 
 
 \subsection{Mesh and Geometry}
 
-Fig.~\ref{fig:skew_quad_ansys_top_view} shows the top view of a meshed ANSYS geometry. It consists of 754 insulated windings. In total, the coils is nearly~810 m-long. It is shorter than 812~m corresponding to the real magnet length because of sharp edges of the rounded coil parts. 
+Fig.~\ref{fig:skew_quad_ansys_top_view} shows the top view of a meshed ANSYS geometry. It consists of 754 insulated windings. In total, the coil is nearly~810 m-long. It is shorter than 812~m, which is the real magnet length, because of sharp edges of the rounded coil parts. 
 
 \begin{figure}[H]
     \centering
@@ -14,9 +14,9 @@ Fig.~\ref{fig:skew_quad_ansys_top_view} shows the top view of a meshed ANSYS geo
     \label{fig:skew_quad_ansys_top_view}
 \end{figure}
 
-Parameters of the meshed geometry are summarised in Table~\ref{table: skew_quad_geometry_mesh}. They are based on the discussion in Section~\ref{subsection:update_skew_quadrupole_geometry}. The insulation domain transverse to the strand is equal to $L_\text{ins}=0.07~\text{mm}$ that corresponds to the thickness of a real insulation layer (of only one strand) without resin. The insulation conduction area $A_\text{ins, cond}$ remains unchanged in this set of analyses, i.e. $u_\text{ins}=1.0$. The geometry is discretised on each side of the coil to uniformly distribute the the insulation conduction area $A_\text{ins, cond}$ along the entire domain of the windings. The parameter $n_\text{divisions, insulation}$ corresponds to an average length of a coil rounding. The parameters $n_\text{divisions, side d}$ and $n_\text{divisions, side e}$ refer to Fig.~\ref{fig: winding_length_in_skew_quad}.
+Parameters of the meshed geometry are summarised in Table~\ref{table: skew_quad_geometry_mesh}. They are based on the discussion in Section~\ref{subsection:update_skew_quadrupole_geometry}. The insulation domain transverse to the strand is equal to $L_\text{ins}=0.07~\text{mm}$, which corresponds to the thickness of a real insulation layer (of only one strand) without resin. The insulation conduction area $A_\text{ins, cond}$ remains unchanged in this set of analyses, i.e. $u_\text{ins}=1.0$. The geometry is discretised on each side of the coil to uniformly distribute the the insulation conduction area $A_\text{ins, cond}$ along the entire domain of the windings. The parameter $n_\text{divisions, insulation}$ corresponds to an average length of a coil rounding. The parameters $n_\text{divisions, side d}$ and $n_\text{divisions, side e}$ refer to Fig.~\ref{fig: winding_length_in_skew_quad}.
 
-There are 72 nodes in each winding representing the composite strand. The insulation layer of every winding is reduced to two elements. It means that the insulation layer between two neighbouring windings accounts for four elements out of which two are coupled with one another. Therefore, the insulation modelling sustains a basic condition of simulating non-linear phenomena that require using at minimum three nodes. The longitudinal mesh size is equal to 15~mm whereas the insulation mesh size -- 35~$\upmu \text{m}$. The entire discretised model accounts for approximately half a million of nodes. Reducing the number of insulation elements aims at lowering the total model size.
+There are 72 nodes in each winding representing the composite strand. The insulation layer of every winding is reduced to two elements. This means that the insulation layer between two neighbouring windings accounts for four elements, out of which two are coupled with one another. Therefore, the insulation modelling fulfils the basic condition of simulating nonlinear phenomena, that require using at minimum three nodes. The longitudinal mesh size is equal to 15~mm whereas the insulation mesh size -- 35~$\upmu \text{m}$. The entire discretised model contains approximately half a million of nodes. Reducing the number of insulation elements aims at lowering the total model size.
 
 \begin{table}[H]
     \caption{Geometry and mesh characteristics.} 
@@ -46,7 +46,7 @@ There are 72 nodes in each winding representing the composite strand. The insula
      \label{table: skew_quad_geometry_mesh} 
  \end{table}
 
-There are three quench analyses conducted with a varying heat capacity of resin that refers to the parameter $u_\text{resin}$, as depicted in Table~\ref{table: skew_quad_geometry_cases}. Adding 0D elements to the strand increases the total number of elements in the model from 480 000 to 530 000. 
+There are three quench analyses conducted with a varying heat capacity of resin represented by the parameter $u_\text{resin}$, as depicted in Table~\ref{table: skew_quad_geometry_cases}. Adding 0D elements to the strand increases the total number of elements in the model from 480 000 to 530 000. 
 
 \begin{table}[H]
     \caption{Geometry and mesh characteristics.} 
@@ -55,7 +55,7 @@ There are three quench analyses conducted with a varying heat capacity of resin 
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ c | c | c }  
+        \begin{tabular}{ | c | c | c | }  
         \hline
         $u_\text{resin}$ & $V_\text{MASS71}$, [$\text{m}^3$] & elements in coil \\
         \hline
@@ -70,7 +70,7 @@ There are three quench analyses conducted with a varying heat capacity of resin 
 
 \subsection{Analysis Settings}
 
-The co-simulation time window remains identical with respect to the previous chapters, as depicted in Table~\ref{table: skew_quad_quench_detect_input_params}. The ANSYS simulation time step is assumed to be constant and equal to the maximum value of a time step range used for the quench velocity-based approach in Chapter~\ref{chapter:quench_velocity_benchmarking}. The time step is increased to keep the computing time in a reasonable limit of several days. The initial energy deposition is placed in the centre of a winding directly neighbouring with the spot heater corresponding to the position of 367.67~m in the meshed model.
+The co-simulation time window remains identical with respect to the previous chapters, as depicted in Table~\ref{table: skew_quad_quench_detect_input_params}. The ANSYS simulation time step is assumed to be constant and equal to the maximum value of a time step range used for the quench velocity-based approach in Chapter~\ref{chapter:quench_velocity_benchmarking}. The time step is increased to keep the computing time in a reasonable limit of several days. The initial energy deposition is placed in the centre of a winding directly neighbouring with the spot heater corresponding to a position of 367.67~m in the meshed model.
 
 \begin{table}[H]
     \caption{Input parameters in the quench detection analysis of the skew quadrupole.} 
@@ -94,7 +94,7 @@ The co-simulation time window remains identical with respect to the previous cha
 
 \subsection{Results}
 
-The evolution of resistive voltage until the quench detection is shown in Fig.~\ref{fig: quench_detection_v_res}. The results from three analyses are compared with the measurements. One can observe that the~initial slope of the~simulated models and the measured magnet remains similar at $t < 0.1~\text{s}$. It means that the~initial quench velocity set in the model corresponds to its real value in the quenched winding at $I=86~\text{A}$. In the measurements, the first turn-to-turn propagation occurs at $t \approx 0.08~\text{s}$ which is much faster than in case of each simulation. However, one must remember that the initial heat impulse is much larger in the measurements than in the simulated cases. Therefore, the~first transverse propagation also occurs more slowly in the simulations compared to the measurements. Including resin in the models results in a slower turn-to-turn propagation as well. Such a phenomenon is expected due to a higher heat capacity of the windings with resin. 
+The evolution of resistive voltage up to the point of the quench detection is shown in Fig.~\ref{fig: quench_detection_v_res}. The results from three analyses are compared with the measurements. The~initial slope of the~simulated models and the measured magnet remains similar at $t < 0.1~\text{s}$. This means that the~initial quench velocity set in the model corresponds to its real value in the quenched winding at $I=86~\text{A}$. In the measurements, the first turn-to-turn propagation occurs at $t \approx 0.08~\text{s}$ which is much faster than what any simulation predicts. However, the initial heat impulse is much larger in the measurements than in the simulated cases. Therefore, the~first transverse propagation also occurs more slowly in the simulations than in the experiment. Including resin in the models results in a slower turn-to-turn propagation as well. Such a phenomenon is expected due to a higher heat capacity of the windings with resin. 
 
 \begin{figure}[H]
     \centering
@@ -135,7 +135,7 @@ The evolution of resistive voltage until the quench detection is shown in Fig.~\
     \label{fig: quench_detection_v_res}
 \end{figure}
 
-Once the first turn-to-turn propagation occurs, the simulated models start resembling the measurements because the current discharged in the coil becomes a predominant heat source. In order to compare the measurements with the performed analyses, each resistive voltage obtained in the simulations is translated to the left so that the~threshold voltage $V_\text{th}$ is reached at the same time window. Table~\ref{table: skew_quad_v_res_q_det} presents the~time windows at which the~threshold voltage is obtained for every case. The translation times are used in the next section to translate the plots of the resistive  voltage and resistance from the simulations. By that means, the comparison of the simulations with the results is more clear. 
+Once the first turn-to-turn propagation occurs, the simulated models start resembling the measurements because the current discharged in the coil becomes the predominant heat source. In order to compare the measurements with the performed analyses, each resistive voltage obtained in the simulations is translated in time, so that the~threshold voltage $V_\text{th}$ is reached within the same time. Table~\ref{table: skew_quad_v_res_q_det} presents the~time instants at which the~threshold voltage is obtained for every case. The translation times are used in the next section to translate the plots of the resistive voltage and the resistance. Hereby, the comparison of the simulations with the results becomes more clear. 
 
 \begin{table}[H]
     \caption{List of time windows at which the simulations reaches $V_\text{th}$.} 

@@ -1,5 +1,5 @@
 
-Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summarises different improvement rates when the quench velocity-based approach is applied with respect to the standard analysis. It is possible to increase the time step range and increase the mesh size with the quench velocity-based approach. Unlike the case of a~bare strand, the~acceleration in computing time is clearly visible. The mesh relaxation along the strand also reduces the total number of nodes used to model the zone outside of the composite strand. The evolution of the nodal size of the model can be easily deduced from (\ref{eqn:tot_number_of_nodes}). In fact, the reduction of the insulation elements is one of the main reasons for accelerating the computing speed whose gain is higher than the loss of time due to the data exchange during the co-simulation process\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
+Table~\ref{table: 1d_qv_benchmarking_with_insulation_methods_comparison} summarises different improvement rates when the quench velocity-based approach is applied with respect to the standard analysis. It is possible to increase the time step range and increase the mesh size with the quench velocity-based approach. Unlike the case of a~bare strand, shortening the computation time is clearly visible. The mesh relaxation along the strand also reduces the total number of nodes used to model the zone outside of the composite strand. The evolution of the nodal size of the model can be easily deduced from (\ref{eqn:tot_number_of_nodes}). In fact, the reduction of the insulation elements is one of the main reasons for accelerating the computing speed, the gain of which is higher than the loss of time due to the data exchange during the co-simulation process\footnote{The analysis was performed on the following calculation unit: Intel(R) Xeon(R) CPU E5-2667 V4 @~3.20 GHz (2~processors) with RAM 128 GB.}.
 
 \begin{table}[H]
     \caption{Benchmark summary of the analysis with insulation and epoxy resin.} 
@@ -31,9 +31,9 @@ Table~\ref{table: 1d_qv_benchmarking_with_insulation_res_and_hot_spot_error_conc
     \selectfont 
     \renewcommand{\arraystretch}{1.5}
     \begin{center}
-        \begin{tabular}{ c | cc | cc }  
+        \begin{tabular}{ | c | cc | cc | }  
         \hline
-        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{$V_\text{res}$} & \multicolumn{2}{c}{$T_\text{hot-spot}$} \\ 
+        \multirow{2}{*}{mesh size, mm} & \multicolumn{2}{c|}{$V_\text{res}$} & \multicolumn{2}{c|}{$T_\text{hot-spot}$} \\ 
            & $t=0.01~\text{s}$ & $t=0.5~\text{s}$ & $t=0.01~\text{s}$ & $t=0.5~\text{s}$ \\
         \hline
         1 & -9.52\% & -2.42\% & -0.94\% & -1.81\% \\

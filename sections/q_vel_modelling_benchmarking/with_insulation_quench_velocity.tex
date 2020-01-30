@@ -1,5 +1,5 @@
 
-Similarly to the analysis of a bare strand employing the quench velocity-based approach, the electro-thermal element LINK68 is used to model a strand. The insulation with epoxy resin is represented by the LINK33 element since no heat is generated in that region. In~order to observe the relevant evolution of a relative error of the resistive voltage and the hot-spot temperature, the total simulation time is extended to $t=0.5~\text{s}$. The study of a~1.5~metre-long cable is performed with a varying longitudinal mesh size, $m=\{1, 10, 20\}~\text{mm}$. The cable is longer than in the analysis a bare strand so that the quench front could propagate during the entire simulation time without reaching the end of the domain. The time step range in the quench velocity-based approach is $t_\text{step range}=[0.1, 1]~\text{ms}$, as deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. The geometric assumptions, the initial conditions, and the analysis settings are identical with the ones discussed in Section \ref{section: 1D_quench_propagation_with_insulation}. The parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. 
+Similarly to the analysis of a bare strand employing the quench velocity-based approach, the electro-thermal element LINK68 is used to model a strand. The insulation with epoxy resin is represented by the LINK33 element since no heat is generated in that region. In~order to observe the relevant evolution of a relative error in resistive voltage and hot-spot temperature, the total simulation time is extended to $t=0.5~\text{s}$. The study of a~1.5~metre-long cable is performed with a varying longitudinal mesh size, $m=\{1, 10, 20\}~\text{mm}$. The cable is longer than in the analysis of a bare strand so that the quench front could propagate during the entire simulation time without reaching the end of the domain. The time step range in the quench velocity-based approach is $t_\text{step range}=[0.1, 1]~\text{ms}$ as deduced in Section~\ref{section:quench_velocity_benchmarking_no_insulation_quench_velocity}. The geometric assumptions, the initial conditions, and the analysis settings are identical with those discussed in Section \ref{section: 1D_quench_propagation_with_insulation}. The parameters related to the co-simulation are shown in Table \ref{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity}. 
 
 \begin{table}[H]
     \caption{Input parameters in the quench velocity-based approach.} 
@@ -21,7 +21,7 @@ Similarly to the analysis of a bare strand employing the quench velocity-based a
     \label{table:1d_qv_benchmarking_geometry__with_insulation_parameters_quench_velocity} 
 \end{table}
 
-Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution along the strand with the mesh size of 20~mm between the standard analysis and the quench velocity-based approach. The quench front remains behind the~reference solution analogously to the case of a bare strand, as presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}.
+Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compares the temperature distribution along the strand with the mesh size of 20~mm between the standard analysis and the quench velocity-based approach. The quench front remains behind the~reference solution in analogy to the case of a bare strand, as presented in Fig.~\ref{fig: q_vel_benchmarking_temp_distr_over_strand_no_insulation}.
 
 \begin{figure}[H]
 \centering
@@ -62,7 +62,7 @@ Fig.~\ref{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation} compare
         \node[scale = 1] at (3.3, 3) {$\vec{v}_\text{quench}$}; 
         
     \end{tikzpicture}
-    \caption{Temperature distribution with a specified direction of quench velocity, $\vec{v}_\text{quench}$ of for the reference solution and the quench velocity-based approach with the longitudinal mesh size of 20~mm and the mesh size of 8~$\upmu \text{m}$ (20 nodes) across the insulation layer at three time steps: $t=\{0.1, 0.3, 0.5\}$~s.}
+    \caption{Temperature distribution with a specified direction of quench velocity, $\vec{v}_\text{quench}$ of the reference solution and the quench velocity-based approach with the longitudinal mesh size of 20~mm and the mesh size of 8~$\upmu \text{m}$ (20 nodes) across the insulation layer at three time steps: $t=\{0.1, 0.3, 0.5\}$~s.}
     \label{fig:q_vel_benchmarking_temp_distr_over_strand_with_insulation}
 \end{figure}
 
@@ -97,7 +97,7 @@ As presented in Fig.~\ref{fig: q_vel_modelling_res_volt_benchmarking_with_insula
     \label{fig: q_vel_modelling_res_volt_benchmarking_with_insulation}
 \end{figure}
 
-A double decrease in the mesh size from 20 to 10~mm results in a better convergence of the resistive voltage in the quench velocity-based approach with respect to the reference solution, as presented in Fig.~\ref{fig: q_vel_modelling_res_volt_rel_error_with_insulation}. For the mesh size of 10~mm, the relative error remains in the range of -10\% and converges to -2.5\% as the quench propagates. With a coarser mesh of 20~mm, the relative error converges to the approximate value of -5\%. It is also worth mentioning that the decrease of the mesh size to 1~mm of does not decrease the relative error with respect to the solution with a larger mesh size. The mesh size of 1~mm corresponds to the case of a reference standard solution. Similarly to the example without the insulation layer, one has to accept the difference between two approaches.
+Halving the mesh size from 20 to 10~mm results in a better convergence of the resistive voltage in the quench velocity-based approach with respect to the reference solution, as presented in Fig.~\ref{fig: q_vel_modelling_res_volt_rel_error_with_insulation}. For the mesh size of 10~mm, the relative error remains in the range of -10\% and converges to -2.5\% as the quench propagates. With a coarser mesh of 20~mm, the relative error converges to the approximate value of -5\%. It is also worth mentioning, that the decrease of the mesh size to 1~mm does not decrease the relative error with respect to the solution with a larger mesh size. The mesh size of 1~mm corresponds to the case of a reference standard solution. Similarly to the example without the insulation layer, one has to accept the difference between two approaches.
 
 \begin{figure}[H]
 \centering
@@ -126,7 +126,7 @@ A double decrease in the mesh size from 20 to 10~mm results in a better converge
     \label{fig: q_vel_modelling_res_volt_rel_error_with_insulation}
 \end{figure}
 
-Figure~\ref{fig: q_vel_modelling_hot_spot_rel_error_with_insulation} presents the evolution of the relative error with respect to the hot-spot temperature. One can notice the stabilisation of an error after approximately $t=0.2~\text{s}$. After that moment, the error starts diverging with an approximate rate of -2\%/s by assuming a linear change error drop with time. The divergence occurs for every mesh size. At $t=0.5~\text{s}$, the result with the mesh size of 20~mm is characterised by a relative error 0.5\% lower with respect to higher mesh densities. 
+Figure~\ref{fig: q_vel_modelling_hot_spot_rel_error_with_insulation} presents the evolution of the relative error with respect to the hot-spot temperature. The error stabilises at approximately  $t=0.2~\text{s}$. After that moment, the error starts diverging with an approximate rate of -2\%/s, assuming a linear change of error over time. The divergence occurs for every mesh size. At $t=0.5~\text{s}$, the result for a mesh size of 20~mm is characterised by a relative error 0.5\% lower with respect to higher mesh densities. 
 
 \begin{figure}[H]
 \centering
